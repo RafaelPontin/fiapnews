@@ -4,9 +4,14 @@ namespace Dominio.ObjetosDeValor
 {
     public class Tag : Base, IEquatable<Tag>
     {
+        public string Texto { get; set; }
+
         public bool Equals(Tag? other)
         {
-            throw new NotImplementedException();
+            if (ReferenceEquals(null, other)) 
+                return false;
+
+            return other.Texto == Texto;
         }
     }
 }

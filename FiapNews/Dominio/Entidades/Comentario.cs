@@ -2,5 +2,6 @@
 {
     public class Comentario : Base
     {
+        public bool ValidadoPelaModeracao { get; set; }
     }
 }

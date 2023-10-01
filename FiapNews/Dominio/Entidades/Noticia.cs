@@ -27,6 +27,8 @@ namespace Dominio.Entidades
 
         private List<Comentario>? _comentarios;
         
+        public IReadOnlyCollection<Comentario>? ComentariosModerados { get => _comentarios.Where(x => x.ValidadoPelaModeracao).ToList() ; }
+
         public IReadOnlyCollection<Comentario>? Comentarios { get => _comentarios; }
 
         private List<Autor> _autores;
@@ -105,6 +107,9 @@ namespace Dominio.Entidades
             if (_tags == null)
                 _tags = new List<Tag>();
 
+            if (_tags.Contains(tag))
+                throw new ArgumentException("Essa tag já existe!");
+
             _tags.Add(tag);
         }
 
@@ -116,10 +121,13 @@ namespace Dominio.Entidades
             noticiasRelacionadas.ToList().ForEach(AdicionarNoticiaRelacionada);
         }
 
-        private void AdicionarNoticiaRelacionada(Noticia noticia)
+        public void AdicionarNoticiaRelacionada(Noticia noticia)
         {
             if (_noticiasRelacionadas == null)
                 _noticiasRelacionadas = new List<Noticia>();
+
+            if (_noticiasRelacionadas.Contains(noticia))
+                throw new ArgumentException("Essa notícia já existe na lista de notícias relacionadas!");
 
             _noticiasRelacionadas.Add(noticia);
         }
@@ -136,6 +144,9 @@ namespace Dominio.Entidades
         {
             if (_comentarios == null)
                 _comentarios = new List<Comentario>();
+
+            if (_comentarios.Contains(comentario))
+                throw new ArgumentException("Esse comentário já existe!");
 
             _comentarios.Add(comentario);
         }
@@ -155,6 +166,9 @@ namespace Dominio.Entidades
         {
             if (_imagens == null)
                 _imagens = new List<Imagem>();
+
+            if (_imagens.Contains(imagem))
+                throw new ArgumentException("Essa imagem já existe!");
 
             if (_imagens.Count == LIMITE_IMAGENS)
                 throw new ArgumentException($"Limite de {LIMITE_IMAGENS} imagens atingido");
@@ -187,7 +201,7 @@ namespace Dominio.Entidades
                 _autores = new List<Autor>();
 
             if (_autores.Contains(autor))
-                throw new ArgumentException("Categoria já existente!");
+                throw new ArgumentException("Autor já existente!");
 
             if (_autores.Count == LIMITE_AUTORES)
                 throw new ArgumentException($"Limite de {LIMITE_AUTORES} autores atingido");
