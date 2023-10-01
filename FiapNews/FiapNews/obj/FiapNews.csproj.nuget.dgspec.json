@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\AutranFranciscoMarti\\Documents\\Autran\\FIAP\\git\\Tech Challenge\\fiapnews\\FiapNews\\FiapNews\\FiapNews.csproj": {}
+    "C:\\Users\\Alexssander\\Desktop\\Pos Tech\\fiapnews\\FiapNews\\FiapNews\\FiapNews.csproj": {}
   },
   "projects": {
-    "C:\\Users\\AutranFranciscoMarti\\Documents\\Autran\\FIAP\\git\\Tech Challenge\\fiapnews\\FiapNews\\FiapNews\\FiapNews.csproj": {
+    "C:\\Users\\Alexssander\\Desktop\\Pos Tech\\fiapnews\\FiapNews\\FiapNews\\FiapNews.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\AutranFranciscoMarti\\Documents\\Autran\\FIAP\\git\\Tech Challenge\\fiapnews\\FiapNews\\FiapNews\\FiapNews.csproj",
+        "projectUniqueName": "C:\\Users\\Alexssander\\Desktop\\Pos Tech\\fiapnews\\FiapNews\\FiapNews\\FiapNews.csproj",
         "projectName": "FiapNews",
-        "projectPath": "C:\\Users\\AutranFranciscoMarti\\Documents\\Autran\\FIAP\\git\\Tech Challenge\\fiapnews\\FiapNews\\FiapNews\\FiapNews.csproj",
-        "packagesPath": "C:\\Users\\AutranFranciscoMarti\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\AutranFranciscoMarti\\Documents\\Autran\\FIAP\\git\\Tech Challenge\\fiapnews\\FiapNews\\FiapNews\\obj\\",
+        "projectPath": "C:\\Users\\Alexssander\\Desktop\\Pos Tech\\fiapnews\\FiapNews\\FiapNews\\FiapNews.csproj",
+        "packagesPath": "C:\\Users\\Alexssander\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Alexssander\\Desktop\\Pos Tech\\fiapnews\\FiapNews\\FiapNews\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\AutranFranciscoMarti\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Alexssander\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,9 +22,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Util\\DLL": {},
-          "https://api.nuget.org/v3/index.json": {},
-          "https://hiplatform.pkgs.visualstudio.com/_packaging/Hi/nuget/v3/index.json": {}
+          "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net7.0": {
@@ -70,7 +68,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     }
