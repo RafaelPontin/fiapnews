@@ -1,4 +1,5 @@
-﻿using Dominio.ObjetosDeValor;
+﻿using Dominio.Enum;
+using Dominio.ObjetosDeValor;
 
 namespace Dominio.Entidades
 {
@@ -27,7 +28,7 @@ namespace Dominio.Entidades
 
         private List<Comentario>? _comentarios;
         
-        public IReadOnlyCollection<Comentario>? ComentariosModerados { get => _comentarios.Where(x => x.ValidadoPelaModeracao).ToList() ; }
+        public IReadOnlyCollection<Comentario>? ComentariosModerados { get => _comentarios.Where(x => x.EstadoValidacao == EstadoValidacaoComentario.Aprovado).ToList() ; }
 
         public IReadOnlyCollection<Comentario>? Comentarios { get => _comentarios; }
 
