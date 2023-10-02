@@ -49,18 +49,12 @@ public class Comentario : Base
 
     private void DefinirUsuario(Usuario usuario)
     {
-        if (usuario == null)
-            throw new ArgumentException("Usuário é obrigatório!");
-
-        Usuario = usuario;
+        Usuario = usuario ?? throw new ArgumentException("Usuário é obrigatório!");
     }
 
     private void DefinirNoticia(Noticia noticia)
     {
-        if (noticia == null)
-            throw new ArgumentException("Notícia é obrigatória!");
-
-        Noticia = noticia;
+        Noticia = noticia ?? throw new ArgumentException("Notícia é obrigatória!");
     }
 
     private void DefinirTexto(string texto)
@@ -79,8 +73,6 @@ public class Comentario : Base
 
     public void ValidarComentario(Usuario moderador, EstadoValidacaoComentario estado, string motivo)
     {
-        if (moderador == null)
-            throw new ArgumentException("Moderador é obrigatório!");
 
         //if (moderador.TipoUsuario != TipoUsuario.Moderador)
         //    throw new ArgumentException("Usuário não é moderador!");
@@ -99,6 +91,6 @@ public class Comentario : Base
 
         EstadoValidacao = estado;
         DataValidacao = DateTime.UtcNow;
-        ModeradorResponsavel = moderador;
+        ModeradorResponsavel = moderador ?? throw new ArgumentException("Moderador é obrigatório!");
     }
 }
