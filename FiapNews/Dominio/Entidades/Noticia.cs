@@ -1,4 +1,5 @@
 ﻿using Dominio.ObjetosDeValor;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Dominio.Entidades
 {
@@ -64,6 +65,16 @@ namespace Dominio.Entidades
             AdicionarTags(tags);
         }
 
+        public void TornarNoticiaExclusivaParaAssinantes()
+        {
+            ExclusivoParaAssinantes = true;
+        }
+
+        public void TornarNoticiaPublica()
+        {
+            ExclusivoParaAssinantes = false;
+        }
+
         public void DesativarNoticia()
         {
             Ativa = false;
@@ -76,6 +87,9 @@ namespace Dominio.Entidades
 
         public void AdicionarTag(Tag tag)
         {
+            if (tag == null)
+                throw new ArgumentNullException(nameof(tag), "Valor nulo!");
+
             if (_tags == null)
                 _tags = new List<Tag>();
 
@@ -95,6 +109,9 @@ namespace Dominio.Entidades
 
         public void AdicionarNoticiaRelacionada(Noticia noticia)
         {
+            if (noticia == null)
+                throw new ArgumentNullException(nameof(noticia), "Valor nulo!");
+
             if (_noticiasRelacionadas == null)
                 _noticiasRelacionadas = new List<Noticia>();
 
@@ -114,6 +131,9 @@ namespace Dominio.Entidades
 
         public void AdicionarComentario(Comentario comentario)
         {
+            if (comentario == null)
+                throw new ArgumentNullException(nameof(comentario), "Valor nulo!");
+
             if (_comentarios == null)
                 _comentarios = new List<Comentario>();
 
@@ -133,6 +153,9 @@ namespace Dominio.Entidades
 
         public void AdicionarImagem(Imagem imagem)
         {
+            if (imagem == null)
+                throw new ArgumentNullException(nameof(imagem), "Valor nulo!");
+
             if (_imagens == null)
                 _imagens = new List<Imagem>();
 
@@ -156,13 +179,16 @@ namespace Dominio.Entidades
         public void DefinirRegiao(Regiao regiao)
         {
             if (regiao == null)
-                throw new ArgumentNullException("É obrigatório que a notícia tenha uma região!");
+                throw new ArgumentNullException(nameof(regiao), "Valor nulo!");
 
             Regiao = regiao;
         }
 
         public void AdicionarAutor(Autor autor)
         {
+            if (autor == null)
+                throw new ArgumentNullException(nameof(autor), "Valor nulo!");
+
             if (_autores == null)
                 _autores = new List<Autor>();
 
@@ -188,6 +214,9 @@ namespace Dominio.Entidades
 
         public void AdicionarCategoria(Categoria categoria)
         {
+            if (categoria == null)
+                throw new ArgumentNullException(nameof(categoria), "Valor nulo!");
+
             if (_categorias == null)
                 _categorias = new List<Categoria>();
 
@@ -222,7 +251,7 @@ namespace Dominio.Entidades
         public void DefinirConteudo(string conteudo)
         {
             if (string.IsNullOrWhiteSpace(conteudo))
-                throw new ArgumentException("O conteúdo é obrigatório!");
+                throw new ArgumentNullException(nameof(conteudo), "O conteúdo é obrigatório!");
 
             if (conteudo.Length > LIMITE_CONTEUDO)
                 throw new ArgumentException($"Título ultrapassa o máximo permitido de {LIMITE_CONTEUDO} caracteres!");
@@ -241,7 +270,7 @@ namespace Dominio.Entidades
         public void DefinirTitulo(string titulo)
         {
             if (string.IsNullOrWhiteSpace(titulo))
-                throw new ArgumentException("O título é obrigatório!");
+                throw new ArgumentNullException(nameof(titulo), "O título é obrigatório!");
 
             if (titulo.Length > LIMITE_TITULO)
                 throw new ArgumentException($"Título ultrapassa o máximo permitido de {LIMITE_TITULO} caracteres!");
@@ -287,7 +316,7 @@ namespace Dominio.Entidades
         private void AdicionarAutores(ICollection<Autor> autores)
         {
             if (autores == null)
-                throw new ArgumentNullException("É obrigatório que a notícia tenha ao menos um autor!");
+                throw new ArgumentNullException(nameof(autores),"É obrigatório que a notícia tenha ao menos um autor!");
 
             if (autores.Count > LIMITE_AUTORES)
                 throw new ArgumentException($"Ultrapassa o máximo permitido de {LIMITE_AUTORES} autores!");
@@ -298,7 +327,7 @@ namespace Dominio.Entidades
         private void AdicionarCategorias(ICollection<Categoria> categorias)
         {
             if (categorias == null)
-                throw new ArgumentNullException("É obrigatório que a notícia tenha ao menos uma categoria!");
+                throw new ArgumentNullException(nameof(categorias), "É obrigatório que a notícia tenha ao menos uma categoria!");
 
             if (categorias.Count > LIMITE_CATEGORIAS)
                 throw new ArgumentException($"Ultrapassa o máximo permitido de {LIMITE_CATEGORIAS} categorias!");
