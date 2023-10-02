@@ -12,7 +12,7 @@ public class Comentario : Base
     public Noticia Noticia { get; private set; }
     public EstadoValidacaoComentario EstadoValidacao { get; private set; }
     public DateTime? DataValidacao { get; private set; }
-    public Usuario? ModeradorResponsavel { get; private set; }
+    public Administrador? ModeradorResponsavel { get; private set; }
     public string? MotivoRejeicao { get; private set; }
     public Comentario? ComentarioPai { get; private set; }
 
@@ -71,12 +71,8 @@ public class Comentario : Base
         Texto = texto;
     }
 
-    public void ValidarComentario(Usuario moderador, EstadoValidacaoComentario estado, string motivo)
+    public void ValidarComentario(Administrador moderador, EstadoValidacaoComentario estado, string motivo)
     {
-
-        //if (moderador.TipoUsuario != TipoUsuario.Moderador)
-        //    throw new ArgumentException("Usuário não é moderador!");
-
         if (EstadoValidacao != EstadoValidacaoComentario.Pendente)
             throw new ArgumentException("Comentário já validado!");
 
