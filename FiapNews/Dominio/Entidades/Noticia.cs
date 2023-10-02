@@ -13,49 +13,29 @@ namespace Dominio.Entidades
         private const int LIMITE_CATEGORIAS = 5;
         private const string LINK_COMPARTILHAMENTO = "https://www.teste.com.br/api/ler-noticia/{0}";
 
-        public string Titulo { get; private set; }
-
-        public string SubTitulo { get; private set; }
-        
-        public string Conteudo { get; private set; }
-        
-        public string Lead { get; private set; }
-
         private List<Imagem>? _imagens;
-        
-        public IReadOnlyCollection<Imagem>? Imagens { get => _imagens; }
-
         private List<Comentario>? _comentarios;
-        
-        public IReadOnlyCollection<Comentario>? ComentariosModerados { get => _comentarios.Where(x => x.ValidadoPelaModeracao).ToList() ; }
-
-        public IReadOnlyCollection<Comentario>? Comentarios { get => _comentarios; }
-
         private List<Autor> _autores;
-        
-        public IReadOnlyCollection<Autor> Autores { get => _autores; } //créditos (cada um com seu papel) ???
-
         private List<Categoria> _categorias;
-        
-        public IReadOnlyCollection<Categoria> Categorias { get => _categorias; }
-
-        public DateTime DataCriacao { get; private set; }
-        
         private List<Noticia>? _noticiasRelacionadas;
-        
-        public IReadOnlyCollection<Noticia>? NoticiasRelacionadas { get => _noticiasRelacionadas; }
-        
         private List<Tag>? _tags;
-        
-        public IReadOnlyCollection<Tag>? Tags { get => _tags; }
-        
-        public Regiao Regiao { get; private set; }
-        
-        public bool ExclusivoParaAssinantes { get; private set; }
-        
-        public bool Ativa { get; private set; }
 
+        public string Titulo { get; private set; }
+        public string SubTitulo { get; private set; }        
+        public string Conteudo { get; private set; }        
+        public string Lead { get; private set; }
+        public DateTime DataCriacao { get; private set; }
+        public IReadOnlyCollection<Autor> Autores { get => _autores; } //créditos (cada um com seu papel) ???
+        public IReadOnlyCollection<Categoria> Categorias { get => _categorias; }
+        public Regiao Regiao { get; private set; }
+        public bool ExclusivoParaAssinantes { get; private set; }
+        public bool Ativa { get; private set; }
         public string LinkDeCompartilhamento { get => string.Format(LINK_COMPARTILHAMENTO, Id.ToString()); }
+        public IReadOnlyCollection<Imagem>? Imagens { get => _imagens; }        
+        public IReadOnlyCollection<Comentario>? ComentariosModerados { get => _comentarios.FindAll(x => x.ValidadoPelaModeracao); }
+        public IReadOnlyCollection<Comentario>? Comentarios { get => _comentarios; }        
+        public IReadOnlyCollection<Noticia>? NoticiasRelacionadas { get => _noticiasRelacionadas; }
+        public IReadOnlyCollection<Tag>? Tags { get => _tags; }        
 
         public Noticia(string titulo, string subTitulo, string conteudo, string lead,
             ICollection<Categoria> categorias,
@@ -94,14 +74,6 @@ namespace Dominio.Entidades
             Ativa = true;
         }
 
-        private void AdicionarTags(ICollection<Tag>? tags)
-        {
-            if (tags == null)
-                return;
-
-            tags.ToList().ForEach(AdicionarTag);
-        }
-
         public void AdicionarTag(Tag tag)
         {
             if (_tags == null)
@@ -113,12 +85,12 @@ namespace Dominio.Entidades
             _tags.Add(tag);
         }
 
-        private void AdicionarNoticiasRelacionadas(ICollection<Noticia>? noticiasRelacionadas)
+        public void RemoverTag(Tag tag)
         {
-            if (noticiasRelacionadas == null)
-                return;
+            if (_tags == null || !_tags.Contains(tag))
+                throw new ArgumentException("Essa tag não foi encontrada!");
 
-            noticiasRelacionadas.ToList().ForEach(AdicionarNoticiaRelacionada);
+            _tags.Remove(tag);
         }
 
         public void AdicionarNoticiaRelacionada(Noticia noticia)
@@ -132,12 +104,12 @@ namespace Dominio.Entidades
             _noticiasRelacionadas.Add(noticia);
         }
 
-        private void AdicionarComentarios(ICollection<Comentario>? comentarios)
+        public void RemoverNoticiaRelacionada(Noticia noticia)
         {
-            if (comentarios == null)
-                return;
+            if (_noticiasRelacionadas == null || !_noticiasRelacionadas.Contains(noticia))
+                throw new ArgumentException("Essa notícia relacionada não foi encontrada!");
 
-            comentarios.ToList().ForEach(AdicionarComentario);
+            _noticiasRelacionadas.Remove(noticia);
         }
 
         public void AdicionarComentario(Comentario comentario)
@@ -151,15 +123,12 @@ namespace Dominio.Entidades
             _comentarios.Add(comentario);
         }
 
-        private void AdicionarImagens(ICollection<Imagem>? imagens)
+        public void RemoverComentario(Comentario comentario)
         {
-            if (imagens == null)
-                return;
+            if (_comentarios == null || !_comentarios.Contains(comentario))
+                throw new ArgumentException("Esse comentário não foi encontrado!");
 
-            if (imagens.Count > LIMITE_IMAGENS)
-                throw new ArgumentException($"Ultrapassa o máximo permitido de {LIMITE_IMAGENS} imagens!");
-
-            imagens.ToList().ForEach(AdicionarImagem);
+            _comentarios.Remove(comentario);
         }
 
         public void AdicionarImagem(Imagem imagem)
@@ -176,23 +145,20 @@ namespace Dominio.Entidades
             _imagens.Add(imagem);
         }
 
+        public void RemoverImagem(Imagem imagem)
+        {
+            if (_imagens == null || !_imagens.Contains(imagem))
+                throw new ArgumentException("Essa imagem não foi encontrada!");
+
+            _imagens.Remove(imagem);
+        }
+
         public void DefinirRegiao(Regiao regiao)
         {
             if (regiao == null)
                 throw new ArgumentNullException("É obrigatório que a notícia tenha uma região!");
 
             Regiao = regiao;
-        }
-
-        private void AdicionarAutores(ICollection<Autor> autores)
-        {
-            if (autores == null)
-                throw new ArgumentNullException("É obrigatório que a notícia tenha ao menos um autor!");
-
-            if (autores.Count > LIMITE_AUTORES)
-                throw new ArgumentException($"Ultrapassa o máximo permitido de {LIMITE_AUTORES} autores!");
-
-            autores.ToList().ForEach(AdicionarAutor);
         }
 
         public void AdicionarAutor(Autor autor)
@@ -209,15 +175,15 @@ namespace Dominio.Entidades
             _autores.Add(autor);
         }
 
-        private void AdicionarCategorias(ICollection<Categoria> categorias)
+        public void RemoverAutor(Autor autor)
         {
-            if (categorias == null)
-                throw new ArgumentNullException("É obrigatório que a notícia tenha ao menos uma categoria!");
+            if (_autores == null || !_autores.Contains(autor))
+                throw new ArgumentException("Esse autor não foi encontrado!");
 
-            if (categorias.Count > LIMITE_CATEGORIAS)
-                throw new ArgumentException($"Ultrapassa o máximo permitido de {LIMITE_CATEGORIAS} categorias!");
+            if (_autores.Count == 1)
+                throw new ArgumentException("A matéria não pode ficar sem nenhum autor!");
 
-            categorias.ToList().ForEach(AdicionarCategoria);
+            _autores.Remove(autor);
         }
 
         public void AdicionarCategoria(Categoria categoria)
@@ -232,6 +198,17 @@ namespace Dominio.Entidades
                 throw new ArgumentException($"Limite de {LIMITE_CATEGORIAS} categorias atingido");
 
             _categorias.Add(categoria);
+        }
+
+        public void RemoverCategoria(Categoria categoria)
+        {
+            if (_categorias == null || !_categorias.Contains(categoria))
+                throw new ArgumentException("Essa categoria não foi encontrada!");
+
+            if (_categorias.Count == 1)
+                throw new ArgumentException("A matéria não pode ficar sem nenhuma categoria!");
+
+            _categorias.Remove(categoria);
         }
 
         public void DefinirLead(string lead)
@@ -272,5 +249,61 @@ namespace Dominio.Entidades
             Titulo = titulo.Trim();
         }
 
+        private void AdicionarTags(ICollection<Tag>? tags)
+        {
+            if (tags == null)
+                return;
+
+            tags.ToList().ForEach(AdicionarTag);
+        }
+
+        private void AdicionarNoticiasRelacionadas(ICollection<Noticia>? noticiasRelacionadas)
+        {
+            if (noticiasRelacionadas == null)
+                return;
+
+            noticiasRelacionadas.ToList().ForEach(AdicionarNoticiaRelacionada);
+        }
+
+        private void AdicionarComentarios(ICollection<Comentario>? comentarios)
+        {
+            if (comentarios == null)
+                return;
+
+            comentarios.ToList().ForEach(AdicionarComentario);
+        }
+
+        private void AdicionarImagens(ICollection<Imagem>? imagens)
+        {
+            if (imagens == null)
+                return;
+
+            if (imagens.Count > LIMITE_IMAGENS)
+                throw new ArgumentException($"Ultrapassa o máximo permitido de {LIMITE_IMAGENS} imagens!");
+
+            imagens.ToList().ForEach(AdicionarImagem);
+        }
+
+        private void AdicionarAutores(ICollection<Autor> autores)
+        {
+            if (autores == null)
+                throw new ArgumentNullException("É obrigatório que a notícia tenha ao menos um autor!");
+
+            if (autores.Count > LIMITE_AUTORES)
+                throw new ArgumentException($"Ultrapassa o máximo permitido de {LIMITE_AUTORES} autores!");
+
+            autores.ToList().ForEach(AdicionarAutor);
+        }
+
+        private void AdicionarCategorias(ICollection<Categoria> categorias)
+        {
+            if (categorias == null)
+                throw new ArgumentNullException("É obrigatório que a notícia tenha ao menos uma categoria!");
+
+            if (categorias.Count > LIMITE_CATEGORIAS)
+                throw new ArgumentException($"Ultrapassa o máximo permitido de {LIMITE_CATEGORIAS} categorias!");
+
+            categorias.ToList().ForEach(AdicionarCategoria);
+        }
     }
 }
