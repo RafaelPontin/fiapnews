@@ -1,9 +1,3 @@
-<<<<<<< HEAD
-﻿namespace Dominio.Entidades;
-
-public class Usuario : Base
-{
-=======
 ﻿using Dominio.ObjetosDeValor;
 
 namespace Dominio.Entidades
@@ -14,7 +8,7 @@ namespace Dominio.Entidades
         public string Login { get; protected set; }
         public string Senha { get; protected set; }
         public Email Email { get; protected set; }
-        public string Foto { get; protected set;}
+        public string Foto { get; protected set; }
         protected Usuario()
         {
 
@@ -76,7 +70,4 @@ namespace Dominio.Entidades
 
         protected IList<string> _erros = new List<string>();
     }
-
-    
->>>>>>> origin/feature/elielson
 }
