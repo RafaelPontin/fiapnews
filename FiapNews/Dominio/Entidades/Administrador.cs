@@ -1,10 +1,4 @@
-<<<<<<< HEAD
-﻿namespace Dominio.Entidades;
-
-public class Administrador
-{
-=======
-﻿namespace Dominio.Entidades
+namespace Dominio.Entidades
 {
     public class Administrador : Usuario
     {
@@ -18,5 +12,5 @@ public class Administrador
 
         }
     }
->>>>>>> origin/feature/elielson
 }
+
