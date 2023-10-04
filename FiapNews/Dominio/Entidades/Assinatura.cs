@@ -1,4 +1,4 @@
-﻿using Dominio.Entidades.Enum;
+﻿using Dominio.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
