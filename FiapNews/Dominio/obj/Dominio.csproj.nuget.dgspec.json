@@ -1,6 +1,7 @@
 {
   "format": 1,
   "restore": {
+<<<<<<< HEAD
     "C:\\Users\\rfmpo\\source\\repos\\fiapnews\\fiapnews\\FiapNews\\Dominio\\Dominio.csproj": {}
   },
   "projects": {
@@ -12,6 +13,19 @@
         "projectPath": "C:\\Users\\rfmpo\\source\\repos\\fiapnews\\fiapnews\\FiapNews\\Dominio\\Dominio.csproj",
         "packagesPath": "C:\\Users\\rfmpo\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\rfmpo\\source\\repos\\fiapnews\\fiapnews\\FiapNews\\Dominio\\obj\\",
+=======
+    "C:\\Users\\rfmpo\\source\\repos\\fiapnews\\FiapNews\\Dominio\\Dominio.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\rfmpo\\source\\repos\\fiapnews\\FiapNews\\Dominio\\Dominio.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\rfmpo\\source\\repos\\fiapnews\\FiapNews\\Dominio\\Dominio.csproj",
+        "projectName": "Dominio",
+        "projectPath": "C:\\Users\\rfmpo\\source\\repos\\fiapnews\\FiapNews\\Dominio\\Dominio.csproj",
+        "packagesPath": "C:\\Users\\rfmpo\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\rfmpo\\source\\repos\\fiapnews\\FiapNews\\Dominio\\obj\\",
+>>>>>>> origin/feature/rafael-categoria
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

@@ -1,8 +1,14 @@
 {
   "version": 2,
+<<<<<<< HEAD
   "dgSpecHash": "+oXPAFRBbwWCdKjlU5nBqncqCjbHZJTpxEPrK4GHbvFm/OIkvJtX7FIZxj7gL/eFm5snpaonGYGMrfaBVk6CFQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\rfmpo\\source\\repos\\fiapnews\\fiapnews\\FiapNews\\Dominio\\Dominio.csproj",
+=======
+  "dgSpecHash": "qf4t8vf6sCiC+2l6nGn+pAVqgz4TfKjy3BKVV3sGbEjRpeXl8yR9e2Up+qYHpX7H5KtKS2uuusN0An3dChvuhg==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\rfmpo\\source\\repos\\fiapnews\\FiapNews\\Dominio\\Dominio.csproj",
+>>>>>>> origin/feature/rafael-categoria
   "expectedPackageFiles": [],
   "logs": []
 }

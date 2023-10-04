@@ -1,8 +1,14 @@
 {
   "version": 2,
+<<<<<<< HEAD
   "dgSpecHash": "OW8KgdeKHQDPiMbQlGBWygiDnc82WkrRu1uj42t6ch4+/wEyn4x8xh2TDI+5WG4rAlz8pMZ7E9VAZUJuSqALJQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\rfmpo\\source\\repos\\fiapnews\\fiapnews\\FiapNews\\FiapNews\\FiapNews.csproj",
+=======
+  "dgSpecHash": "bCco4201XTIXuVZ0IzTU8bkZ87e+TgCQePazNCag3xk61hQynFPkIxzqcAUYx2EMGfuDJ1oYyJcerJG8u96F6Q==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\rfmpo\\source\\repos\\fiapnews\\FiapNews\\FiapNews\\FiapNews.csproj",
+>>>>>>> origin/feature/rafael-categoria
   "expectedPackageFiles": [
     "C:\\Users\\rfmpo\\.nuget\\packages\\microsoft.aspnetcore.openapi\\7.0.4\\microsoft.aspnetcore.openapi.7.0.4.nupkg.sha512",
     "C:\\Users\\rfmpo\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",

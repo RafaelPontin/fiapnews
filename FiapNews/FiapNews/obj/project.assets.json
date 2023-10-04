@@ -466,11 +466,19 @@
   "project": {
     "version": "1.0.0",
     "restore": {
+<<<<<<< HEAD
       "projectUniqueName": "C:\\Users\\rfmpo\\source\\repos\\fiapnews\\fiapnews\\FiapNews\\FiapNews\\FiapNews.csproj",
       "projectName": "FiapNews",
       "projectPath": "C:\\Users\\rfmpo\\source\\repos\\fiapnews\\fiapnews\\FiapNews\\FiapNews\\FiapNews.csproj",
       "packagesPath": "C:\\Users\\rfmpo\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\rfmpo\\source\\repos\\fiapnews\\fiapnews\\FiapNews\\FiapNews\\obj\\",
+=======
+      "projectUniqueName": "C:\\Users\\rfmpo\\source\\repos\\fiapnews\\FiapNews\\FiapNews\\FiapNews.csproj",
+      "projectName": "FiapNews",
+      "projectPath": "C:\\Users\\rfmpo\\source\\repos\\fiapnews\\FiapNews\\FiapNews\\FiapNews.csproj",
+      "packagesPath": "C:\\Users\\rfmpo\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\rfmpo\\source\\repos\\fiapnews\\FiapNews\\FiapNews\\obj\\",
+>>>>>>> origin/feature/rafael-categoria
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
