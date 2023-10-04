@@ -1,22 +1,15 @@
-<<<<<<< HEAD
-﻿namespace Dominio.Entidades;
+namespace Dominio.Entidades;
 
-public class Administrador
+public class Administrador : Usuario
 {
-=======
-﻿namespace Dominio.Entidades
-{
-    public class Administrador : Usuario
+    public Administrador()
     {
-        public Administrador()
-        {
 
-        }
-        public Administrador(string nome, string login, string senha, string email, string foto)
-            : base(nome, login, senha, email, foto)
-        {
-
-        }
     }
->>>>>>> origin/feature/elielson
+    public Administrador(string nome, string login, string senha, string email, string foto)
+        : base(nome, login, senha, email, foto)
+    {
+
+    }
 }
+
