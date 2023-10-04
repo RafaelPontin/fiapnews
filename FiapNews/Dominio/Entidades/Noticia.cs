@@ -1,4 +1,5 @@
-﻿using Dominio.ObjetosDeValor;
+﻿using Dominio.Enum;
+using Dominio.ObjetosDeValor;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace Dominio.Entidades
@@ -32,9 +33,10 @@ namespace Dominio.Entidades
         public bool ExclusivoParaAssinantes { get; private set; }
         public bool Ativa { get; private set; }
         public string LinkDeCompartilhamento { get => string.Format(LINK_COMPARTILHAMENTO, Id.ToString()); }
-        public IReadOnlyCollection<Imagem>? Imagens { get => _imagens; }        
-        public IReadOnlyCollection<Comentario>? ComentariosModerados { get => _comentarios.FindAll(x => x.ValidadoPelaModeracao); }
-        public IReadOnlyCollection<Comentario>? Comentarios { get => _comentarios; }        
+        public IReadOnlyCollection<Imagem>? Imagens { get => _imagens; }
+        public IReadOnlyCollection<Comentario>? ComentariosModerados { get => _comentarios.Where(x => x.EstadoValidacao == EstadoValidacaoComentario.Aprovado).ToList(); }
+
+        public IReadOnlyCollection<Comentario>? Comentarios { get => _comentarios; }
         public IReadOnlyCollection<Noticia>? NoticiasRelacionadas { get => _noticiasRelacionadas; }
         public IReadOnlyCollection<Tag>? Tags { get => _tags; }        
 

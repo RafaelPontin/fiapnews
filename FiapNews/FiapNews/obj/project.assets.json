@@ -460,12 +460,17 @@
     ]
   },
   "packageFolders": {
+<<<<<<< HEAD
     "C:\\Users\\rfmpo\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+=======
+    "C:\\Users\\Alexssander\\.nuget\\packages\\": {}
+>>>>>>> origin/feature/alexssander
   },
   "project": {
     "version": "1.0.0",
     "restore": {
+<<<<<<< HEAD
 <<<<<<< HEAD
       "projectUniqueName": "C:\\Users\\rfmpo\\source\\repos\\fiapnews\\fiapnews\\FiapNews\\FiapNews\\FiapNews.csproj",
       "projectName": "FiapNews",
@@ -479,13 +484,24 @@
       "packagesPath": "C:\\Users\\rfmpo\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\rfmpo\\source\\repos\\fiapnews\\FiapNews\\FiapNews\\obj\\",
 >>>>>>> origin/feature/rafael-categoria
+=======
+      "projectUniqueName": "C:\\Users\\Alexssander\\Desktop\\Pos Tech\\fiapnews\\FiapNews\\FiapNews\\FiapNews.csproj",
+      "projectName": "FiapNews",
+      "projectPath": "C:\\Users\\Alexssander\\Desktop\\Pos Tech\\fiapnews\\FiapNews\\FiapNews\\FiapNews.csproj",
+      "packagesPath": "C:\\Users\\Alexssander\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Alexssander\\Desktop\\Pos Tech\\fiapnews\\FiapNews\\FiapNews\\obj\\",
+>>>>>>> origin/feature/alexssander
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
+<<<<<<< HEAD
         "C:\\Users\\rfmpo\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+=======
+        "C:\\Users\\Alexssander\\AppData\\Roaming\\NuGet\\NuGet.Config",
+>>>>>>> origin/feature/alexssander
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -493,7 +509,10 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+<<<<<<< HEAD
         "C:\\Program Files\\dotnet\\library-packs": {},
+=======
+>>>>>>> origin/feature/alexssander
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
