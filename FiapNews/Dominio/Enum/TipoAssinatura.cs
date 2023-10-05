@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dominio.Entidades.Enum
+namespace Dominio.Enum
 {
     public enum TipoAssinatura
     {
         BASICO = 1,
-        PAGO = 2, 
+        PAGO = 2,
         AUTOR = 3,
         ADMIN = 4
     }
