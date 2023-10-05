@@ -9,6 +9,11 @@ namespace Dominio.Entidades
         public int TipoPlano { get; private set; }
         public bool PodeComentar { get => TipoAssinatura == TipoAssinatura.PAGO; }
 
+        public Assinatura()
+        {
+                
+        }
+
         public Assinatura(TipoAssinatura tipoAssinatura) : base()
         {
             AdicionaAssinatura(tipoAssinatura);
@@ -18,6 +23,7 @@ namespace Dominio.Entidades
         {
             TipoAssinatura = tipoAssinatura;
             CalculaPreco();
+            CalculaPeriodicidade();
         }
 
         private void CalculaPreco()
@@ -36,6 +42,7 @@ namespace Dominio.Entidades
             {
                 case TipoAssinatura.BASICO: TipoPlano = 360; break;
                 case TipoAssinatura.PAGO:   TipoPlano = 30; break;
+                default: throw new ArgumentException("Não foi possivel encontrar Preço para o TipoPlano ", nameof(TipoPlano));
             }
         }
     }
