@@ -22,6 +22,7 @@ namespace Dominio.Entidades
         {
             TipoAssinatura = tipoAssinatura;
             CalculaPreco();
+            CalculaPeriodicidade();
         }
 
         private void CalculaPreco()
