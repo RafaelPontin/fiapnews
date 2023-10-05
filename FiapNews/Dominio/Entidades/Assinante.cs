@@ -1,4 +1,6 @@
-﻿namespace Dominio.Entidades
+﻿using Dominio.Enum;
+
+namespace Dominio.Entidades
 {
     public class Assinante : Usuario
     {
@@ -6,28 +8,23 @@
         {
 
         }
-        public Assinante(string nome, string login, string senha, string email, string foto)
-            : base(nome, login, senha, email, foto)
+
+        public Assinante(string nome, string login, string senha, string email, string foto, Assinatura assinatura = null)
+            : base(nome, login, senha, email, foto, TipoUsuario.ASSINANTE)
         {
-
+            DefinirAssinatura(assinatura ?? new Assinatura(TipoAssinatura.BASICO));
         }
-        public Guid IdAssinatura { get; private set; }
-        //public virtual Assinatura Assinatura { get; set; }
+        
+        public Assinatura Assinatura { get; private set; }
+        public override bool PodeComentar { get => Assinatura.PodeComentar; }
+        public ICollection<Comentario>? Comentarios { get; private set; }
 
-        public virtual ICollection<Comentario>? Comentarios { get; private set; }
-
-        public void AdicionarAssinatura (Guid idAssinatura)
-        {            
-            if (Guid.Empty == idAssinatura)
-                throw new ArgumentException($"Informe o Id da Assinatura.", nameof(IdAssinatura));
-
-            IdAssinatura = idAssinatura;
-        }
-
-        public bool PodeComentar()
+        public void DefinirAssinatura(Assinatura assinatura)
         {
-            // validar assinatura
-            return true;
+            if (assinatura == null)
+                throw new ArgumentNullException(nameof(assinatura), "Valor nulo!");
+
+            Assinatura = assinatura;
         }
     }
 }

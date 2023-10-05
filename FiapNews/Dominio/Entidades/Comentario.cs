@@ -16,7 +16,12 @@ public class Comentario : Base
     public string? MotivoRejeicao { get; private set; }
     public Comentario? ComentarioPai { get; private set; }
 
-    public Comentario(string texto, Usuario usuario, Noticia noticia, Comentario? comentarioPai)
+    public Comentario()
+    {
+            
+    }
+
+    public Comentario(string texto, Usuario usuario, Noticia noticia, Comentario? comentarioPai) : base()
     {
         DataCriacao = DateTime.UtcNow;
         EstadoValidacao = EstadoValidacaoComentario.Pendente;

@@ -5,31 +5,29 @@ namespace Dominio.ObjetosDeValor
     public class Categoria : Base
     {
         public string Descricao { get; private set; }
+        private const int TAMANHO_DESCRICAO = 100;
+
+        public Categoria()
+        {
+                
+        }
 
         public Categoria(string descricao) : base()
         {
-            AdicionarDescricao(descricao);
+            DefinirDescricao(descricao);
         }
 
-
-        private void AdicionarDescricao(string descricao)
+        public void DefinirDescricao(string descricao)
         {
             ValidarDescricao(descricao);
             Descricao = descricao;
         }
-
-        public void AlterarDescricao(string descricao)
-        {
-            ValidarDescricao(descricao);
-            Descricao = descricao;
-        }
-
 
         private void ValidarDescricao(string descricao)
         {
-            if (string.IsNullOrEmpty(descricao)) throw new ArgumentNullException("A descricao do comentário não pode estar vazio ou nulo.", nameof(descricao));
+            if (string.IsNullOrWhiteSpace(descricao)) throw new ArgumentNullException("A descricao do comentário não pode estar vazio ou nulo.", nameof(descricao));
 
-            if (descricao.Length >= 100) throw new ArgumentException($"A descricao deve ter no máximo 100 caracteres.", nameof(descricao));
+            if (descricao.Length >= TAMANHO_DESCRICAO) throw new ArgumentException($"A descricao deve ter no máximo {TAMANHO_DESCRICAO} caracteres.", nameof(descricao));
         }
 
 

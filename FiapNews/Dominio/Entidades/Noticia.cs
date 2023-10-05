@@ -1,6 +1,5 @@
 ﻿using Dominio.Enum;
 using Dominio.ObjetosDeValor;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Dominio.Entidades
 {
@@ -15,7 +14,7 @@ namespace Dominio.Entidades
         private const int LIMITE_CATEGORIAS = 5;
         private const string LINK_COMPARTILHAMENTO = "https://www.teste.com.br/api/ler-noticia/{0}";
 
-        private List<Imagem>? _imagens;
+        private List<string>? _imagens;
         private List<Comentario>? _comentarios;
         private List<Autor> _autores;
         private List<Categoria> _categorias;
@@ -27,28 +26,32 @@ namespace Dominio.Entidades
         public string Conteudo { get; private set; }        
         public string Lead { get; private set; }
         public DateTime DataCriacao { get; private set; }
-        public IReadOnlyCollection<Autor> Autores { get => _autores; } //créditos (cada um com seu papel) ???
+        public IReadOnlyCollection<Autor> Autores { get => _autores; }
         public IReadOnlyCollection<Categoria> Categorias { get => _categorias; }
-        public Regiao Regiao { get; private set; }
+        public string Regiao { get; private set; }
         public bool ExclusivoParaAssinantes { get; private set; }
         public bool Ativa { get; private set; }
         public string LinkDeCompartilhamento { get => string.Format(LINK_COMPARTILHAMENTO, Id.ToString()); }
-        public IReadOnlyCollection<Imagem>? Imagens { get => _imagens; }
-        public IReadOnlyCollection<Comentario>? ComentariosModerados { get => _comentarios.Where(x => x.EstadoValidacao == EstadoValidacaoComentario.Aprovado).ToList(); }
-
+        public IReadOnlyCollection<string>? Imagens { get => _imagens; }
+        public IReadOnlyCollection<Comentario>? ComentariosModerados { get => _comentarios?.FindAll(x => x.EstadoValidacao == EstadoValidacaoComentario.Aprovado); }
         public IReadOnlyCollection<Comentario>? Comentarios { get => _comentarios; }
         public IReadOnlyCollection<Noticia>? NoticiasRelacionadas { get => _noticiasRelacionadas; }
         public IReadOnlyCollection<Tag>? Tags { get => _tags; }        
 
+        public Noticia()
+        {
+            
+        }
+
         public Noticia(string titulo, string subTitulo, string conteudo, string lead,
             ICollection<Categoria> categorias,
             ICollection<Autor> autores,
-            Regiao regiao,
+            string regiao,
             bool exclusivoParaAssinantes,
-            ICollection<Imagem>? imagens = null,
+            ICollection<string>? imagens = null,
             ICollection<Comentario>? comentarios = null,
             ICollection<Noticia>? noticiasRelacionadas = null,
-            ICollection<Tag>? tags = null)
+            ICollection<Tag>? tags = null) : base()
         {
             DataCriacao = DateTime.UtcNow;
             ExclusivoParaAssinantes = exclusivoParaAssinantes;
@@ -153,13 +156,13 @@ namespace Dominio.Entidades
             _comentarios.Remove(comentario);
         }
 
-        public void AdicionarImagem(Imagem imagem)
+        public void AdicionarImagem(string imagem)
         {
-            if (imagem == null)
+            if (String.IsNullOrWhiteSpace(imagem))
                 throw new ArgumentNullException(nameof(imagem), "Valor nulo!");
 
             if (_imagens == null)
-                _imagens = new List<Imagem>();
+                _imagens = new List<string>();
 
             if (_imagens.Contains(imagem))
                 throw new ArgumentException("Essa imagem já existe!");
@@ -170,7 +173,7 @@ namespace Dominio.Entidades
             _imagens.Add(imagem);
         }
 
-        public void RemoverImagem(Imagem imagem)
+        public void RemoverImagem(string imagem)
         {
             if (_imagens == null || !_imagens.Contains(imagem))
                 throw new ArgumentException("Essa imagem não foi encontrada!");
@@ -178,9 +181,9 @@ namespace Dominio.Entidades
             _imagens.Remove(imagem);
         }
 
-        public void DefinirRegiao(Regiao regiao)
+        public void DefinirRegiao(string regiao)
         {
-            if (regiao == null)
+            if (string.IsNullOrWhiteSpace(regiao))
                 throw new ArgumentNullException(nameof(regiao), "Valor nulo!");
 
             Regiao = regiao;
@@ -304,7 +307,7 @@ namespace Dominio.Entidades
             comentarios.ToList().ForEach(AdicionarComentario);
         }
 
-        private void AdicionarImagens(ICollection<Imagem>? imagens)
+        private void AdicionarImagens(ICollection<string>? imagens)
         {
             if (imagens == null)
                 return;

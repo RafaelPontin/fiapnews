@@ -1,4 +1,5 @@
-﻿using Dominio.ObjetosDeValor;
+﻿using Dominio.Enum;
+using Dominio.ObjetosDeValor;
 
 namespace Dominio.Entidades
 {
@@ -9,11 +10,15 @@ namespace Dominio.Entidades
         public string Senha { get; protected set; }
         public Email Email { get; protected set; }
         public string Foto { get; protected set; }
+        public TipoUsuario Tipo { get; protected set; }
+
+        public virtual bool PodeComentar { get => Tipo == TipoUsuario.ADMINISTRADOR; }
+        
         protected Usuario()
         {
 
         }
-        public Usuario(string nome, string login, string senha, string email, string foto)
+        public Usuario(string nome, string login, string senha, string email, string foto, TipoUsuario tipoUsuario)
         {
             if (!UsuarioEhValido(nome, login, senha, email, foto))
                 throw new ArgumentException($"É necessário informar todos os campos.");
@@ -23,6 +28,7 @@ namespace Dominio.Entidades
             Senha = senha.Trim();
             Email = new Email(email.Trim());
             Foto = foto.Trim();
+            Tipo = tipoUsuario;
         }
 
         protected IList<string> Erros()
