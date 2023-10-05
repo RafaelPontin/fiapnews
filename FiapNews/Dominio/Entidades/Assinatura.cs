@@ -13,6 +13,11 @@ namespace Dominio.Entidades
         public double Preco { get; private set; }
         public int TipoPlano { get; private set; }
 
+        public Assinatura()
+        {
+                
+        }
+
         public Assinatura(TipoAssinatura tipoAssinatura) : base()
         {
             AdicionaAssinatura(tipoAssinatura);
@@ -45,6 +50,7 @@ namespace Dominio.Entidades
                 case TipoAssinatura.AUTOR:  TipoPlano = 360; break;
                 case TipoAssinatura.ADMIN:  TipoPlano = 360; break;
                 case TipoAssinatura.PAGO:   TipoPlano = 30; break;
+                default: throw new ArgumentException("Não foi possivel encontrar Preço para o TipoPlano ", nameof(TipoPlano));
             }
         }
 

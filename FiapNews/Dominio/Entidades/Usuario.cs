@@ -13,7 +13,7 @@ namespace Dominio.Entidades
         {
 
         }
-        public Usuario(string nome, string login, string senha, string email, string foto)
+        public Usuario(string nome, string login, string senha, string email, string foto) : base()
         {
             if (!UsuarioEhValido(nome, login, senha, email, foto))
                 throw new ArgumentException($"É necessário informar todos os campos.");

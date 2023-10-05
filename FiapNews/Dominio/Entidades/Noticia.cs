@@ -38,7 +38,12 @@ namespace Dominio.Entidades
 
         public IReadOnlyCollection<Comentario>? Comentarios { get => _comentarios; }
         public IReadOnlyCollection<Noticia>? NoticiasRelacionadas { get => _noticiasRelacionadas; }
-        public IReadOnlyCollection<Tag>? Tags { get => _tags; }        
+        public IReadOnlyCollection<Tag>? Tags { get => _tags; }
+
+        public Noticia()
+        {
+            
+        }
 
         public Noticia(string titulo, string subTitulo, string conteudo, string lead,
             ICollection<Categoria> categorias,
@@ -48,7 +53,7 @@ namespace Dominio.Entidades
             ICollection<Imagem>? imagens = null,
             ICollection<Comentario>? comentarios = null,
             ICollection<Noticia>? noticiasRelacionadas = null,
-            ICollection<Tag>? tags = null)
+            ICollection<Tag>? tags = null) : base()
         {
             DataCriacao = DateTime.UtcNow;
             ExclusivoParaAssinantes = exclusivoParaAssinantes;
