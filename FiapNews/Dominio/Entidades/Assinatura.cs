@@ -1,9 +1,4 @@
 ﻿using Dominio.Enum;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Dominio.Entidades
 {
@@ -12,6 +7,7 @@ namespace Dominio.Entidades
         public TipoAssinatura TipoAssinatura { get; private set; }
         public double Preco { get; private set; }
         public int TipoPlano { get; private set; }
+        public bool PodeComentar { get => TipoAssinatura == TipoAssinatura.PAGO; }
 
         public Assinatura(TipoAssinatura tipoAssinatura) : base()
         {
@@ -29,8 +25,6 @@ namespace Dominio.Entidades
             switch (TipoAssinatura)
             {
                 case TipoAssinatura.BASICO: Preco = 0; break;
-                case TipoAssinatura.AUTOR:  Preco = 0; break;
-                case TipoAssinatura.ADMIN: Preco = 0; break;
                 case TipoAssinatura.PAGO: Preco = 50; break;
                 default: throw new ArgumentException("Não foi possivel encontrar Preço para o TipoAssinatura ", nameof(Preco));
             }
@@ -41,14 +35,8 @@ namespace Dominio.Entidades
             switch (TipoAssinatura) 
             {
                 case TipoAssinatura.BASICO: TipoPlano = 360; break;
-                case TipoAssinatura.AUTOR:  TipoPlano = 360; break;
-                case TipoAssinatura.ADMIN:  TipoPlano = 360; break;
                 case TipoAssinatura.PAGO:   TipoPlano = 30; break;
             }
         }
-
-
-
-
     }
 }

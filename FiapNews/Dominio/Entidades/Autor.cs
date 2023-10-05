@@ -1,4 +1,7 @@
-﻿namespace Dominio.Entidades
+﻿using Dominio.Enum;
+using Dominio.ObjetosDeValor;
+
+namespace Dominio.Entidades
 {
     public class Autor : Usuario
     {
@@ -6,27 +9,48 @@
         {
 
         }
-        public Autor(string nome, string login, string senha, string email, string foto, string redeSocias, string descricao) 
-            : base(nome, login, senha, email, foto)
+        public Autor(string nome, string login, string senha, string email, string foto, string descricao, List<RedeSocial> redesSociais = null)
+            : base(nome, login, senha, email, foto, TipoUsuario.AUTOR)
         {
-            if (!AutorEhValido(redeSocias, descricao))
-                throw new ArgumentException($"É necessário informar todos os campos do autor.");
+            DefinirDescricao(descricao);
+            AdicionarRedesSociais(redesSociais);
+        }
 
-            RedeSocias = redeSocias.Trim();
+        public void DefinirDescricao(string descricao)
+        {
+            if (!AutorEhValido(descricao))
+                throw new ArgumentException(string.Join("\n", _erros));
+
             Descricao = descricao.Trim();
         }
 
-        public string RedeSocias { get; private set; }
+        private void AdicionarRedesSociais(List<RedeSocial> redesSociais)
+        {
+            if (redesSociais == null) return;
+
+            redesSociais.ForEach(AdicionarRedeSocial);
+        }
+
+        private List<RedeSocial> _redesSociais;
+        public IReadOnlyCollection<RedeSocial>? RedesSociais { get => _redesSociais; }
         public string Descricao { get; private set; }
         public virtual ICollection<Noticia>? Noticias { get; private set; }
 
-        public bool AutorEhValido(string redeSocias, string descricao)
+        public void AdicionarRedeSocial(RedeSocial redeSocial)
         {
-            if (string.IsNullOrWhiteSpace(redeSocias))
-            {
-                _erros.Add("A Rede social do autor não pode estar vazio ou nula.");
-            }
+            if (redeSocial == null) throw new ArgumentNullException();
 
+            if (_redesSociais == null)
+                _redesSociais = new List<RedeSocial> ();
+
+            if (_redesSociais.Contains(redeSocial))
+                throw new ArgumentException();
+
+            _redesSociais.Add(redeSocial);
+        }
+
+        private bool AutorEhValido(string descricao)
+        {
             if (string.IsNullOrWhiteSpace(descricao))
             {
                 _erros.Add("A descrição do autor não pode estar vazio ou nula.");
