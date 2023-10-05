@@ -9,7 +9,7 @@ namespace Dominio.Entidades
         {
 
         }
-        public Autor(string nome, string login, string senha, string email, string foto, string descricao, List<RedeSocial> redesSociais = null)
+        public Autor(string nome, string login, string senha, string email, string foto, string descricao, List<RedeSocial>? redesSociais = null)
             : base(nome, login, senha, email, foto, TipoUsuario.AUTOR)
         {
             DefinirDescricao(descricao);

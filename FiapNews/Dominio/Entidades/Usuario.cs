@@ -66,10 +66,10 @@ namespace Dominio.Entidades
             return !_erros.Any();
         }
 
-        public virtual void AlterarSenha(string senha)
+        public void AlterarSenha(string senha)
         {
             if (string.IsNullOrWhiteSpace(senha))
-                throw new ArgumentException($"A senha não pode estar vazio ou nula.", nameof(senha));
+                throw new ArgumentNullException(nameof(senha), $"A senha não pode estar vazio ou nula.");
 
             Senha = senha;
         }
