@@ -1,10 +1,13 @@
-﻿namespace Dominio.ObjetosDeValor
+﻿using Dominio.Entidades;
+using System.Collections.ObjectModel;
+
+namespace Dominio.ObjetosDeValor
 {
-    public class RedeSocial
+    public class RedeSocial : Base
     {
         public string Nome { get; private set; }
         public string Link { get; private set; }
-
+        public ReadOnlyCollection<Autor> Autores { get; set; }
         public RedeSocial()
         {
 

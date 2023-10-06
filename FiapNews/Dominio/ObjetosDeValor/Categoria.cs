@@ -6,7 +6,7 @@ namespace Dominio.ObjetosDeValor
     {
         public string Descricao { get; private set; }
         private const int TAMANHO_DESCRICAO = 100;
-
+        public IReadOnlyCollection<Noticia>? Noticias { get ; }
         public Categoria()
         {
                 

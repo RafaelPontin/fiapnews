@@ -14,7 +14,7 @@ public class Comentario : Base
     public DateTime? DataValidacao { get; private set; }
     public Administrador? ModeradorResponsavel { get; private set; }
     public string? MotivoRejeicao { get; private set; }
-    public Comentario? ComentarioPai { get; private set; }
+    //public Comentario? ComentarioPai { get; private set; }
 
     public Comentario()
     {
@@ -40,8 +40,8 @@ public class Comentario : Base
         if (comentarioPai.Noticia.Id != Noticia.Id)
             throw new ArgumentException("Comentário pai deve ser da mesma notícia!");
 
-        if (comentarioPai.ComentarioPai != null)
-            throw new ArgumentException("Comentário pai não pode ser resposta de outro comentário!");
+        //if (comentarioPai.ComentarioPai != null)
+        //    throw new ArgumentException("Comentário pai não pode ser resposta de outro comentário!");
 
         if (comentarioPai.Id == Id)
             throw new ArgumentException("Comentário pai não pode ser o próprio comentário!");
@@ -49,7 +49,7 @@ public class Comentario : Base
         if (comentarioPai.EstadoValidacao != EstadoValidacaoComentario.Aprovado)
             throw new ArgumentException("Comentário pai deve estar aprovado!");
 
-        ComentarioPai = comentarioPai;
+        //ComentarioPai = comentarioPai;
     }
 
     private void DefinirUsuario(Usuario usuario)
