@@ -1,5 +1,4 @@
 ﻿using Dominio.Enum;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Dominio.Entidades;
 
