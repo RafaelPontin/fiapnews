@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FiapNews", "FiapNews\FiapNe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dominio", "Dominio\Dominio.csproj", "{4A2C592A-9ECF-4839-AA40-A272667212B1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infraestrutura", "Infraestrutura\Infraestrutura.csproj", "{C263D8EC-E40D-4019-B4BD-E88C69B815C7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infraestrutura", "Infraestrutura\Infraestrutura.csproj", "{C263D8EC-E40D-4019-B4BD-E88C69B815C7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aplicacao", "Aplicacao\Aplicacao.csproj", "{EC0B1DC5-F6ED-4797-B771-D886AD90E457}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{C263D8EC-E40D-4019-B4BD-E88C69B815C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C263D8EC-E40D-4019-B4BD-E88C69B815C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C263D8EC-E40D-4019-B4BD-E88C69B815C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC0B1DC5-F6ED-4797-B771-D886AD90E457}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC0B1DC5-F6ED-4797-B771-D886AD90E457}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC0B1DC5-F6ED-4797-B771-D886AD90E457}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC0B1DC5-F6ED-4797-B771-D886AD90E457}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

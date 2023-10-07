@@ -1,4 +1,6 @@
-﻿using Infraestrutura.Persistencia;
+﻿using Aplicacao.Contratos.Persistencia;
+using Infraestrutura.Persistencia;
+using Infraestrutura.Repositorio;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,6 +13,8 @@ namespace Infraestrutura
         {
             services.AddDbContext<FiapNewsContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("ConnectionString")));
+
+            services.AddScoped(typeof(IRepositoryBase<>), typeof(RepositoryBase<>));
 
             return services;
         }

@@ -1,6 +1,6 @@
 ﻿namespace Dominio.Entidades
 {
-    public class Base
+    public abstract class Base
     {
         public Guid Id { get; private set; }
 
