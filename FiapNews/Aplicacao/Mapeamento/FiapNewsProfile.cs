@@ -9,6 +9,6 @@ namespace Aplicacao.Mapeamento
         public FiapNewsProfile()
         {
             CreateMap<Categoria, CategoriaDto>().ReverseMap();
-        }
+        } 
     }
 }
