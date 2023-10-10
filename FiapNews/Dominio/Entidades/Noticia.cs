@@ -1,5 +1,6 @@
 ﻿using Dominio.Enum;
 using Dominio.ObjetosDeValor;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Dominio.Entidades
 {
@@ -33,6 +34,7 @@ namespace Dominio.Entidades
         public bool Ativa { get; private set; }
         public string LinkDeCompartilhamento { get => string.Format(LINK_COMPARTILHAMENTO, Id.ToString()); }
         public IReadOnlyCollection<string>? Imagens { get => _imagens; }
+        [NotMapped]
         public IReadOnlyCollection<Comentario>? ComentariosModerados { get => _comentarios?.FindAll(x => x.EstadoValidacao == EstadoValidacaoComentario.Aprovado); }
         public IReadOnlyCollection<Comentario>? Comentarios { get => _comentarios; }
         public IReadOnlyCollection<Noticia>? NoticiasRelacionadas { get => _noticiasRelacionadas; }

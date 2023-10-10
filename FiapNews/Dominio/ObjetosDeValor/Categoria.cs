@@ -4,12 +4,12 @@ namespace Dominio.ObjetosDeValor
 {
     public class Categoria : Base
     {
-        public string Descricao { get; private set; }
+        public string Descricao { get; private set; } = string.Empty;
         private const int TAMANHO_DESCRICAO = 100;
-
-        public Categoria()
+        public IReadOnlyCollection<Noticia>? Noticias { get; }
+        protected Categoria()
         {
-                
+
         }
 
         public Categoria(string descricao) : base()

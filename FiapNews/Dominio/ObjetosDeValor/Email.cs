@@ -4,7 +4,7 @@ namespace Dominio.ObjetosDeValor
 {
     public class Email
     {
-        public string EnderecoEmail { get; private set; }
+        public string EnderecoEmail { get; private set; } = string.Empty;
 
         protected Email() { }
 
