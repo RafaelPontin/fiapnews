@@ -9,6 +9,7 @@ namespace Aplicacao
         public static IServiceCollection AddServicosAplicacao(this IServiceCollection services)
         {
             services.AddScoped<ICategoriaService, CategoriaService>();
+            services.AddScoped<IAdministradorService, AdministradorService>();
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             return services;
         }
