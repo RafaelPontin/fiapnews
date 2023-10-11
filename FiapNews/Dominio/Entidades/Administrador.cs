@@ -1,18 +1,14 @@
+
 using Dominio.Enum;
 
-namespace Dominio.Entidades
+namespace Dominio.Entidades;
+
+public class Administrador : Usuario
 {
-    public class Administrador : Usuario
+    public Administrador(string nome, string login, string senha, string email, string foto)
+        : base(nome, login, senha, email, foto, TipoUsuario.ADMINISTRADOR)
     {
-        public Administrador()
-        {
 
-        }
-        public Administrador(string nome, string login, string senha, string email, string foto)
-            : base(nome, login, senha, email, foto, TipoUsuario.ADMINISTRADOR)
-        {
-
-        }
     }
 }
 
