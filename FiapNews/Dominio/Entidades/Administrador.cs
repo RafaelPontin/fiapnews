@@ -4,7 +4,7 @@ namespace Dominio.Entidades
 {
     public class Administrador : Usuario
     {
-        public Administrador()
+        protected Administrador()
         {
 
         }
