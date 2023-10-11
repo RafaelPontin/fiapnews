@@ -17,7 +17,7 @@ namespace Infraestrutura.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.9")
+                .HasAnnotation("ProductVersion", "7.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -98,10 +98,10 @@ namespace Infraestrutura.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("DataCriacao")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
 
                     b.Property<DateTime?>("DataValidacao")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
 
                     b.Property<int>("EstadoValidacao")
                         .HasColumnType("int");
@@ -110,17 +110,14 @@ namespace Infraestrutura.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("MotivoRejeicao")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(500)");
 
-                    b.Property<Guid>("NoticiaId")
+                    b.Property<Guid?>("NoticiaId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Texto")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("UsuarioId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("varchar(1000)");
 
                     b.HasKey("Id");
 
@@ -129,8 +126,6 @@ namespace Infraestrutura.Migrations
                     b.HasIndex("ModeradorResponsavelId");
 
                     b.HasIndex("NoticiaId");
-
-                    b.HasIndex("UsuarioId");
 
                     b.ToTable("Comentario", (string)null);
                 });
@@ -145,7 +140,6 @@ namespace Infraestrutura.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Conteudo")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("DataCriacao")
@@ -155,19 +149,15 @@ namespace Infraestrutura.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Lead")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Regiao")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SubTitulo")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Titulo")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -182,19 +172,15 @@ namespace Infraestrutura.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Foto")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Login")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nome")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Senha")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Tipo")
@@ -214,7 +200,6 @@ namespace Infraestrutura.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Descricao")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -229,11 +214,9 @@ namespace Infraestrutura.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Link")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nome")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -248,7 +231,6 @@ namespace Infraestrutura.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Texto")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -297,7 +279,7 @@ namespace Infraestrutura.Migrations
                 {
                     b.HasBaseType("Dominio.Entidades.Usuario");
 
-                    b.Property<Guid>("AssinaturaId")
+                    b.Property<Guid?>("AssinaturaId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasIndex("AssinaturaId");
@@ -310,7 +292,6 @@ namespace Infraestrutura.Migrations
                     b.HasBaseType("Dominio.Entidades.Usuario");
 
                     b.Property<string>("Descricao")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.ToTable("Autor", (string)null);
@@ -363,7 +344,7 @@ namespace Infraestrutura.Migrations
 
             modelBuilder.Entity("Dominio.Entidades.Comentario", b =>
                 {
-                    b.HasOne("Dominio.Entidades.Assinante", null)
+                    b.HasOne("Dominio.Entidades.Assinante", "Assinante")
                         .WithMany("Comentarios")
                         .HasForeignKey("AssinanteId");
 
@@ -373,21 +354,13 @@ namespace Infraestrutura.Migrations
 
                     b.HasOne("Dominio.Entidades.Noticia", "Noticia")
                         .WithMany("Comentarios")
-                        .HasForeignKey("NoticiaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("NoticiaId");
 
-                    b.HasOne("Dominio.Entidades.Usuario", "Usuario")
-                        .WithMany()
-                        .HasForeignKey("UsuarioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Assinante");
 
                     b.Navigation("ModeradorResponsavel");
 
                     b.Navigation("Noticia");
-
-                    b.Navigation("Usuario");
                 });
 
             modelBuilder.Entity("Dominio.Entidades.Usuario", b =>
@@ -410,8 +383,7 @@ namespace Infraestrutura.Migrations
                                 .HasForeignKey("UsuarioId");
                         });
 
-                    b.Navigation("Email")
-                        .IsRequired();
+                    b.Navigation("Email");
                 });
 
             modelBuilder.Entity("NoticiaNoticia", b =>
@@ -457,9 +429,7 @@ namespace Infraestrutura.Migrations
                 {
                     b.HasOne("Dominio.Entidades.Assinatura", "Assinatura")
                         .WithMany()
-                        .HasForeignKey("AssinaturaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AssinaturaId");
 
                     b.HasOne("Dominio.Entidades.Usuario", null)
                         .WithOne()
