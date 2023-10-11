@@ -33,7 +33,6 @@ namespace Infraestrutura.Repositorio
             _dbSet.Remove(entity);
             await _dbContext.SaveChangesAsync();
         }
-
         public IQueryable<TEntity> ObterIQueryable()
         {
             return _dbSet;
