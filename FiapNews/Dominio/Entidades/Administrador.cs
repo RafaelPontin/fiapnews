@@ -10,5 +10,10 @@ public class Administrador : Usuario
     {
 
     }
+
+    protected Administrador()
+    {
+
+    }
 }
 
