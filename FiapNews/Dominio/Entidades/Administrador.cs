@@ -13,6 +13,7 @@ namespace Dominio.Entidades
             : base(nome, login, senha, email, foto, TipoUsuario.ADMINISTRADOR)
         {
 
+        }
     }
 }
 
