@@ -13,7 +13,8 @@ namespace Aplicacao.Mapeamento
                 .ForMember(x => x.Senha, opt => opt.Ignore())
                 .ForMember(x => x.Email, opt => opt.MapFrom(d => d.Email.EnderecoEmail));
             
-            CreateMap<AdministradorDto, Administrador>();                
+            CreateMap<AdministradorDto, Administrador>();
+            CreateMap<Tag, TagDto>().ReverseMap();
         }
     }
 }
