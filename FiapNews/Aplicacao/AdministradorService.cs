@@ -9,9 +9,14 @@ namespace Aplicacao
     public class AdministradorService : ServiceBase<AdministradorDto, Administrador, IRepositoryBase<Administrador>>, IAdministradorService
     {
         private readonly IRepositoryBase<Administrador> _repository;
-        public AdministradorService(IRepositoryBase<Administrador> repository, IMapper mapper) : base(repository, mapper)
+        private readonly IUsuarioService<Administrador> _usuarioService;
+        public AdministradorService(
+            IRepositoryBase<Administrador> repository, 
+            IMapper mapper, 
+            IUsuarioService<Administrador> usuarioService) : base(repository, mapper)
         {
             _repository = repository;
+            _usuarioService = usuarioService;
         }
 
         protected override Administrador DefinirEntidadeInclusao(AdministradorDto dto)
@@ -54,43 +59,12 @@ namespace Aplicacao
 
         public async Task AlterarSenha(AlterarSenhaDto alterarSenhaDto)
         {
-            if (alterarSenhaDto == null || string.IsNullOrWhiteSpace(alterarSenhaDto.Senha))
-                throw new Exception("Informe a senha");
-
-            if ((!string.IsNullOrWhiteSpace(alterarSenhaDto.Senha) && !string.IsNullOrWhiteSpace(alterarSenhaDto.ConfirmacaoDeSenha)) 
-                && (alterarSenhaDto.Senha != alterarSenhaDto.ConfirmacaoDeSenha))
-                throw new Exception("Senha e Confirmação de senha não conferem");
-
-            var usuario = _repository.ObterIQueryable().Where(x => x.Login == alterarSenhaDto.Login).FirstOrDefault();
-            if (usuario != null)
-            {
-                usuario.AlterarSenha(alterarSenhaDto.Senha);
-                await _repository.AlterarAsync(usuario);
-            }            
+            await _usuarioService.AlterarSenha(alterarSenhaDto);
         }
 
         public async Task RecuperarSenha(UsuarioSenhaDto usuarioSenhaDto)
         {
-            if (usuarioSenhaDto == null || string.IsNullOrWhiteSpace(usuarioSenhaDto.Login))
-                throw new Exception("Informe o login");
-            var usuario = _repository.ObterIQueryable().Where(x => x.Login == usuarioSenhaDto.Login).FirstOrDefault();
-            if (usuario != null)
-            {
-                var novaSenha = usuario.GerarNovaSenha();
-                var usuarioSenha = new RecuperarSenhaDto
-                {
-                    Login = usuario.Login,
-                    Senha = novaSenha,
-                };
-
-                // TODO - Enviar a senha por email
-
-                usuario.AlterarSenha(novaSenha);
-                await _repository.AlterarAsync(usuario);
-                return;
-            }
-
-            throw new Exception("Login informado não encontrado");
+            await _usuarioService.RecuperarSenha(usuarioSenhaDto);
         }
     }
 

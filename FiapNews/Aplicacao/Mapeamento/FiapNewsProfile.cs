@@ -20,8 +20,7 @@ namespace Aplicacao.Mapeamento
             CreateMap<Assinante, AssinanteDto>()
                 .ForMember(x => x.Senha, opt => opt.Ignore())
                 .ForMember(x => x.Email, opt => opt.MapFrom(d => d.Email.EnderecoEmail));
-
-            CreateMap<AdministradorDto, Administrador>().ReverseMap();            
+            
         }
     }
 }
