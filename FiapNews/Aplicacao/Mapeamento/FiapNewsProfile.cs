@@ -9,11 +9,12 @@ namespace Aplicacao.Mapeamento
         public FiapNewsProfile()
         {
             CreateMap<Categoria, CategoriaDto>().ReverseMap();
+            CreateMap<RedeSocial, RedeSocialDto>().ReverseMap();
             CreateMap<Administrador, AdministradorDto>()
                 .ForMember(x => x.Senha, opt => opt.Ignore())
                 .ForMember(x => x.Email, opt => opt.MapFrom(d => d.Email.EnderecoEmail));
             
-            CreateMap<AdministradorDto, Administrador>();                
+            CreateMap<AdministradorDto, Administrador>().ReverseMap();            
         }
     }
 }

@@ -5,17 +5,18 @@ namespace Dominio.ObjetosDeValor
 {
     public class RedeSocial : Base
     {
-        public string Nome { get; private set; }
-        public string Link { get; private set; }
+        public string Nome { get; private set; } = string.Empty;
+        public string Link { get; private set; } = string.Empty;
         public ReadOnlyCollection<Autor> Autores { get; set; }
-        public RedeSocial()
+        protected RedeSocial()
         {
 
         }
 
-        public RedeSocial(string descricao) : base()
+        public RedeSocial(string descricao, string link) : base()
         {
             DefinirNome(descricao);
+            DefinirLink(link);
         }
 
         public void DefinirNome(string nome)
