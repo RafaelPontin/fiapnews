@@ -15,6 +15,7 @@ namespace Infraestrutura
                 options.UseSqlServer(configuration.GetConnectionString("ConnectionString")));
 
             services.AddScoped(typeof(IRepositoryBase<>), typeof(RepositoryBase<>));
+            services.AddScoped(typeof(IAutorRepository), typeof(AutorRepository));
 
             return services;
         }

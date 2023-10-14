@@ -5,11 +5,11 @@ namespace Dominio.Entidades
 {
     public class Autor : Usuario
     {
-        public Autor()
+        protected Autor()
         {
 
         }
-        public Autor(string nome, string login, string senha, string email, string foto, string descricao, List<RedeSocial>? redesSociais = null)
+        public Autor(string nome, string login, string senha, string email, string foto, string descricao, List<RedeSocial> redesSociais = null)
             : base(nome, login, senha, email, foto, TipoUsuario.AUTOR)
         {
             DefinirDescricao(descricao);
@@ -24,7 +24,7 @@ namespace Dominio.Entidades
             Descricao = descricao.Trim();
         }
 
-        private void AdicionarRedesSociais(List<RedeSocial>? redesSociais)
+        private void AdicionarRedesSociais(List<RedeSocial> redesSociais)
         {
             if (redesSociais == null) return;
 
@@ -32,9 +32,9 @@ namespace Dominio.Entidades
         }
 
         private List<RedeSocial> _redesSociais;
-        public IReadOnlyCollection<RedeSocial>? RedesSociais { get => _redesSociais; }
+        public IReadOnlyCollection<RedeSocial> RedesSociais { get => _redesSociais; }
         public string Descricao { get; private set; }
-        public virtual ICollection<Noticia>? Noticias { get; private set; }
+        public virtual IReadOnlyCollection<Noticia> Noticias { get; private set; }
 
         public void AdicionarRedeSocial(RedeSocial redeSocial)
         {

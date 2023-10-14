@@ -66,6 +66,18 @@ namespace Dominio.Entidades
             return !_erros.Any();
         }
 
+        public void DefinirUsuario(string nome, string login, string senha, string email, string foto, TipoUsuario tipoUsuario)
+        {
+            if (!UsuarioEhValido(nome, login, senha, email, foto))
+                throw new ArgumentException($"É necessário informar todos os campos.");
+            Nome = nome.Trim();
+            Login = login.Trim();
+            Senha = senha.Trim();
+            Email = new Email(email.Trim());
+            Foto = foto.Trim();
+            Tipo = tipoUsuario;
+        }
+
         public void AlterarSenha(string senha)
         {
             if (string.IsNullOrWhiteSpace(senha))

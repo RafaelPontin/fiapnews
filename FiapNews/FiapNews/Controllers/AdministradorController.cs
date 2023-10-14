@@ -11,8 +11,6 @@ namespace FiapNews.Controllers
         public AdministradorController(IAdministradorService appService) : base(appService)
         {
             this.appService = appService;
-        }
-
-        
+        }        
     }
 }

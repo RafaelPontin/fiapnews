@@ -1,5 +1,4 @@
 ﻿using Dominio.Entidades;
-using System.Collections.ObjectModel;
 
 namespace Dominio.ObjetosDeValor
 {
@@ -7,7 +6,7 @@ namespace Dominio.ObjetosDeValor
     {
         public string Nome { get; private set; } = string.Empty;
         public string Link { get; private set; } = string.Empty;
-        public ReadOnlyCollection<Autor> Autores { get; set; }
+        public IReadOnlyCollection<Autor> Autores { get; set; }
         protected RedeSocial()
         {
 
