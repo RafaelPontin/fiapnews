@@ -12,6 +12,7 @@ namespace Aplicacao
             services.AddScoped<IAdministradorService, AdministradorService>();
             services.AddScoped<IRedeSocialService, RedeSocialService>();
             services.AddScoped<IAutorService, AutorService>();
+            services.AddScoped<IAssinanteService, AssinanteService>();
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             return services;
         }
