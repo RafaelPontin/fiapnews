@@ -2,8 +2,9 @@
 
 namespace Aplicacao.Contratos.Servico
 {
-    public interface IAutorService : IServiceBase<AutorDto>
+    public interface IAutorService : IServiceBase<AutorDto>, IUsuarioService
     {
+        
     }
 
 }

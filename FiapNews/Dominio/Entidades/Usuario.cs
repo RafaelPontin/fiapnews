@@ -86,6 +86,19 @@ namespace Dominio.Entidades
             Senha = senha;
         }
 
+        public string GerarNovaSenha()
+        {
+            string caracteres = "abcdefghjkmnpqrstuvwxyz023456789";
+            string senha = "";
+            Random random = new Random();
+            for (int f = 0; f < 6; f++)
+            {
+                senha = senha + caracteres.Substring(random.Next(0, caracteres.Length - 1), 1);
+            }
+
+            return senha;
+        }
+
         protected IList<string> _erros = new List<string>();
     }
 }

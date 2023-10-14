@@ -19,6 +19,11 @@ namespace Aplicacao
 
         protected override Assinante DefinirEntidadeInclusao(AssinanteDto dto)
         {
+            var usuario = Repository.ObterIQueryable().FirstOrDefault(x => x.Login == dto.Login);
+
+            if (usuario != null)
+                throw new Exception("Login informado não disponível.");
+
             var assinante = new Assinante(dto.Nome, dto.Login, dto.Senha, dto.Email, dto.Foto, null);
             return assinante;
         }
@@ -70,6 +75,41 @@ namespace Aplicacao
         public override async Task<IReadOnlyList<AssinanteDto>> ObterTodosAsync()
         {            
             return _mapper.Map<IReadOnlyList<AssinanteDto>>(await _repository.ObterAssinantes());            
+        }
+
+        public async Task AlterarSenha(AlterarSenhaDto alterarSenhaDto)
+        {
+            var usuario = _repository.ObterIQueryable().Where(x => x.Login == alterarSenhaDto.Login).FirstOrDefault();
+            if (usuario != null)
+            {
+                usuario.AlterarSenha(alterarSenhaDto.Senha);
+                await _repository.AlterarAsync(usuario);
+                return;
+            }
+            throw new Exception("Login informado não encontrado");
+        }
+
+        public async Task RecuperarSenha(UsuarioSenhaDto usuarioSenhaDto)
+        {
+            if (usuarioSenhaDto == null || string.IsNullOrWhiteSpace(usuarioSenhaDto.Login))
+                throw new Exception("Informe o login");
+            var usuario = _repository.ObterIQueryable().Where(x => x.Login == usuarioSenhaDto.Login).FirstOrDefault();
+            if (usuario != null)
+            {
+                var novaSenha = usuario.GerarNovaSenha();
+                var usuarioSenha = new RecuperarSenhaDto
+                {
+                    Login = usuario.Login,
+                    Senha = novaSenha,
+                };
+
+                // TODO - Enviar a senha por email
+                usuario.AlterarSenha(novaSenha);
+                await _repository.AlterarAsync(usuario);
+                return;
+            }
+
+            throw new Exception("Login informado não encontrado");
         }
     }
 

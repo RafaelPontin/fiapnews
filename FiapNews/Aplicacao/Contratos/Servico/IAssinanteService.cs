@@ -2,8 +2,8 @@
 
 namespace Aplicacao.Contratos.Servico
 {
-    public interface IAssinanteService : IServiceBase<AssinanteDto>
-    {
+    public interface IAssinanteService : IServiceBase<AssinanteDto>, IUsuarioService
+    {        
     }
 
 }

@@ -9,19 +9,25 @@ namespace Aplicacao
 {
     public class AutorService : ServiceBase<AutorDto, Autor, IRepositoryBase<Autor>>, IAutorService
     {
-        private readonly IAutorRepository _repository;
+        private readonly IAutorRepository _autorRepository;
         private readonly IRepositoryBase<RedeSocial> _redeSocialRepository;
         public AutorService(
-            IAutorRepository repository, 
-            IMapper mapper, 
-            IRepositoryBase<RedeSocial> redeSocialRepository) : base(repository, mapper)
-        {
-            _repository = repository;
+            IRepositoryBase<Autor> repository,
+            IMapper mapper,
+            IRepositoryBase<RedeSocial> redeSocialRepository,
+            IAutorRepository autorRepository) : base(repository, mapper)
+        {            
             _redeSocialRepository = redeSocialRepository;
+            _autorRepository = autorRepository;
         }
 
         protected override Autor DefinirEntidadeInclusao(AutorDto dto)
         {
+            var usuario = Repository.ObterIQueryable().FirstOrDefault(x => x.Login == dto.Login);
+
+            if (usuario != null)
+                throw new Exception("Login informado não disponível.");
+
             var autor = new Autor(dto.Nome, dto.Login, dto.Senha, dto.Email, dto.Foto, dto.Descricao);
             DefinirRedeSocial(autor, dto);
             return autor;
@@ -102,12 +108,45 @@ namespace Aplicacao
 
         public override async Task<AutorDto> ObterPorIdAsync(Guid id)
         {            
-            return _mapper.Map<AutorDto>(await _repository.ObterAutorPorId(id));            
+            return _mapper.Map<AutorDto>(await _autorRepository.ObterAutorPorId(id));            
         }
-
         public override async Task<IReadOnlyList<AutorDto>> ObterTodosAsync()
         {            
-            return _mapper.Map<IReadOnlyList<AutorDto>>(await _repository.ObterAutores());            
+            return _mapper.Map<IReadOnlyList<AutorDto>>(await _autorRepository.ObterAutores());            
+        }
+        public async Task AlterarSenha(AlterarSenhaDto alterarSenhaDto)
+        {
+            var usuario = _autorRepository.ObterIQueryable().Where(x => x.Login == alterarSenhaDto.Login).FirstOrDefault();
+            if (usuario != null)
+            {
+                usuario.AlterarSenha(alterarSenhaDto.Senha);
+                await _autorRepository.AlterarAsync(usuario);
+            }
+        }
+
+        public async Task RecuperarSenha(UsuarioSenhaDto usuarioSenhaDto)
+        {
+            if (usuarioSenhaDto == null || string.IsNullOrWhiteSpace(usuarioSenhaDto.Login))
+                throw new Exception("Informe o login");
+
+            var usuario = _autorRepository.ObterIQueryable().Where(x => x.Login == usuarioSenhaDto.Login).FirstOrDefault();
+            if (usuario != null)
+            {
+                var novaSenha = usuario.GerarNovaSenha();
+                var usuarioSenha = new RecuperarSenhaDto
+                {
+                    Login = usuario.Login,
+                    Senha = novaSenha,
+                };
+
+                // TODO - Enviar a senha por email
+
+                usuario.AlterarSenha(novaSenha);
+                await _autorRepository.AlterarAsync(usuario);
+                return;
+            }
+
+            throw new Exception("Login informado não encontrado");
         }
     }
 
