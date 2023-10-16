@@ -1,14 +1,6 @@
-﻿using Dominio.Enum;
-
-namespace Aplicacao.DTOs
+﻿namespace Aplicacao.DTOs
 {
-    public class AdministradorDto : BaseDto
-    {
-        public string Nome { get; set; }
-        public string Login { get; set; }
-        public string Senha { get; set; }
-        public string Email { get; set; }
-        public string Foto { get; set; }
-        public TipoUsuario Tipo { get; set; }
+    public class AdministradorDto : UsuarioDto
+    {        
     }
 }

@@ -12,7 +12,7 @@ namespace Aplicacao
         where TRepository : IRepositoryBase<TEntity>
     {
         protected TRepository Repository;
-        private readonly IMapper _mapper;
+        protected readonly IMapper _mapper;
         protected List<string> _erros;
         public ServiceBase(TRepository repository, IMapper mapper)
         {
@@ -46,13 +46,13 @@ namespace Aplicacao
             throw new NotImplementedException();
         }
 
-        public async Task<TDto> ObterPorIdAsync(Guid id)
+        public virtual async Task<TDto> ObterPorIdAsync(Guid id)
         {
             return _mapper.Map<TDto>(await Repository.ObterPorIdAsync(id));
         }
 
         public virtual async Task<IReadOnlyList<TDto>> ObterTodosAsync()
-        {                       
+        {
             return _mapper.Map<IReadOnlyList<TDto>>(await Repository.ObterTodosAsync());
         }
 

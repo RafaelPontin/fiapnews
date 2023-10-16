@@ -7,15 +7,16 @@ using Microsoft.AspNetCore.Mvc;
 namespace FiapNews.Controllers
 {
     [Authorize(Roles = "ADMINISTRADOR")]
-    public class AdministradorController : BaseController<Administrador, AdministradorDto, IAdministradorService>
+    public class AssinanteController : BaseController<Assinante, AssinanteDto, IAssinanteService>
     {
-        private readonly IAdministradorService appService;
+        private readonly IAssinanteService appService;
 
-        public AdministradorController(IAdministradorService appService) : base(appService)
+        public AssinanteController(IAssinanteService appService) : base(appService)
         {
             this.appService = appService;
         }
 
+        [Authorize(Roles = "ASSINANTE")]
         [HttpPut("AlterarSenha")]
         public async Task<IActionResult> AlterarSenha(AlterarSenhaDto alterarSenhaDto)
         {
@@ -29,13 +30,13 @@ namespace FiapNews.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
-
+        [Authorize(Roles = "ASSINANTE")]
         [HttpPut("RecuperarSenha")]
         public async Task<IActionResult> RecuperarSenha(UsuarioSenhaDto usuarioSenhaDto)
         {
             try
             {
-                await appService.RecuperarSenha(usuarioSenhaDto);
+               await appService.RecuperarSenha(usuarioSenhaDto);
                 return Ok("Senha recuperada com sucesso. Verifique o email de cadastro");
             }
             catch (Exception ex)
@@ -43,7 +44,6 @@ namespace FiapNews.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
-
         [HttpPost("Login")]
         [AllowAnonymous]
         public IActionResult Login(LoginDto usuario)
@@ -52,7 +52,7 @@ namespace FiapNews.Controllers
             {
                 var token = appService.Autenticar(usuario);
                 if (string.IsNullOrWhiteSpace(token))
-                   return StatusCode(StatusCodes.Status400BadRequest, "Dados Informados inválidos");
+                    return StatusCode(StatusCodes.Status400BadRequest, "Dados Informados inválidos");
                 return Ok(token);
             }
             catch (Exception ex)

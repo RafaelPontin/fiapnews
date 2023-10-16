@@ -43,7 +43,7 @@ namespace Infraestrutura.Repositorio
             return await _dbSet.FindAsync(id);
         }
 
-        public async Task<IReadOnlyList<TEntity>> ObterTodosAsync()
+        public virtual async Task<IReadOnlyList<TEntity>> ObterTodosAsync()
         {
             return await _dbSet.ToListAsync();
         }

@@ -6,13 +6,14 @@ using Microsoft.AspNetCore.Authorization;
 namespace FiapNews.Controllers
 {
     [Authorize(Roles = "ADMINISTRADOR")]
-    public class CategoriaController : BaseController<Categoria, CategoriaDto, ICategoriaService>
+    public class RedeSocialController : BaseController<RedeSocial, RedeSocialDto, IRedeSocialService>
     {
-        private readonly ICategoriaService appService;
+        private readonly IRedeSocialService appService;
 
-        public CategoriaController(ICategoriaService appService) : base(appService)
+        public RedeSocialController(IRedeSocialService appService) : base(appService)
         {
             this.appService = appService;
         }
     }
+
 }

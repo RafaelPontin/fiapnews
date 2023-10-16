@@ -1,6 +1,7 @@
 ﻿using Aplicacao.Contratos.Persistencia;
 using Dominio.Entidades;
 using Infraestrutura.Persistencia;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infraestrutura.Repositorio
 {
@@ -9,5 +10,19 @@ namespace Infraestrutura.Repositorio
         public AssinanteRepository(FiapNewsContext dbContext) : base(dbContext)
         {
         }
+        public async Task<IReadOnlyList<Assinante>> ObterAssinantes()
+        {
+            var autores = await _dbSet
+                .Include(x => x.Assinatura)
+                .ToListAsync();
+            return autores;
+        }
+        public async Task<Assinante> ObterAssinantePorId(Guid id)
+        {
+            return await _dbSet
+                .Include(x => x.Assinatura)
+                .FirstOrDefaultAsync(x => x.Id == id);                                                            
+        }        
     }
+
 }

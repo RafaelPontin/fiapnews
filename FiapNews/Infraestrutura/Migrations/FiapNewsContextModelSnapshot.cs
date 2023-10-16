@@ -116,8 +116,12 @@ namespace Infraestrutura.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Texto")
+<<<<<<< HEAD
                         .IsRequired()
                         .HasColumnType("varchar(1000)");
+=======
+                        .HasColumnType("nvarchar(max)");
+>>>>>>> bdb439c4c3d8d947f64beb4608b4f8b0d3e2e089
 
                     b.HasKey("Id");
 

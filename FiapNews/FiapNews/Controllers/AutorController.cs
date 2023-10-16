@@ -7,16 +7,17 @@ using Microsoft.AspNetCore.Mvc;
 namespace FiapNews.Controllers
 {
     [Authorize(Roles = "ADMINISTRADOR")]
-    public class AdministradorController : BaseController<Administrador, AdministradorDto, IAdministradorService>
+    public class AutorController : BaseController<Autor, AutorDto, IAutorService>
     {
-        private readonly IAdministradorService appService;
+        private readonly IAutorService appService;
 
-        public AdministradorController(IAdministradorService appService) : base(appService)
+        public AutorController(IAutorService appService) : base(appService)
         {
             this.appService = appService;
         }
 
         [HttpPut("AlterarSenha")]
+        [Authorize(Roles = "AUTOR")]
         public async Task<IActionResult> AlterarSenha(AlterarSenhaDto alterarSenhaDto)
         {
             try
@@ -31,6 +32,7 @@ namespace FiapNews.Controllers
         }
 
         [HttpPut("RecuperarSenha")]
+        [Authorize(Roles = "AUTOR")]
         public async Task<IActionResult> RecuperarSenha(UsuarioSenhaDto usuarioSenhaDto)
         {
             try
@@ -43,7 +45,6 @@ namespace FiapNews.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
-
         [HttpPost("Login")]
         [AllowAnonymous]
         public IActionResult Login(LoginDto usuario)
@@ -52,7 +53,7 @@ namespace FiapNews.Controllers
             {
                 var token = appService.Autenticar(usuario);
                 if (string.IsNullOrWhiteSpace(token))
-                   return StatusCode(StatusCodes.Status400BadRequest, "Dados Informados inválidos");
+                    return StatusCode(StatusCodes.Status400BadRequest, "Dados Informados inválidos");
                 return Ok(token);
             }
             catch (Exception ex)

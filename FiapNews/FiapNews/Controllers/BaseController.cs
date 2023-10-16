@@ -1,12 +1,14 @@
 ﻿using Aplicacao.Contratos.Servico;
 using Aplicacao.DTOs;
 using Dominio.Entidades;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FiapNews.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class BaseController<TEntity, TDto, TService> : ControllerBase
         where TEntity : Base
         where TDto : BaseDto
