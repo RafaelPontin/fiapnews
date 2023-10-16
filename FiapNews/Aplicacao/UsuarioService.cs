@@ -2,17 +2,24 @@
 using Aplicacao.Contratos.Servico;
 using Aplicacao.DTOs;
 using Dominio.Entidades;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace Aplicacao
 {
-    public class UsuarioService<TEntity> : IUsuarioService<TEntity> 
+    public class UsuarioService<TEntity> : IUsuarioService<TEntity>
         where TEntity : Usuario
     {
-        private readonly IRepositoryBase<Usuario> _usuarioRepository;
+        private readonly IUsuarioRepository _usuarioRepository;
+        private readonly IConfiguration _configuration;
 
-        public UsuarioService(IRepositoryBase<Usuario> usuarioRepository)
+        public UsuarioService(IUsuarioRepository usuarioRepository, IConfiguration configuration)
         {
             _usuarioRepository = usuarioRepository;
+            _configuration = configuration;
         }
 
         public async Task AlterarSenha(AlterarSenhaDto alterarSenhaDto)
@@ -32,6 +39,31 @@ namespace Aplicacao
                 return;
             }
             throw new Exception("Login informado não encontrado");
+        }
+
+        public string GerarToken(Usuario usuario)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+
+            var key = Encoding.ASCII.GetBytes(_configuration.GetValue<string>("SecretApi"));
+
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new Claim[]
+                {
+                    new Claim(ClaimTypes.Name, usuario.Login),
+                    new Claim(ClaimTypes.Role, usuario.Tipo.ToString()),
+                    new Claim("Id", usuario.Id.ToString()),
+                }),
+
+                Expires = DateTime.UtcNow.AddHours(8),
+                SigningCredentials = new SigningCredentials(
+                    new SymmetricSecurityKey(key),
+                    SecurityAlgorithms.HmacSha256Signature)
+            };
+
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            return tokenHandler.WriteToken(token);
         }
 
         public async Task RecuperarSenha(UsuarioSenhaDto usuarioSenhaDto)
@@ -58,5 +90,20 @@ namespace Aplicacao
             throw new Exception("Login informado não encontrado");
         }
 
+        public Usuario ObterPorLoginESenha(LoginDto logindto)
+        {
+            var usuario = _usuarioRepository.ObterIQueryable().OfType<TEntity>().Where(x => x.Login == logindto.Login && x.Senha == logindto.Senha).FirstOrDefault();
+            return usuario;
+        }
+        public string Autenticar(LoginDto loginDto)
+        {
+            var usuario = ObterPorLoginESenha(loginDto);
+            if (usuario != null)
+            {
+                var token = GerarToken(usuario);
+                return token;
+            }
+            return string.Empty;
+        }
     }
 }

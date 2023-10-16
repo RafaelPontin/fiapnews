@@ -7,5 +7,6 @@ namespace Aplicacao.Contratos.Servico
     {
         Task AlterarSenha(AlterarSenhaDto alterarSenhaDto);
         Task RecuperarSenha(UsuarioSenhaDto usuarioSenhaDto);
+        string Autenticar(LoginDto loginDto);
     }
 }

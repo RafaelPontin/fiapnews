@@ -127,6 +127,10 @@ namespace Aplicacao
         {
             await _usuarioService.RecuperarSenha(usuarioSenhaDto);
         }
+        public string Autenticar(LoginDto loginDto)
+        {
+            return _usuarioService.Autenticar(loginDto);
+        }
     }
 
 }

@@ -17,6 +17,7 @@ namespace Infraestrutura
             services.AddScoped(typeof(IRepositoryBase<>), typeof(RepositoryBase<>));
             services.AddScoped(typeof(IAutorRepository), typeof(AutorRepository));
             services.AddScoped(typeof(IAssinanteRepository), typeof(AssinanteRepository));
+            services.AddScoped(typeof(IUsuarioRepository), typeof(UsuarioRepository));
 
             return services;
         }
