@@ -66,12 +66,37 @@ namespace Dominio.Entidades
             return !_erros.Any();
         }
 
+        public void DefinirUsuario(string nome, string login, string senha, string email, string foto, TipoUsuario tipoUsuario)
+        {
+            if (!UsuarioEhValido(nome, login, senha, email, foto))
+                throw new ArgumentException($"É necessário informar todos os campos.");
+            Nome = nome.Trim();
+            Login = login.Trim();
+            Senha = senha.Trim();
+            Email = new Email(email.Trim());
+            Foto = foto.Trim();
+            Tipo = tipoUsuario;
+        }
+
         public void AlterarSenha(string senha)
         {
             if (string.IsNullOrWhiteSpace(senha))
                 throw new ArgumentNullException(nameof(senha), $"A senha não pode estar vazio ou nula.");
 
             Senha = senha;
+        }
+
+        public string GerarNovaSenha()
+        {
+            string caracteres = "abcdefghjkmnpqrstuvwxyz023456789";
+            string senha = "";
+            Random random = new Random();
+            for (int f = 0; f < 6; f++)
+            {
+                senha = senha + caracteres.Substring(random.Next(0, caracteres.Length - 1), 1);
+            }
+
+            return senha;
         }
 
         protected IList<string> _erros = new List<string>();

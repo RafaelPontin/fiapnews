@@ -4,12 +4,12 @@ namespace Dominio.Entidades
 {
     public class Assinante : Usuario
     {
-        public Assinante()
+        protected Assinante()
         {
 
         }
 
-        public Assinante(string nome, string login, string senha, string email, string foto, Assinatura? assinatura = null)
+        public Assinante(string nome, string login, string senha, string email, string foto, Assinatura assinatura = null)
             : base(nome, login, senha, email, foto, TipoUsuario.ASSINANTE)
         {
             DefinirAssinatura(assinatura ?? new Assinatura(TipoAssinatura.BASICO));
@@ -17,7 +17,7 @@ namespace Dominio.Entidades
         
         public Assinatura Assinatura { get; private set; }
         public override bool PodeComentar { get => Assinatura.PodeComentar; }
-        public ICollection<Comentario>? Comentarios { get; private set; }
+        public ICollection<Comentario> Comentarios { get; private set; }
 
         public void DefinirAssinatura(Assinatura assinatura)
         {

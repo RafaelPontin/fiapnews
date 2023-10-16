@@ -30,7 +30,7 @@ namespace Infraestrutura.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Descricao = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Descricao = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -42,12 +42,12 @@ namespace Infraestrutura.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Titulo = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    SubTitulo = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Conteudo = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Lead = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Titulo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SubTitulo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Conteudo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Lead = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DataCriacao = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Regiao = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Regiao = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ExclusivoParaAssinantes = table.Column<bool>(type: "bit", nullable: false),
                     Ativa = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -61,8 +61,8 @@ namespace Infraestrutura.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Link = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Link = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -74,7 +74,7 @@ namespace Infraestrutura.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Texto = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Texto = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -86,11 +86,11 @@ namespace Infraestrutura.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Login = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Senha = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "varchar(max)", nullable: false),
-                    Foto = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Login = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Senha = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Email = table.Column<string>(type: "varchar(max)", nullable: true),
+                    Foto = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Tipo = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -191,7 +191,7 @@ namespace Infraestrutura.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    AssinaturaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    AssinaturaId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -200,8 +200,7 @@ namespace Infraestrutura.Migrations
                         name: "FK_Assinante_Assinatura_AssinaturaId",
                         column: x => x.AssinaturaId,
                         principalTable: "Assinatura",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Assinante_Usuarios_Id",
                         column: x => x.Id,
@@ -215,7 +214,7 @@ namespace Infraestrutura.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Descricao = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Descricao = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -233,15 +232,14 @@ namespace Infraestrutura.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Texto = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UsuarioId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Texto = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AssinanteId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     DataCriacao = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    NoticiaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    NoticiaId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     EstadoValidacao = table.Column<int>(type: "int", nullable: false),
                     DataValidacao = table.Column<DateTime>(type: "datetime2", nullable: true),
                     ModeradorResponsavelId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    MotivoRejeicao = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AssinanteId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    MotivoRejeicao = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -260,14 +258,7 @@ namespace Infraestrutura.Migrations
                         name: "FK_Comentario_Noticia_NoticiaId",
                         column: x => x.NoticiaId,
                         principalTable: "Noticia",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Comentario_Usuarios_UsuarioId",
-                        column: x => x.UsuarioId,
-                        principalTable: "Usuarios",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -352,11 +343,6 @@ namespace Infraestrutura.Migrations
                 name: "IX_Comentario_NoticiaId",
                 table: "Comentario",
                 column: "NoticiaId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Comentario_UsuarioId",
-                table: "Comentario",
-                column: "UsuarioId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_NoticiaNoticia_NoticiasRelacionadasId",
