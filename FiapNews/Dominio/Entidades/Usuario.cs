@@ -1,10 +1,13 @@
 ﻿using Dominio.Enum;
 using Dominio.ObjetosDeValor;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Dominio.Entidades
 {
     public abstract class Usuario : Base
     {
+        [Column(TypeName = "varchar(100)")]
         public string Nome { get; protected set; }
         public string Login { get; protected set; }
         public string Senha { get; protected set; }

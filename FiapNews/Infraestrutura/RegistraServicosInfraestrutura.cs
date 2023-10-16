@@ -15,6 +15,10 @@ namespace Infraestrutura
                 options.UseSqlServer(configuration.GetConnectionString("ConnectionString")));
 
             services.AddScoped(typeof(IRepositoryBase<>), typeof(RepositoryBase<>));
+            services.AddScoped<IComentarioRepository, ComentarioRepository>();
+            services.AddScoped<IAdministradorRepository, AdministradorRepository>();
+            services.AddScoped<IAssinanteRepository, AssinanteRepository>();
+            services.AddScoped<INoticiaRepository, NoticiaRepository>();
 
             return services;
         }

@@ -21,7 +21,7 @@ namespace Aplicacao
             _erros = new();
         }
 
-        public async Task AdicionarAsync(TDto dto)
+        public virtual async Task AdicionarAsync(TDto dto)
         {
             ValidarValores(dto);
             await Repository.AdicionarAsync(DefinirEntidadeInclusao(dto));

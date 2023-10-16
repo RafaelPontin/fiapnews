@@ -15,10 +15,5 @@ namespace Dominio.Entidades
 
         }
     }
-
-    protected Administrador()
-    {
-
-    }
 }
 

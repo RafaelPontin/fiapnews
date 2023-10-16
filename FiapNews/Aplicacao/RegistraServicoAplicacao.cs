@@ -10,6 +10,7 @@ namespace Aplicacao
         {
             services.AddScoped<ICategoriaService, CategoriaService>();
             services.AddScoped<IAdministradorService, AdministradorService>();
+            services.AddScoped<IComentarioService, ComentarioService>();
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             return services;
         }

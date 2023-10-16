@@ -18,6 +18,4 @@ namespace Infraestrutura.Configuracoes
             builder.Property(c => c.MotivoRejeicao).HasColumnType("varchar(500)");
         }
     }
-
-
 }
