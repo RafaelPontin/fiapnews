@@ -95,4 +95,10 @@ public class ComentarioService : ServiceBase<ComentarioDto, Comentario, IReposit
 
         return;
     }
+
+    protected override void ValidarDelecao(Comentario entidade)
+    {
+        if (entidade == null)
+            throw new ArgumentNullException(nameof(entidade), "Comentario informada não encontrada.");
+    }
 }
