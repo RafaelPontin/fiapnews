@@ -27,7 +27,7 @@ namespace Aplicacao
             await Repository.AdicionarAsync(DefinirEntidadeInclusao(dto));
         }
 
-        public async Task AlterarAsync(TDto dto)
+        public virtual async Task AlterarAsync(TDto dto)
         {
             ValidarValores(dto);
             var entidade = await Repository.ObterPorIdAsync(dto.Id);

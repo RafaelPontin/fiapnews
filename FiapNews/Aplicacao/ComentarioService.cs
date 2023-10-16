@@ -101,4 +101,9 @@ public class ComentarioService : ServiceBase<ComentarioDto, Comentario, IReposit
         if (entidade == null)
             throw new ArgumentNullException(nameof(entidade), "Comentario informada não encontrada.");
     }
+
+    public override async Task AlterarAsync(ComentarioDto comentarioDto)
+    {
+        throw new NotImplementedException();
+    }
 }
