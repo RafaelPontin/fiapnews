@@ -102,4 +102,9 @@ public class NoticiaService : ServiceBase<NoticiaDto, Noticia, INoticiaRepositor
         if (!dto.Autores.Any()) _erros.Add("Informe uma autor");
         if (_erros.Any()) throw new Exception(string.Join("\n", _erros));
     }
+
+    public IList<Noticia> ObterNoticiaCategoria(Guid idCategoria)
+    {
+        return Repository.ObterNoticiaCategoria(idCategoria).ToList();
+    }
 }

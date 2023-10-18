@@ -30,7 +30,9 @@ namespace Dominio.ObjetosDeValor
             if (descricao.Length >= TAMANHO_DESCRICAO) throw new ArgumentException($"A descricao deve ter no máximo {TAMANHO_DESCRICAO} caracteres.", nameof(descricao));
         }
 
-
-
+        public bool CompararId(Guid id)
+        {
+            return Id.Equals(id);
+        }
     }
 }

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace FiapNews.Configuracao
 {
@@ -11,7 +12,8 @@ namespace FiapNews.Configuracao
     {
         public static IServiceCollection AddApiConfig(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddControllers();
+            services.AddControllers()
+                    .AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve); ;
 
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
