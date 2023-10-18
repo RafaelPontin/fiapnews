@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Aplicacao.DTOs;
 public class NoticiaDto : BaseDto
@@ -26,16 +21,10 @@ public class NoticiaDto : BaseDto
 
     [Required]
     public DateTime DataCriacao { get; set; }
-
-    //feature/elielson
-    //public IEnumerable<AutorDto>
-
-    public IEnumerable<CategoriaDto> Categorias { get; set; }
+    public ICollection<AutorDto> Autores { get; set; }
+    public ICollection<CategoriaDto> Categorias { get; set; }
     public string Regiao { get; set; }
     public string LinkDeCompartilhamento { get; set; }
-
-    public IEnumerable<string> Imagens { get; set; }
-
-
+    public ICollection<string> Imagens { get; set; }
 
 }

@@ -16,6 +16,7 @@ namespace Aplicacao
             services.AddScoped<IAssinanteService, AssinanteService>();
             services.AddScoped(typeof(IUsuarioService<>), typeof(UsuarioService<>));            
             services.AddScoped<ITagService, TagService>();
+            services.AddScoped<INoticiaService, NoticiaService>();
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             return services;
         }

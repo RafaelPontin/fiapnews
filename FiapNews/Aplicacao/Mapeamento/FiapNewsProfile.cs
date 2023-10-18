@@ -23,6 +23,7 @@ namespace Aplicacao.Mapeamento
             
             CreateMap<AdministradorDto, Administrador>();
             CreateMap<Tag, TagDto>().ReverseMap();
+            CreateMap<Noticia, NoticiaDto>().ReverseMap();
         }
     }
 }

@@ -7,7 +7,7 @@ namespace Infraestrutura.Repositorio
     public class NoticiaRepository : RepositoryBase<Noticia>, INoticiaRepository
     {
         public NoticiaRepository(FiapNewsContext dbContext) : base(dbContext)
-        {
+        {   
         }
     }
 }
