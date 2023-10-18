@@ -320,7 +320,7 @@ namespace Dominio.Entidades
             imagens.ToList().ForEach(AdicionarImagem);
         }
 
-        private void AdicionarAutores(ICollection<Autor> autores)
+        public void AdicionarAutores(ICollection<Autor> autores)
         {
             if (autores == null)
                 throw new ArgumentNullException(nameof(autores),"É obrigatório que a notícia tenha ao menos um autor!");
@@ -331,7 +331,7 @@ namespace Dominio.Entidades
             autores.ToList().ForEach(AdicionarAutor);
         }
 
-        private void AdicionarCategorias(ICollection<Categoria> categorias)
+        public void AdicionarCategorias(ICollection<Categoria> categorias)
         {
             if (categorias == null)
                 throw new ArgumentNullException(nameof(categorias), "É obrigatório que a notícia tenha ao menos uma categoria!");
@@ -339,7 +339,12 @@ namespace Dominio.Entidades
             if (categorias.Count > LIMITE_CATEGORIAS)
                 throw new ArgumentException($"Ultrapassa o máximo permitido de {LIMITE_CATEGORIAS} categorias!");
 
+          
             categorias.ToList().ForEach(AdicionarCategoria);
         }
+
+        public void LimparAutores() => _autores.Clear();
+        public void LimparCategoria() => _categorias.Clear();
+
     }
 }

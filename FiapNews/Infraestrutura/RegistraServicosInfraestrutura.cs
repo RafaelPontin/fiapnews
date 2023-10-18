@@ -20,6 +20,8 @@ namespace Infraestrutura
             services.AddScoped(typeof(IUsuarioRepository), typeof(UsuarioRepository));
             services.AddScoped<ITagRepository, TagRepository>();
             services.AddScoped<INoticiaRepository, NoticiaRepository>();
+            services.AddScoped<ICategoriaRepository, CategoriaRepository>();
+            services.AddScoped<IAutorRepository, AutorRepository>();
 
             return services;
         }

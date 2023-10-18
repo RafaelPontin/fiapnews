@@ -38,7 +38,7 @@ namespace Infraestrutura.Repositorio
             return _dbSet;
         }
 
-        public async Task<TEntity> ObterPorIdAsync(Guid id)
+        public async virtual Task<TEntity> ObterPorIdAsync(Guid id)
         {
             return await _dbSet.FindAsync(id);
         }
