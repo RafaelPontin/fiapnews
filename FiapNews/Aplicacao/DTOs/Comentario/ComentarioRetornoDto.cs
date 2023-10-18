@@ -1,8 +1,6 @@
-﻿using Dominio.Enum;
+﻿namespace Aplicacao.DTOs.Comentario;
 
-namespace Aplicacao.DTOs;
-
-public class ComentarioDto : BaseDto
+public class ComentarioRetornoDto : BaseDto
 {
     public string Texto { get; set; }
     public Guid AssinanteId { get; set; }

@@ -16,7 +16,7 @@ namespace Infraestrutura.Repositorio
             _dbSet = dbContext.Set<TEntity>();
         }
 
-        public async Task AdicionarAsync(TEntity entity)
+        public virtual async Task AdicionarAsync(TEntity entity)
         {
             _dbSet.Add(entity);
             await _dbContext.SaveChangesAsync();

@@ -2,6 +2,8 @@
 using AutoMapper;
 using Dominio.ObjetosDeValor;
 using Dominio.Entidades;
+using Aplicacao.DTOs.Comentario;
+
 namespace Aplicacao.Mapeamento
 {
     public class FiapNewsProfile : Profile
@@ -10,6 +12,7 @@ namespace Aplicacao.Mapeamento
         {
             CreateMap<Categoria, CategoriaDto>().ReverseMap();
             CreateMap<RedeSocial, RedeSocialDto>().ReverseMap();
+            CreateMap<Comentario, ComentarioDto>().ReverseMap();
             CreateMap<Assinatura, AssinaturaDto>().ReverseMap();
             CreateMap<Autor, AutorDto>()
                 .ForMember(x => x.Senha, opt => opt.Ignore())

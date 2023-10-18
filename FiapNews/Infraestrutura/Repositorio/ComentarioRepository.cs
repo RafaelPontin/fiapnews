@@ -32,4 +32,10 @@ public class ComentarioRepository : RepositoryBase<Comentario>, IComentarioRepos
             .Where(x => x.Noticia.Id.Equals(idNoticia) && x.EstadoValidacao == estadoValidacao)
             .ToListAsync();
     }
+
+    public override async Task AdicionarAsync(Comentario comentario)
+    {
+        await _dbSet.AddAsync(comentario);
+        await _dbContext.SaveChangesAsync();
+    }
 }
