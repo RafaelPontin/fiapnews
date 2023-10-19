@@ -1,18 +1,30 @@
 ﻿using Dominio.Entidades;
 
-namespace Dominio.ObjetosDeValor
+namespace Dominio.ObjetosDeValor;
+public class Tag : Base, IEquatable<Tag>
 {
-    public class Tag : Base, IEquatable<Tag>
+    public string Texto { get; private set; }
+    public IReadOnlyCollection<Noticia>? Noticias { get; }
+
+    public Tag(){}
+
+    public Tag(string texto)
     {
-        public string Texto { get; set; }
-        public IReadOnlyCollection<Noticia>? Noticias { get; }
-
-        public bool Equals(Tag? other)
-        {
-            if (ReferenceEquals(null, other)) 
-                return false;
-
-            return other.Texto == Texto;
-        }
+        AlteraTexto(texto);
     }
+
+    public bool Equals(Tag? other)
+    {
+        if (ReferenceEquals(null, other)) 
+            return false;
+
+        return other.Texto == Texto;
+    }
+
+    public void AlteraTexto(string texto)
+    {
+        if(string.IsNullOrWhiteSpace(texto)) throw new ArgumentNullException("Texto da tag não pode ser vazio ");
+        Texto = texto;
+    }
+
 }
