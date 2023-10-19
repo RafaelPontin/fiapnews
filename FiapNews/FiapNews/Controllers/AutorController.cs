@@ -17,7 +17,7 @@ namespace FiapNews.Controllers
         }
 
         [HttpPut("AlterarSenha")]
-        [Authorize(Roles = "AUTOR")]
+        [Authorize(Roles = "AUTOR, ADMINISTRADOR")]
         public async Task<IActionResult> AlterarSenha(AlterarSenhaDto alterarSenhaDto)
         {
             try
@@ -32,7 +32,7 @@ namespace FiapNews.Controllers
         }
 
         [HttpPut("RecuperarSenha")]
-        [Authorize(Roles = "AUTOR")]
+        [Authorize(Roles = "AUTOR, ADMINISTRADOR")]
         public async Task<IActionResult> RecuperarSenha(UsuarioSenhaDto usuarioSenhaDto)
         {
             try

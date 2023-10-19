@@ -81,6 +81,15 @@ namespace Dominio.Entidades
             Tipo = tipoUsuario;
         }
 
+        public void AlterarDadosDoUsuario(string nome, string email, string foto)
+        {
+            if (!UsuarioEhValido(nome, this.Login, this.Senha, email, foto))
+                throw new ArgumentException($"É necessário informar todos os campos.");
+            Nome = nome.Trim();
+            Email = new Email(email.Trim());
+            Foto = foto.Trim();            
+        }
+
         public void AlterarSenha(string senha)
         {
             if (string.IsNullOrWhiteSpace(senha))

@@ -16,7 +16,13 @@ namespace FiapNews.Controllers
             this.appService = appService;
         }
 
-        [Authorize(Roles = "ASSINANTE")]
+        [AllowAnonymous]
+        public override Task<IActionResult> AdicionarAsync(AssinanteDto dto)
+        {
+            return base.AdicionarAsync(dto);
+        }
+
+        [Authorize(Roles = "ASSINANTE, ADMINISTRADOR")]
         [HttpPut("AlterarSenha")]
         public async Task<IActionResult> AlterarSenha(AlterarSenhaDto alterarSenhaDto)
         {
@@ -30,7 +36,7 @@ namespace FiapNews.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
-        [Authorize(Roles = "ASSINANTE")]
+        [Authorize(Roles = "ASSINANTE, ADMINISTRADOR")]
         [HttpPut("RecuperarSenha")]
         public async Task<IActionResult> RecuperarSenha(UsuarioSenhaDto usuarioSenhaDto)
         {

@@ -9,8 +9,12 @@ using static System.Net.Mime.MediaTypeNames;
 namespace Aplicacao;
 public class NoticiaService : ServiceBase<NoticiaDto, Noticia, INoticiaRepository>, INoticiaService
 {
-    public NoticiaService(INoticiaRepository repository, IMapper mapper) : base(repository, mapper)
+    private readonly ICategoriaRepository _categoriaRepository;
+    private readonly IAutorRepository _autorRepository;
+    public NoticiaService(INoticiaRepository repository, IMapper mapper, ICategoriaRepository categoriaRepository, IAutorRepository autorRepository) : base(repository, mapper)
     {
+        _categoriaRepository = categoriaRepository;
+        _autorRepository = autorRepository;
     }
 
     protected override Noticia DefinirEntidadeAlteracao(Noticia entidade, NoticiaDto dto)
@@ -22,19 +26,21 @@ public class NoticiaService : ServiceBase<NoticiaDto, Noticia, INoticiaRepositor
         entidade.DefinirSubtitulo(dto.SubTitulo);
         entidade.DefinirConteudo(dto.Conteudo);
         entidade.DefinirLead(dto.Lead);
-
+        
         if (dto.Categorias is not null)
         {
             var categorias = CriarCategoria(dto);
-            categorias.ToList().ForEach(c => entidade.AdicionarCategoria(c));
+            entidade.LimparCategoria();
+            entidade.AdicionarCategorias(categorias);
         }
-
+        
         if(dto.Autores is not null)
         {
             var autores = CriarAutor(dto);
-            autores.ToList().ForEach(a => entidade.AdicionarAutor(a));
+            entidade.LimparAutores();
+            entidade.AdicionarAutores(autores);
         }
-
+        
         entidade.DefinirRegiao(dto.Regiao);
         dto.Imagens.ToList().ForEach(i => entidade.AdicionarImagem(i)); 
 
@@ -45,11 +51,12 @@ public class NoticiaService : ServiceBase<NoticiaDto, Noticia, INoticiaRepositor
     {
         if(dto.Categorias is null) return null; 
         ICollection<Categoria> categorias = new List<Categoria>();
-        foreach (var categoria in dto.Categorias)
+        foreach (var item in dto.Categorias)
         {
-            if (categoria != null)
+            if (item != null)
             {
-                categorias.Add(new Categoria(categoria.Descricao));
+                Categoria categoria = _categoriaRepository.ObterPorIdAsync(item.Id).Result;
+                categorias.Add(categoria);
             }
         }
         return categorias;
@@ -59,11 +66,12 @@ public class NoticiaService : ServiceBase<NoticiaDto, Noticia, INoticiaRepositor
     {
         if (dto.Autores is null) return null;
         ICollection<Autor> autores = new List<Autor>();
-        foreach (var autor in dto.Autores)
+        foreach (var item in dto.Autores)
         {
-            if (autor != null)
+            if (item != null)
             {
-                autores.Add(new Autor(autor.Nome, autor.Login, autor.Senha, autor.Email, autor.Foto, autor.Descricao, null));
+                Autor autor = _autorRepository.ObterAutorPorId(item.Id).Result;
+                autores.Add(autor);
             }
         }
         return autores;
@@ -93,5 +101,18 @@ public class NoticiaService : ServiceBase<NoticiaDto, Noticia, INoticiaRepositor
         if (!dto.Categorias.Any()) _erros.Add("Informe uma categoria");
         if (!dto.Autores.Any()) _erros.Add("Informe uma autor");
         if (_erros.Any()) throw new Exception(string.Join("\n", _erros));
+    }
+
+    public IList<NoticiaDto> ObterNoticiaCategoria(Guid idCategoria)
+    {
+        var noticias = Repository.ObterNoticiaCategoria(idCategoria);
+        IList<NoticiaDto> dtos = new List<NoticiaDto>();
+
+        foreach (var item in noticias)
+        {
+            var noticia = _mapper.Map<NoticiaDto>(item);
+            dtos.Add(noticia);
+        }
+        return dtos;
     }
 }

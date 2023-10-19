@@ -4,16 +4,16 @@ namespace Dominio.ObjetosDeValor;
 public class Tag : Base, IEquatable<Tag>
 {
     public string Texto { get; private set; }
-    public IReadOnlyCollection<Noticia>? Noticias { get; }
+    public IReadOnlyCollection<Noticia> Noticias { get; }
 
-    public Tag(){}
+    protected Tag(){}
 
     public Tag(string texto)
     {
         AlteraTexto(texto);
     }
 
-    public bool Equals(Tag? other)
+    public bool Equals(Tag other)
     {
         if (ReferenceEquals(null, other)) 
             return false;

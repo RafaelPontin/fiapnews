@@ -25,7 +25,7 @@ public class TagService : ServiceBase<TagDto, Tag, ITagRepository>, ITagService
         if(entidade == null)
             throw new ArgumentNullException(nameof(entidade), "Tag informada não encontrada.");
 
-        var tag = ObterPorTextoAsync(dto.Texto);
+        var tag = ObterPorTexto(dto.Texto);
             if (tag != null) throw new ArgumentNullException(nameof(dto), "Já existe uma tag com esse nome");
 
         entidade.AlteraTexto(dto.Texto);
@@ -35,7 +35,7 @@ public class TagService : ServiceBase<TagDto, Tag, ITagRepository>, ITagService
     protected override Tag DefinirEntidadeInclusao(TagDto dto)
     {
 
-        var tag = ObterPorTextoAsync(dto.Texto);
+        var tag = ObterPorTexto(dto.Texto);
             if (tag != null) throw new ArgumentNullException($"Já existe uma tag com esse nome {dto.Texto}");
 
         return new Tag(dto.Texto);
@@ -47,7 +47,7 @@ public class TagService : ServiceBase<TagDto, Tag, ITagRepository>, ITagService
             throw new ArgumentNullException(nameof(entidade), "Tag informada não encontrada.");
     }
 
-    public Tag ObterPorTextoAsync(string texto)
+    public Tag ObterPorTexto(string texto)
     {
         return Repository.ObterPorTexto(texto);
     }

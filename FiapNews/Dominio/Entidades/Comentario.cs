@@ -12,12 +12,12 @@ public class Comentario : Base
     public Noticia Noticia { get; private set; }
     public EstadoValidacaoComentario EstadoValidacao { get; private set; }
     public DateTime? DataValidacao { get; private set; }
-    public Administrador? ModeradorResponsavel { get; private set; }
-    public string? MotivoRejeicao { get; private set; }
+    public Administrador ModeradorResponsavel { get; private set; }
+    public string MotivoRejeicao { get; private set; } = string.Empty;
 
     private IList<string> _erros = new List<string>();
 
-    public Comentario()
+    protected Comentario()
     {
 
     }
