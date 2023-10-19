@@ -61,7 +61,7 @@ namespace Aplicacao
         {
             if (entidade == null)
                 throw new ArgumentNullException(nameof(entidade), "Assinante informado não encontrada.");
-            entidade.DefinirUsuario(dto.Nome, dto.Login, entidade.Senha, dto.Email, dto.Foto, entidade.Tipo);
+            entidade.AlterarDadosDoUsuario(dto.Nome, dto.Email, dto.Foto);
             return entidade;
         }
         protected override void ValidarDelecao(Assinante entidade)

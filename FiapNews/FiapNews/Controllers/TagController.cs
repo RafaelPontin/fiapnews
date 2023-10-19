@@ -17,11 +17,11 @@ public class TagController : BaseController<Tag, TagDto, ITagService>
 
     [HttpGet("Obter-Por-Texto/{texto}")]
     [AllowAnonymous]
-    public async Task<IActionResult> ObterPorTexto(string texto)
+    public IActionResult ObterPorTexto(string texto)
     {
         try
         {
-            var tag = Service.ObterPorTextoAsync(texto);
+            var tag = Service.ObterPorTexto(texto);
             if (tag == null) NoContent();
             return Ok(tag);
         }

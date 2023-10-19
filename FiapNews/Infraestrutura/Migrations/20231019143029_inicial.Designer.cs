@@ -13,7 +13,7 @@ namespace Infraestrutura.Migrations
 {
     [DbContext(typeof(FiapNewsContext))]
     [Migration("20231019143029_inicial")]
-    partial class inicial
+    partial class Inicial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -15,12 +15,12 @@ namespace Dominio.Entidades
         private const int LIMITE_CATEGORIAS = 5;
         private const string LINK_COMPARTILHAMENTO = "https://www.teste.com.br/api/ler-noticia/{0}";
 
-        private List<string>? _imagens;
-        private List<Comentario>? _comentarios;
+        private List<string> _imagens;
+        private List<Comentario> _comentarios;
         private List<Autor> _autores;
         private List<Categoria> _categorias;
-        private List<Noticia>? _noticiasRelacionadas;
-        private List<Tag>? _tags;
+        private List<Noticia> _noticiasRelacionadas;
+        private List<Tag> _tags;
 
         public string Titulo { get; private set; }
         public string SubTitulo { get; private set; }        
@@ -33,14 +33,14 @@ namespace Dominio.Entidades
         public bool ExclusivoParaAssinantes { get; private set; }
         public bool Ativa { get; private set; }
         public string LinkDeCompartilhamento { get => string.Format(LINK_COMPARTILHAMENTO, Id.ToString()); }
-        public IReadOnlyCollection<string>? Imagens { get => _imagens; }
+        public IReadOnlyCollection<string> Imagens { get => _imagens; }
         [NotMapped]
-        public IReadOnlyCollection<Comentario>? ComentariosModerados { get => _comentarios?.FindAll(x => x.EstadoValidacao == EstadoValidacaoComentario.Aprovado); }
-        public IReadOnlyCollection<Comentario>? Comentarios { get => _comentarios; }
-        public IReadOnlyCollection<Noticia>? NoticiasRelacionadas { get => _noticiasRelacionadas; }
-        public IReadOnlyCollection<Tag>? Tags { get => _tags; }        
+        public IReadOnlyCollection<Comentario> ComentariosModerados { get => _comentarios?.FindAll(x => x.EstadoValidacao == EstadoValidacaoComentario.Aprovado); }
+        public IReadOnlyCollection<Comentario> Comentarios { get => _comentarios; }
+        public IReadOnlyCollection<Noticia> NoticiasRelacionadas { get => _noticiasRelacionadas; }
+        public IReadOnlyCollection<Tag> Tags { get => _tags; }        
 
-        public Noticia()
+        protected Noticia()
         {
             
         }
@@ -50,10 +50,10 @@ namespace Dominio.Entidades
             ICollection<Autor> autores,
             string regiao,
             bool exclusivoParaAssinantes,
-            ICollection<string>? imagens = null,
-            ICollection<Comentario>? comentarios = null,
-            ICollection<Noticia>? noticiasRelacionadas = null,
-            ICollection<Tag>? tags = null) : base()
+            ICollection<string> imagens = null,
+            ICollection<Comentario> comentarios = null,
+            ICollection<Noticia> noticiasRelacionadas = null,
+            ICollection<Tag> tags = null) : base()
         {
             DataCriacao = DateTime.UtcNow;
             ExclusivoParaAssinantes = exclusivoParaAssinantes;
@@ -285,7 +285,7 @@ namespace Dominio.Entidades
             Titulo = titulo.Trim();
         }
 
-        private void AdicionarTags(ICollection<Tag>? tags)
+        private void AdicionarTags(ICollection<Tag> tags)
         {
             if (tags == null)
                 return;
@@ -293,7 +293,7 @@ namespace Dominio.Entidades
             tags.ToList().ForEach(AdicionarTag);
         }
 
-        private void AdicionarNoticiasRelacionadas(ICollection<Noticia>? noticiasRelacionadas)
+        private void AdicionarNoticiasRelacionadas(ICollection<Noticia> noticiasRelacionadas)
         {
             if (noticiasRelacionadas == null)
                 return;
@@ -301,7 +301,7 @@ namespace Dominio.Entidades
             noticiasRelacionadas.ToList().ForEach(AdicionarNoticiaRelacionada);
         }
 
-        private void AdicionarComentarios(ICollection<Comentario>? comentarios)
+        private void AdicionarComentarios(ICollection<Comentario> comentarios)
         {
             if (comentarios == null)
                 return;
@@ -309,7 +309,7 @@ namespace Dominio.Entidades
             comentarios.ToList().ForEach(AdicionarComentario);
         }
 
-        private void AdicionarImagens(ICollection<string>? imagens)
+        private void AdicionarImagens(ICollection<string> imagens)
         {
             if (imagens == null)
                 return;
