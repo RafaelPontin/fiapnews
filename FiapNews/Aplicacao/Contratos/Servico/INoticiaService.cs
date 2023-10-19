@@ -5,5 +5,5 @@ namespace Aplicacao.Contratos.Servico;
 
 public interface INoticiaService : IServiceBase<NoticiaDto>
 {
-    IList<Noticia> ObterNoticiaCategoria(Guid idCategoria);
+    IList<NoticiaDto> ObterNoticiaCategoria(Guid idCategoria);
 }

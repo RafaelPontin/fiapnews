@@ -103,8 +103,16 @@ public class NoticiaService : ServiceBase<NoticiaDto, Noticia, INoticiaRepositor
         if (_erros.Any()) throw new Exception(string.Join("\n", _erros));
     }
 
-    public IList<Noticia> ObterNoticiaCategoria(Guid idCategoria)
+    public IList<NoticiaDto> ObterNoticiaCategoria(Guid idCategoria)
     {
-        return Repository.ObterNoticiaCategoria(idCategoria).ToList();
+        var noticias = Repository.ObterNoticiaCategoria(idCategoria);
+        IList<NoticiaDto> dtos = new List<NoticiaDto>();
+
+        foreach (var item in noticias)
+        {
+            var noticia = _mapper.Map<NoticiaDto>(item);
+            dtos.Add(noticia);
+        }
+        return dtos;
     }
 }
