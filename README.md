@@ -11,6 +11,7 @@
     Update-Database
    ~~~ 
 * Rodar pelo IIS Express:
+* 
     ![image](https://github.com/RafaelPontin/fiapnews/assets/16031920/477e76cb-66fd-4b85-94be-226b57b96a92)
 
 * Se rodar o swagger, esta funcionando:
