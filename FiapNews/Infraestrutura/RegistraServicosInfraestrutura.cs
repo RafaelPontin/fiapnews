@@ -22,6 +22,9 @@ namespace Infraestrutura
             services.AddScoped<INoticiaRepository, NoticiaRepository>();
             services.AddScoped<ICategoriaRepository, CategoriaRepository>();
             services.AddScoped<IAutorRepository, AutorRepository>();
+            services.AddScoped(typeof(IComentarioRepository), typeof(ComentarioRepository));
+            services.AddScoped(typeof(INoticiaRepository), typeof(NoticiaRepository));
+            services.AddScoped(typeof(IAdministradorRepository), typeof(AdministradorRepository));
 
             return services;
         }

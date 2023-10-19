@@ -63,6 +63,7 @@ namespace FiapNews.Configuracao
 
             });
         }
+
         private static void AddSwagger(this IServiceCollection services)
         {
             services.AddSwaggerGen(c =>

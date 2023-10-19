@@ -4,76 +4,75 @@ using Dominio.Entidades;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace FiapNews.Controllers
+namespace FiapNews.Controllers;
+
+[Route("api/[controller]")]
+[ApiController]
+[Authorize]
+public class BaseController<TEntity, TDto, TService> : ControllerBase
+    where TEntity : Base
+    where TDto : BaseDto
+    where TService : IServiceBase<TDto>
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    [Authorize]
-    public class BaseController<TEntity, TDto, TService> : ControllerBase
-        where TEntity : Base
-        where TDto : BaseDto
-        where TService : IServiceBase<TDto>
+    protected TService Service;
+
+    public BaseController(TService appService)
     {
-        protected TService Service;
+        Service = appService;
+    }
 
-        public BaseController(TService appService)
+    [HttpPost("Adicionar")]
+    public async Task<IActionResult> AdicionarAsync(TDto dto)
+    {
+        try
         {
-            Service = appService;
+            await Service.AdicionarAsync(dto);
+            return Ok();
         }
-
-        [HttpPost("Adicionar")]
-        public async Task<IActionResult> AdicionarAsync(TDto dto)
+        catch (Exception ex)
         {
-            try
-            {
-                await Service.AdicionarAsync(dto);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
+            return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
         }
+    }
 
-        [HttpPut("Alterar")]
-        public async Task<IActionResult> AlterarAsync(TDto dto)
+    [HttpPut("Alterar")]
+    public async Task<IActionResult> AlterarAsync(TDto dto)
+    {
+        try
         {
-            try
-            {
-                await Service.AlterarAsync(dto);
-                return NoContent();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
+            await Service.AlterarAsync(dto);
+            return NoContent();
         }
-
-        [HttpGet("Obter-Todos")]
-        public async Task<IActionResult> ObterTodosAsync()
-        {            
-            return Ok(await Service.ObterTodosAsync());
-        }
-
-        [HttpGet("Obter-Por-Id")]
-        public async Task<IActionResult> ObterPorIdAsync(Guid id)
+        catch (Exception ex)
         {
-            return Ok(await Service.ObterPorIdAsync(id));
+            return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
         }
+    }
 
-        [HttpDelete("Deletar")]
-        public async Task<IActionResult> DeletarAsync(Guid id)
-        {            
-            try
-            {
-                await Service.DeletarAsync(id);
+    [HttpGet("Obter-Todos")]
+    public async Task<IActionResult> ObterTodosAsync()
+    {            
+        return Ok(await Service.ObterTodosAsync());
+    }
 
-                return NoContent();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
+    [HttpGet("Obter-Por-Id")]
+    public async Task<IActionResult> ObterPorIdAsync(Guid id)
+    {
+        return Ok(await Service.ObterPorIdAsync(id));
+    }
+
+    [HttpDelete("Deletar")]
+    public async Task<IActionResult> DeletarAsync(Guid id)
+    {            
+        try
+        {
+            await Service.DeletarAsync(id);
+
+            return NoContent();
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
         }
     }
 }

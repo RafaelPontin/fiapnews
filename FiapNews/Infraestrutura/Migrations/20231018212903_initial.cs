@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Infraestrutura.Migrations
 {
     /// <inheritdoc />
-    public partial class inicial : Migration
+    public partial class initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -86,7 +86,7 @@ namespace Infraestrutura.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Nome = table.Column<string>(type: "varchar(100)", nullable: true),
                     Login = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Senha = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "varchar(max)", nullable: true),
@@ -232,14 +232,14 @@ namespace Infraestrutura.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Texto = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AssinanteId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    DataCriacao = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    NoticiaId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    Texto = table.Column<string>(type: "varchar(1000)", nullable: false),
+                    AssinanteId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    DataCriacao = table.Column<DateTime>(type: "datetime", nullable: false),
+                    NoticiaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     EstadoValidacao = table.Column<int>(type: "int", nullable: false),
-                    DataValidacao = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DataValidacao = table.Column<DateTime>(type: "datetime", nullable: true),
                     ModeradorResponsavelId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    MotivoRejeicao = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    MotivoRejeicao = table.Column<string>(type: "varchar(500)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -253,12 +253,14 @@ namespace Infraestrutura.Migrations
                         name: "FK_Comentario_Assinante_AssinanteId",
                         column: x => x.AssinanteId,
                         principalTable: "Assinante",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Comentario_Noticia_NoticiaId",
                         column: x => x.NoticiaId,
                         principalTable: "Noticia",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(

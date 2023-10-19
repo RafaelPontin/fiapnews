@@ -95,13 +95,14 @@ namespace Infraestrutura.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("AssinanteId")
+                        .IsRequired()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("DataCriacao")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
 
                     b.Property<DateTime?>("DataValidacao")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
 
                     b.Property<int>("EstadoValidacao")
                         .HasColumnType("int");
@@ -110,13 +111,15 @@ namespace Infraestrutura.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("MotivoRejeicao")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(500)");
 
                     b.Property<Guid?>("NoticiaId")
+                        .IsRequired()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Texto")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("varchar(1000)");
 
                     b.HasKey("Id");
 
@@ -177,7 +180,7 @@ namespace Infraestrutura.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nome")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(100)");
 
                     b.Property<string>("Senha")
                         .HasColumnType("nvarchar(max)");
@@ -345,7 +348,9 @@ namespace Infraestrutura.Migrations
                 {
                     b.HasOne("Dominio.Entidades.Assinante", "Assinante")
                         .WithMany("Comentarios")
-                        .HasForeignKey("AssinanteId");
+                        .HasForeignKey("AssinanteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Dominio.Entidades.Administrador", "ModeradorResponsavel")
                         .WithMany()
@@ -353,7 +358,9 @@ namespace Infraestrutura.Migrations
 
                     b.HasOne("Dominio.Entidades.Noticia", "Noticia")
                         .WithMany("Comentarios")
-                        .HasForeignKey("NoticiaId");
+                        .HasForeignKey("NoticiaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Assinante");
 
