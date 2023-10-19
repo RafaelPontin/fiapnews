@@ -1,9 +1,12 @@
 ﻿using Aplicacao.Contratos.Servico;
 using Aplicacao.DTOs;
 using Dominio.ObjetosDeValor;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FiapNews.Controllers;
+
+[Authorize(Roles = "ADMINISTRADOR")]
 public class TagController : BaseController<Tag, TagDto, ITagService>
 {
     private readonly ITagService appService;
@@ -13,6 +16,7 @@ public class TagController : BaseController<Tag, TagDto, ITagService>
     }
 
     [HttpGet("Obter-Por-Texto/{texto}")]
+    [AllowAnonymous]
     public async Task<IActionResult> ObterPorTexto(string texto)
     {
         try

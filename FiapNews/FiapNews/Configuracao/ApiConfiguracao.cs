@@ -12,8 +12,7 @@ namespace FiapNews.Configuracao
     {
         public static IServiceCollection AddApiConfig(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddControllers()
-                    .AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve); ;
+            services.AddControllers();                    
 
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
@@ -36,9 +35,9 @@ namespace FiapNews.Configuracao
             app.UseHttpsRedirection();
 
             app.UseAuthentication();
-            app.UseAuthorization();
-
+            app.UseAuthorization();            
             app.MapControllers();
+            app.MigrateDatabase();
             return app;
         }
 

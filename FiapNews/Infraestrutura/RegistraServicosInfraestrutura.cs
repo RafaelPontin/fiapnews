@@ -1,6 +1,7 @@
 ﻿using Aplicacao.Contratos.Persistencia;
 using Infraestrutura.Persistencia;
 using Infraestrutura.Repositorio;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -29,5 +30,18 @@ namespace Infraestrutura
             return services;
         }
 
+
+        public static void MigrateDatabase(this WebApplication app)
+        {
+            using (var scope = app.Services.CreateScope())
+            {
+                var dbContext = scope.ServiceProvider
+                    .GetRequiredService<FiapNewsContext>();
+
+                dbContext.Database.Migrate();
+
+                FiapNewsSeed.Seed(dbContext);
+            }
+        }
     }
 }

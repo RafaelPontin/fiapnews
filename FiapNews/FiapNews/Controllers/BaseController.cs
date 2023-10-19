@@ -22,7 +22,7 @@ public class BaseController<TEntity, TDto, TService> : ControllerBase
     }
 
     [HttpPost("Adicionar")]
-    public async Task<IActionResult> AdicionarAsync(TDto dto)
+    public virtual async Task<IActionResult> AdicionarAsync(TDto dto)
     {
         try
         {
@@ -50,13 +50,13 @@ public class BaseController<TEntity, TDto, TService> : ControllerBase
     }
 
     [HttpGet("Obter-Todos")]
-    public async Task<IActionResult> ObterTodosAsync()
+    public virtual async Task<IActionResult> ObterTodosAsync()
     {            
         return Ok(await Service.ObterTodosAsync());
     }
 
     [HttpGet("Obter-Por-Id")]
-    public async Task<IActionResult> ObterPorIdAsync(Guid id)
+    public virtual async Task<IActionResult> ObterPorIdAsync(Guid id)
     {
         return Ok(await Service.ObterPorIdAsync(id));
     }

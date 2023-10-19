@@ -10,12 +10,4 @@ var app = builder.Build();
 
 app.UseConfig();
 
-using (var scope = app.Services.CreateScope())
-{
-    var dbContext = scope.ServiceProvider
-        .GetRequiredService<FiapNewsContext>();
-
-    dbContext.Database.Migrate();
-}
-
 app.Run();
