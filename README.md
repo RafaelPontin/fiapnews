@@ -1,6 +1,6 @@
-# fiapnews
+# FiapNews
 
-### Como rodar nosso projeto: 
+### Instruções para Executar o Projeto: 
 
  * dentro do projeto FiapNews alterar o arquivo : appsettings.json (modificar a connection string conforme o print)
      ![image](https://github.com/RafaelPontin/fiapnews/assets/16031920/c56c4dd5-e6bd-41cc-ad87-b2f5b60ff32d)
@@ -11,8 +11,33 @@
     Update-Database
    ~~~ 
 * Rodar pelo IIS Express:
+* 
     ![image](https://github.com/RafaelPontin/fiapnews/assets/16031920/477e76cb-66fd-4b85-94be-226b57b96a92)
 
 * Se rodar o swagger, esta funcionando:
      ![image](https://github.com/RafaelPontin/fiapnews/assets/16031920/08455acf-926b-48d8-9af9-34ea82b26630)
+
+## Credenciais Padrão
+  Ao executar o projeto, algumas tabelas já estarão preenchidas com credenciais padrão para diferentes tipos de usuários. Use essas credenciais para acessar o sistema:
  
+### Administrador:
+**Login:**  admin 
+
+**Senha:**  123456 
+
+
+
+### Autor:
+
+**Login:** autor 
+
+**Senha:** 123456 
+
+
+### Assinante:
+
+**Login:** assinante 
+
+**Senha:** 123456 
+
+[Documentação da regra de negocio e dos termos de aceite](https://github.com/RafaelPontin/fiapnews/wiki/Dom%C3%ADnio)  

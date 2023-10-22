@@ -23,6 +23,7 @@ public class ComentarioService : IComentarioService
         _noticiaRepository = noticiaRepository;
         _assinanteRepository = assinanteRepository;
         _mapper = mapper;
+        _erros = new List<string>();
     }
 
     //Aprovar ou Reprovar comentario
@@ -115,7 +116,7 @@ public class ComentarioService : IComentarioService
         if (entidade.Assinante is null)
             _erros.Add("Assinante informado não encontrado.");
 
-        if (entidade.Assinante.PodeComentar)
+        if (!entidade.Assinante.PodeComentar)
             _erros.Add(entidade.Assinante.Nome + " não pode comentar.");
 
         if (_erros.Any())
@@ -144,7 +145,7 @@ public class ComentarioService : IComentarioService
     {
         ValidarValoresDto(dto);
         Noticia noticia = await _noticiaRepository.ObterPorIdAsync(dto.NoticiaId);
-        Assinante assinante = await _assinanteRepository.ObterPorIdAsync(dto.AssinanteId);
+        Assinante assinante = await _assinanteRepository.ObterAssinantePorId(dto.AssinanteId);
         Comentario comentario = new(dto.Texto, assinante, noticia);
         ValidarValores(comentario);
 
