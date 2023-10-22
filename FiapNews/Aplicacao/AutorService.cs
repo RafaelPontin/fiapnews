@@ -70,7 +70,7 @@ namespace Aplicacao
         {
             if (entidade == null)
                 throw new ArgumentNullException(nameof(entidade), "Autor informado não encontrada.");
-            entidade.DefinirUsuario(dto.Nome, dto.Login, entidade.Senha, dto.Email, dto.Foto, entidade.Tipo);
+            entidade.AlterarDadosDoUsuario(dto.Nome, dto.Email, dto.Foto);
             entidade.DefinirDescricao(dto.Descricao);
             DefinirRedeSocial(entidade, dto);
             return entidade;

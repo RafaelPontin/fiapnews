@@ -47,7 +47,7 @@ namespace Aplicacao
         {
             if (entidade == null)
                 throw new ArgumentNullException(nameof(entidade), "Administrador informada não encontrado.");
-            
+            entidade.AlterarDadosDoUsuario(dto.Nome, dto.Email, dto.Foto);
 
             return entidade;
         }

@@ -9,7 +9,7 @@ namespace Dominio.Entidades
         public int TipoPlano { get; private set; }
         public bool PodeComentar { get => true; }
 
-        public Assinatura()
+        protected Assinatura()
         {
                 
         }
