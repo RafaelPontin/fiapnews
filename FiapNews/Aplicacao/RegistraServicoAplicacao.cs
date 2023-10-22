@@ -18,9 +18,6 @@ namespace Aplicacao
             services.AddScoped<IComentarioService, ComentarioService>();
             services.AddScoped<ITagService, TagService>();
             services.AddScoped<INoticiaService, NoticiaService>();
-=========
-            services.AddScoped<IComentarioService, ComentarioService>();
->>>>>>>>> Temporary merge branch 2
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             return services;
         }
