@@ -12,13 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infraestrutura.Migrations
 {
     [DbContext(typeof(FiapNewsContext))]
-<<<<<<<< HEAD:FiapNews/Infraestrutura/Migrations/20231022194810_init.Designer.cs
-    [Migration("20231022194810_init")]
+    [Migration("20231022201747_init")]
     partial class init
-========
-    [Migration("20231019232533_inicial")]
-    partial class inicial
->>>>>>>> feature/alexssander:FiapNews/Infraestrutura/Migrations/20231019232533_inicial.Designer.cs
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
