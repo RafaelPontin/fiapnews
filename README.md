@@ -17,3 +17,10 @@
 * Se rodar o swagger, esta funcionando:
      ![image](https://github.com/RafaelPontin/fiapnews/assets/16031920/08455acf-926b-48d8-9af9-34ea82b26630)
  
+Tabelas ja preenchidas ao executar o projeto: Administrador: Login: admin Senha: 123456
+
+Autor: Login: autor Senha: 123456
+
+Assinante: Login: assinante Senha: 123456
+
+Redes Sociais Tags Categorias
