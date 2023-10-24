@@ -36,7 +36,7 @@ public class BaseController<TEntity, TDto, TService> : ControllerBase
     }
 
     [HttpPut("Alterar")]
-    public async Task<IActionResult> AlterarAsync(TDto dto)
+    public virtual async Task<IActionResult> AlterarAsync(TDto dto)
     {
         try
         {
@@ -62,7 +62,7 @@ public class BaseController<TEntity, TDto, TService> : ControllerBase
     }
 
     [HttpDelete("Deletar")]
-    public async Task<IActionResult> DeletarAsync(Guid id)
+    public virtual async Task<IActionResult> DeletarAsync(Guid id)
     {            
         try
         {

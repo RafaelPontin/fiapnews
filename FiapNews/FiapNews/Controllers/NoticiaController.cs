@@ -11,7 +11,7 @@ namespace FiapNews.Controllers;
 public class NoticiaController : BaseController<Noticia, NoticiaDto, INoticiaService>
 {
 
-    public NoticiaController(INoticiaService appService) : base(appService){}
+    public NoticiaController(INoticiaService appService) : base(appService) { }
 
     [HttpGet("Obter-Por-Categoria/{id}")]
     public IActionResult ObterNoticiaPorCategoria(Guid id)
@@ -29,5 +29,23 @@ public class NoticiaController : BaseController<Noticia, NoticiaDto, INoticiaSer
     public override Task<IActionResult> ObterTodosAsync()
     {
         return base.ObterTodosAsync();
+    }
+
+    [Authorize(Roles = "ADMINISTRADOR")]
+    public override async Task<IActionResult> AdicionarAsync(NoticiaDto dto)
+    {
+        return await base.AdicionarAsync(dto);
+    }
+
+    [Authorize(Roles = "ADMINISTRADOR")]
+    public override async Task<IActionResult> AlterarAsync(NoticiaDto dto)
+    {
+        return await base.AlterarAsync(dto);
+    }
+
+    [Authorize(Roles = "ADMINISTRADOR")]
+    public override async Task<IActionResult> DeletarAsync(Guid id)
+    {
+        return await base.DeletarAsync(id);
     }
 }
