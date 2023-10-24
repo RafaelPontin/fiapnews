@@ -1,6 +1,5 @@
 ﻿using Dominio.Enum;
 using Dominio.ObjetosDeValor;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Dominio.Entidades
@@ -14,8 +13,7 @@ namespace Dominio.Entidades
         public Email Email { get; protected set; }
         public string Foto { get; protected set; }
         public TipoUsuario Tipo { get; protected set; }
-
-        public virtual bool PodeComentar { get => Tipo == TipoUsuario.ADMINISTRADOR; }
+        public virtual bool PodeComentar { get => (Tipo == TipoUsuario.ADMINISTRADOR || Tipo == TipoUsuario.AUTOR); }
         
         protected Usuario()
         {

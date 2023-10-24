@@ -14,6 +14,6 @@ public interface IComentarioService
     Task<IEnumerable<ComentarioRetornoDto>> GetPendentesPorNoticia(Guid idNoticia);
     Task<IReadOnlyList<ComentarioRetornoDto>> ObterTodosAsync();
     Task<ComentarioRetornoDto> ObterPorIdAsync(Guid id);
-    Task AdicionarAsync(ComentarioDto dto);
+    Task AdicionarAsync(ComentarioDto dto, Guid usuarioId, string role);
     Task DeletarAsync(Guid id);
 }

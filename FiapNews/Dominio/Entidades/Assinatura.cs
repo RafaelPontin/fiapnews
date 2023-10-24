@@ -7,7 +7,7 @@ namespace Dominio.Entidades
         public TipoAssinatura TipoAssinatura { get; private set; }
         public double Preco { get; private set; }
         public int TipoPlano { get; private set; }
-        public bool PodeComentar { get => true; }
+        public bool PodeComentar { get => TipoAssinatura == TipoAssinatura.PAGO; }
 
         protected Assinatura()
         {

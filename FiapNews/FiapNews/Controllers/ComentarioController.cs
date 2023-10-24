@@ -1,7 +1,9 @@
 ﻿using Aplicacao.Contratos.Servico;
 using Aplicacao.DTOs.Comentario;
+using Dominio.Entidades;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace FiapNews.Controllers;
 
@@ -18,12 +20,13 @@ public class ComentarioController : ControllerBase
     }
 
     //Validar ou Reprovar comentario
-    [HttpPut("Aprovar/{idComentario}")]
-    public async Task<IActionResult> Aprovar([FromRoute] Guid idComentario, [FromHeader] Guid idAdministrador)
+    [HttpPut("AprovarComentario/{id}")]
+    public async Task<IActionResult> Aprovar(Guid id)
     {
         try
         {
-            await _appService.Aprovar(idComentario, idAdministrador);
+            var idAdministrador = Guid.Parse(User.Claims.FirstOrDefault(x => x.Type == "Id").Value);
+            await _appService.Aprovar(id, idAdministrador);
             return Ok();
         }
         catch (Exception ex)
@@ -32,12 +35,13 @@ public class ComentarioController : ControllerBase
         }
     }
 
-    [HttpPut("Reprovar/{idComentario}")]
-    public async Task<IActionResult> Reprovar([FromRoute] Guid idComentario, [FromHeader] Guid idAdministrador, [FromBody] string motivo)
+    [HttpPut("ReprovarComentario/{id}")]
+    public async Task<IActionResult> Reprovar(Guid id, [FromBody] ComentarioModerarDto dto)
     {
         try
         {
-            await _appService.Reprovar(idComentario, idAdministrador, motivo);
+            var idAdministrador = Guid.Parse(User.Claims.FirstOrDefault(x => x.Type == "Id").Value);
+            await _appService.Reprovar(id, idAdministrador, dto.Motivo);
             return Ok();
         }
         catch (Exception ex)
@@ -93,12 +97,12 @@ public class ComentarioController : ControllerBase
 
     //BuscarPorNoticia
     [AllowAnonymous]
-    [HttpGet("Aprovados/{idNoticia}")]
-    public async Task<IActionResult> GetAprovadosPorNoticia([FromRoute] Guid idNoticia)
+    [HttpGet("Aprovados/Obter-Por-Noticia/{id}")]
+    public async Task<IActionResult> GetAprovadosPorNoticia(Guid id)
     {
         try
         {
-            var comentarios = await _appService.GetAprovadosPorNoticia(idNoticia);
+            var comentarios = await _appService.GetAprovadosPorNoticia(id);
             return Ok(comentarios);
         }
         catch (Exception ex)
@@ -107,12 +111,12 @@ public class ComentarioController : ControllerBase
         }
     }
 
-    [HttpGet("Pendentes/{idNoticia}")]
-    public async Task<IActionResult> GetPendentesPorNoticia([FromRoute] Guid idNoticia)
+    [HttpGet("Pendentes/Obter-Por-Noticia/{id}")]
+    public async Task<IActionResult> GetPendentesPorNoticia(Guid id)
     {
         try
         {
-            var comentarios = await _appService.GetPendentesPorNoticia(idNoticia);
+            var comentarios = await _appService.GetPendentesPorNoticia(id);
             return Ok(comentarios);
         }
         catch (Exception ex)
@@ -121,12 +125,12 @@ public class ComentarioController : ControllerBase
         }
     }
 
-    [HttpGet("Reprovados/{idNoticia}")]
-    public async Task<IActionResult> GetReprovadosPorNoticia([FromRoute] Guid idNoticia)
+    [HttpGet("Reprovados/Obter-Por-Noticia/{id}")]
+    public async Task<IActionResult> GetReprovadosPorNoticia(Guid id)
     {
         try
         {
-            var comentarios = await _appService.GetReprovadosPorNoticia(idNoticia);
+            var comentarios = await _appService.GetReprovadosPorNoticia(id);
             return Ok(comentarios);
         }
         catch (Exception ex)
@@ -136,7 +140,7 @@ public class ComentarioController : ControllerBase
     }
 
     //Metodos CRD
-    [HttpGet]
+    [HttpGet("Obter-Todos")]
     public async Task<IActionResult> ObterTodos()
     {
         try
@@ -150,8 +154,8 @@ public class ComentarioController : ControllerBase
         }
     }
 
-    [HttpGet("{id}")]
-    public async Task<IActionResult> ObterPorId([FromRoute] Guid id)
+    [HttpGet("Obter-Por-Id/{id}")]
+    public async Task<IActionResult> ObterPorId(Guid id)
     {
         try
         {
@@ -164,13 +168,18 @@ public class ComentarioController : ControllerBase
         }
     }
 
+    //[Authorize(Roles = "AUTOR, ADMINISTRADOR, ASSINANTE")]
+
     [AllowAnonymous]
-    [HttpPost]
+    [HttpPost("Adicionar")]
     public async Task<IActionResult> AdicionarAsync([FromBody] ComentarioDto comentarioDTO)
     {
         try
         {
-            await _appService.AdicionarAsync(comentarioDTO);
+            var usuarioId = Guid.Parse(User.Claims.FirstOrDefault(x => x.Type == "Id").Value);
+            var role = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role).Value;
+
+            await _appService.AdicionarAsync(comentarioDTO, usuarioId, role);
             return Ok();
         }
         catch (Exception ex)
@@ -179,8 +188,8 @@ public class ComentarioController : ControllerBase
         }
     }
 
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> Deletar([FromRoute] Guid id)
+    [HttpDelete("Deletar/{id}")]
+    public async Task<IActionResult> Deletar( Guid id)
     {
         try
         {

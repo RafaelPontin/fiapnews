@@ -7,13 +7,13 @@ public class Comentario : Base
     private const int LIMITE_COMENTARIO = 1000;
     private const int LIMITE_REJEICAO = 500;
     public string Texto { get; private set; }
-    public Assinante Assinante { get; private set; }
+    public Usuario Usuario { get; private set; }
     public DateTime DataCriacao { get; private set; }
     public Noticia Noticia { get; private set; }
     public EstadoValidacaoComentario EstadoValidacao { get; private set; }
     public DateTime? DataValidacao { get; private set; }
     public Administrador ModeradorResponsavel { get; private set; }
-    public string MotivoRejeicao { get; private set; } = string.Empty;
+    public string MotivoRejeicao { get; private set; }
 
     private IList<string> _erros = new List<string>();
 
@@ -22,26 +22,26 @@ public class Comentario : Base
 
     }
 
-    public Comentario(string texto, Assinante assinante, Noticia noticia) : base()
+    public Comentario(string texto, Usuario usuario, Noticia noticia) : base()
     {
         DataCriacao = DateTime.UtcNow;
         EstadoValidacao = EstadoValidacaoComentario.Pendente;
 
-        DefinirUsuario(assinante);
+        DefinirUsuario(usuario);
         DefinirNoticia(noticia);
         DefinirTexto(texto);
     }
 
-    private void DefinirUsuario(Assinante assinante)
+    private void DefinirUsuario(Usuario usuario)
     {
-        if(assinante == null)
+        if(usuario == null)
             _erros.Add("Usuário é obrigatório!");
             //throw new ArgumentException(nameof(assinante),"Usuário é obrigatório!");
 
         if (_erros.Any())
             throw new ArgumentException(string.Join("\n", _erros));
 
-        Assinante = assinante;
+        Usuario = usuario;
     }
 
     private void DefinirNoticia(Noticia noticia)
@@ -111,6 +111,8 @@ public class Comentario : Base
         if (_erros.Any())
             throw new ArgumentException(string.Join("\n", _erros));
 
+
+        MotivoRejeicao = motivo;
         EstadoValidacao = estado;
         DataValidacao = DateTime.UtcNow;
         ModeradorResponsavel = moderador;

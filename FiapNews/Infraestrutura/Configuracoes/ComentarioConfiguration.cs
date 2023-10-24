@@ -17,7 +17,7 @@ namespace Infraestrutura.Configuracoes
             builder.Property(c => c.DataValidacao).HasColumnType("datetime");
             builder.Property(c => c.MotivoRejeicao).HasColumnType("varchar(500)");
             builder.Property("NoticiaId").IsRequired().HasColumnType("uniqueidentifier");
-            builder.Property("AssinanteId").IsRequired().HasColumnType("uniqueidentifier");
+            builder.Property("UsuarioId").IsRequired().HasColumnType("uniqueidentifier");
             builder.Property("ModeradorResponsavelId").HasColumnType("uniqueidentifier");
         }
     }
