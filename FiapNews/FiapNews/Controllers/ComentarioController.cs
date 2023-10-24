@@ -9,7 +9,7 @@ namespace FiapNews.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-[Authorize(Roles = "ADMINISTRADOR")]
+[Authorize(Roles = "ADMINISTRADOR, AUTOR, ASSINANTE")]
 public class ComentarioController : ControllerBase
 {
     private readonly IComentarioService _appService;
@@ -19,7 +19,7 @@ public class ComentarioController : ControllerBase
         _appService = appService;
     }
 
-    //Validar ou Reprovar comentario
+    [Authorize(Roles = "ADMINISTRADOR")]
     [HttpPut("AprovarComentario/{id}")]
     public async Task<IActionResult> Aprovar(Guid id)
     {
@@ -35,6 +35,7 @@ public class ComentarioController : ControllerBase
         }
     }
 
+    [Authorize(Roles = "ADMINISTRADOR")]
     [HttpPut("ReprovarComentario/{id}")]
     public async Task<IActionResult> Reprovar(Guid id, [FromBody] ComentarioModerarDto dto)
     {
@@ -66,6 +67,7 @@ public class ComentarioController : ControllerBase
         }
     }
 
+    [Authorize(Roles = "ADMINISTRADOR")]
     [HttpGet("Reprovados")]
     public async Task<IActionResult> GetReprovados()
     {
@@ -80,6 +82,7 @@ public class ComentarioController : ControllerBase
         }
     }
 
+    [Authorize(Roles = "ADMINISTRADOR")]
     [HttpGet("Pendentes")]
     public async Task<IActionResult> GetPendentes()
     {
@@ -111,6 +114,7 @@ public class ComentarioController : ControllerBase
         }
     }
 
+    [Authorize(Roles = "ADMINISTRADOR")]
     [HttpGet("Pendentes/Obter-Por-Noticia/{id}")]
     public async Task<IActionResult> GetPendentesPorNoticia(Guid id)
     {
@@ -125,6 +129,7 @@ public class ComentarioController : ControllerBase
         }
     }
 
+    [Authorize(Roles = "ADMINISTRADOR")]
     [HttpGet("Reprovados/Obter-Por-Noticia/{id}")]
     public async Task<IActionResult> GetReprovadosPorNoticia(Guid id)
     {
@@ -140,6 +145,7 @@ public class ComentarioController : ControllerBase
     }
 
     //Metodos CRD
+    [Authorize(Roles = "ADMINISTRADOR")]
     [HttpGet("Obter-Todos")]
     public async Task<IActionResult> ObterTodos()
     {
@@ -154,6 +160,7 @@ public class ComentarioController : ControllerBase
         }
     }
 
+    [Authorize(Roles = "ADMINISTRADOR")]
     [HttpGet("Obter-Por-Id/{id}")]
     public async Task<IActionResult> ObterPorId(Guid id)
     {
@@ -168,9 +175,7 @@ public class ComentarioController : ControllerBase
         }
     }
 
-    //[Authorize(Roles = "AUTOR, ADMINISTRADOR, ASSINANTE")]
-
-    [AllowAnonymous]
+    [Authorize(Roles = "AUTOR, ADMINISTRADOR, ASSINANTE")]
     [HttpPost("Adicionar")]
     public async Task<IActionResult> AdicionarAsync([FromBody] ComentarioDto comentarioDTO)
     {
@@ -188,6 +193,7 @@ public class ComentarioController : ControllerBase
         }
     }
 
+    [Authorize(Roles = "ADMINISTRADOR")]
     [HttpDelete("Deletar/{id}")]
     public async Task<IActionResult> Deletar( Guid id)
     {

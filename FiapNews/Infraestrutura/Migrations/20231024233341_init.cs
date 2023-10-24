@@ -239,8 +239,7 @@ namespace Infraestrutura.Migrations
                     EstadoValidacao = table.Column<int>(type: "int", nullable: false),
                     DataValidacao = table.Column<DateTime>(type: "datetime", nullable: true),
                     ModeradorResponsavelId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    MotivoRejeicao = table.Column<string>(type: "varchar(500)", nullable: true),
-                    AssinanteId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    MotivoRejeicao = table.Column<string>(type: "varchar(500)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -249,11 +248,6 @@ namespace Infraestrutura.Migrations
                         name: "FK_Comentario_Administrador_ModeradorResponsavelId",
                         column: x => x.ModeradorResponsavelId,
                         principalTable: "Administrador",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Comentario_Assinante_AssinanteId",
-                        column: x => x.AssinanteId,
-                        principalTable: "Assinante",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Comentario_Noticia_NoticiaId",
@@ -338,11 +332,6 @@ namespace Infraestrutura.Migrations
                 column: "NoticiasId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Comentario_AssinanteId",
-                table: "Comentario",
-                column: "AssinanteId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Comentario_ModeradorResponsavelId",
                 table: "Comentario",
                 column: "ModeradorResponsavelId");
@@ -372,6 +361,9 @@ namespace Infraestrutura.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Assinante");
+
+            migrationBuilder.DropTable(
                 name: "AutorNoticia");
 
             migrationBuilder.DropTable(
@@ -390,6 +382,9 @@ namespace Infraestrutura.Migrations
                 name: "NoticiaTag");
 
             migrationBuilder.DropTable(
+                name: "Assinatura");
+
+            migrationBuilder.DropTable(
                 name: "Autor");
 
             migrationBuilder.DropTable(
@@ -402,16 +397,10 @@ namespace Infraestrutura.Migrations
                 name: "Administrador");
 
             migrationBuilder.DropTable(
-                name: "Assinante");
-
-            migrationBuilder.DropTable(
                 name: "Noticia");
 
             migrationBuilder.DropTable(
                 name: "Tags");
-
-            migrationBuilder.DropTable(
-                name: "Assinatura");
 
             migrationBuilder.DropTable(
                 name: "Usuarios");

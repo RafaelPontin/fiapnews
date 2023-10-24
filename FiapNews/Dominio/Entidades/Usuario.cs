@@ -14,7 +14,8 @@ namespace Dominio.Entidades
         public string Foto { get; protected set; }
         public TipoUsuario Tipo { get; protected set; }
         public virtual bool PodeComentar { get => (Tipo == TipoUsuario.ADMINISTRADOR || Tipo == TipoUsuario.AUTOR); }
-        
+        public ICollection<Comentario> Comentarios { get; private set; }
+
         protected Usuario()
         {
 

@@ -94,9 +94,6 @@ namespace Infraestrutura.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("AssinanteId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<DateTime>("DataCriacao")
                         .HasColumnType("datetime");
 
@@ -125,8 +122,6 @@ namespace Infraestrutura.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AssinanteId");
 
                     b.HasIndex("ModeradorResponsavelId");
 
@@ -351,10 +346,6 @@ namespace Infraestrutura.Migrations
 
             modelBuilder.Entity("Dominio.Entidades.Comentario", b =>
                 {
-                    b.HasOne("Dominio.Entidades.Assinante", null)
-                        .WithMany("Comentarios")
-                        .HasForeignKey("AssinanteId");
-
                     b.HasOne("Dominio.Entidades.Administrador", "ModeradorResponsavel")
                         .WithMany()
                         .HasForeignKey("ModeradorResponsavelId");
@@ -366,7 +357,7 @@ namespace Infraestrutura.Migrations
                         .IsRequired();
 
                     b.HasOne("Dominio.Entidades.Usuario", "Usuario")
-                        .WithMany()
+                        .WithMany("Comentarios")
                         .HasForeignKey("UsuarioId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -469,7 +460,7 @@ namespace Infraestrutura.Migrations
                     b.Navigation("Comentarios");
                 });
 
-            modelBuilder.Entity("Dominio.Entidades.Assinante", b =>
+            modelBuilder.Entity("Dominio.Entidades.Usuario", b =>
                 {
                     b.Navigation("Comentarios");
                 });
