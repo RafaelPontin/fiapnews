@@ -233,13 +233,14 @@ namespace Infraestrutura.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Texto = table.Column<string>(type: "varchar(1000)", nullable: false),
-                    AssinanteId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UsuarioId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     DataCriacao = table.Column<DateTime>(type: "datetime", nullable: false),
                     NoticiaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     EstadoValidacao = table.Column<int>(type: "int", nullable: false),
                     DataValidacao = table.Column<DateTime>(type: "datetime", nullable: true),
                     ModeradorResponsavelId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    MotivoRejeicao = table.Column<string>(type: "varchar(500)", nullable: true)
+                    MotivoRejeicao = table.Column<string>(type: "varchar(500)", nullable: true),
+                    AssinanteId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -253,12 +254,17 @@ namespace Infraestrutura.Migrations
                         name: "FK_Comentario_Assinante_AssinanteId",
                         column: x => x.AssinanteId,
                         principalTable: "Assinante",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Comentario_Noticia_NoticiaId",
                         column: x => x.NoticiaId,
                         principalTable: "Noticia",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Comentario_Usuarios_UsuarioId",
+                        column: x => x.UsuarioId,
+                        principalTable: "Usuarios",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -345,6 +351,11 @@ namespace Infraestrutura.Migrations
                 name: "IX_Comentario_NoticiaId",
                 table: "Comentario",
                 column: "NoticiaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comentario_UsuarioId",
+                table: "Comentario",
+                column: "UsuarioId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_NoticiaNoticia_NoticiasRelacionadasId",

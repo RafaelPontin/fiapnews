@@ -173,10 +173,10 @@ public class ComentarioService : IComentarioService
         switch (role)
         {
             case "AUTOR":
-                usuario = await _autorRepository.ObterPorIdAsync(idUsuario);
+                usuario = await _autorRepository.ObterAutorPorId(idUsuario);
                 break;
             case "ASSINANTE":
-                usuario = await _assinanteRepository.ObterPorIdAsync(idUsuario);
+                usuario = await _assinanteRepository.ObterAssinantePorId(idUsuario);
                 break;
             case "ADMINISTRADOR":
                 usuario = await _administradorRepository.ObterPorIdAsync(idUsuario);
