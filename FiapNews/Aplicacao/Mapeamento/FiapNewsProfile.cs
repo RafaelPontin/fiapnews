@@ -29,6 +29,8 @@ namespace Aplicacao.Mapeamento
 
             CreateMap<Comentario, ComentarioDto>().ReverseMap();
             CreateMap<Comentario, ComentarioRetornoDto>().ReverseMap();
+            CreateMap<Assinatura, AssinaturaDto>().ReverseMap();
+            
         }
     }
 }

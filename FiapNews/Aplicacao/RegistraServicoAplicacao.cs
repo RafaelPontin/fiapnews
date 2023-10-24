@@ -14,6 +14,7 @@ namespace Aplicacao
             services.AddScoped<IRedeSocialService, RedeSocialService>();
             services.AddScoped<IAutorService, AutorService>();
             services.AddScoped<IAssinanteService, AssinanteService>();
+            services.AddScoped<IAssinaturaService, AssinaturaService>();
             services.AddScoped(typeof(IUsuarioService<>), typeof(UsuarioService<>));            
             services.AddScoped<IComentarioService, ComentarioService>();
             services.AddScoped<ITagService, TagService>();
