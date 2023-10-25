@@ -126,15 +126,6 @@ public class ComentarioService : IComentarioService
     {
         if (entidade == null)
             _erros.Add("Comentario informada não encontrada.");
-        
-        if (entidade.Noticia is null)
-            _erros.Add("Noticia informada não encontrada.");
-        
-        if (entidade.Usuario is null)
-            _erros.Add("Assinante informado não encontrado.");
-
-        if (entidade.Usuario.PodeComentar)
-            _erros.Add(entidade.Usuario.Nome + " não pode comentar.");
 
         if (_erros.Any())
             throw new Exception(string.Join("\n", _erros));
@@ -165,6 +156,7 @@ public class ComentarioService : IComentarioService
     {
         var comentario = await _comentarioRepository.ObterPorIdAsync(id);
         ValidarDelecao(comentario);
+        await _comentarioRepository.DeletarAsync(comentario);
     }
 
     private async Task<Usuario> RetornarUsuarioAsync(Guid idUsuario,string role)
