@@ -32,6 +32,10 @@ public class ComentarioService : IComentarioService
     public async Task Aprovar(Guid idComentario, Guid idAdministrador)
     {
         Comentario comentario = await _comentarioRepository.ObterPorIdAsync(idComentario);
+
+        if (comentario is null)
+            throw new Exception("Comentario não encontrado.");
+
         Administrador administrador = await _administradorRepository.ObterPorIdAsync(idAdministrador);
 
         comentario.AprovarComentario(administrador);
@@ -39,9 +43,11 @@ public class ComentarioService : IComentarioService
     }
     public async Task Reprovar(Guid idComentario, Guid idAdministrador, string motivo)
     {
-        if (string.IsNullOrWhiteSpace(motivo))
-            _erros.Add("Informe o motivo da reprovação.");
         Comentario comentario = await _comentarioRepository.ObterPorIdAsync(idComentario);
+
+        if (comentario is null)
+            throw new Exception("Comentario não encontrado.");
+
         Administrador administrador = await _administradorRepository.ObterPorIdAsync(idAdministrador);
 
         comentario.ReprovarComentario(administrador, motivo);
