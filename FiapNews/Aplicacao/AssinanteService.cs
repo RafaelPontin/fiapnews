@@ -11,6 +11,7 @@ namespace Aplicacao
     public class AssinanteService : ServiceBase<AssinanteDto, Assinante, IRepositoryBase<Assinante>>, IAssinanteService
     {
         private readonly IAssinanteRepository _repository;
+        private readonly IAssinaturaRepository _assinaturaRepository;
         private readonly IUsuarioService<Assinante> _usuarioService;
         private readonly IHttpContextAccessor _accessor;
 
@@ -18,11 +19,13 @@ namespace Aplicacao
             IAssinanteRepository repository,
             IMapper mapper,
             IUsuarioService<Assinante> usuarioService,
-            IHttpContextAccessor accessor) : base(repository, mapper)
+            IHttpContextAccessor accessor,
+            IAssinaturaRepository assinaturaRepository) : base(repository, mapper)
         {
             _repository = repository;
             _usuarioService = usuarioService;
             _accessor = accessor;
+            _assinaturaRepository = assinaturaRepository;
         }
 
         protected override Assinante DefinirEntidadeInclusao(AssinanteDto dto)
@@ -46,10 +49,10 @@ namespace Aplicacao
 
             if (string.IsNullOrWhiteSpace(dto.Login))
                 _erros.Add("Informe o login do assinante.");
-            
+
             if (string.IsNullOrWhiteSpace(dto.Senha))
                 _erros.Add("Informe a senha do assinante.");
-            
+
             if (string.IsNullOrWhiteSpace(dto.Email))
                 _erros.Add("Informe a email do assinante.");
 
@@ -76,13 +79,13 @@ namespace Aplicacao
         }
 
         public override async Task<AssinanteDto> ObterPorIdAsync(Guid id)
-        {            
-            return _mapper.Map<AssinanteDto>(await _repository.ObterAssinantePorId(id));            
+        {
+            return _mapper.Map<AssinanteDto>(await _repository.ObterAssinantePorId(id));
         }
 
         public override async Task<IReadOnlyList<AssinanteDto>> ObterTodosAsync()
-        {            
-            return _mapper.Map<IReadOnlyList<AssinanteDto>>(await _repository.ObterAssinantes());            
+        {
+            return _mapper.Map<IReadOnlyList<AssinanteDto>>(await _repository.ObterAssinantes());
         }
 
         public async Task AlterarSenha(AlterarSenhaDto alterarSenhaDto)
@@ -99,17 +102,31 @@ namespace Aplicacao
             return _usuarioService.Autenticar(loginDto);
         }
 
-        public void Assinar(AssinaturaDto assinaturaDto)
+        public async Task AssinarAsync(AssinarDto assinarDto)
         {
-            ObterUserId();
+
+            var assinanteId = ObterUserId();
+            if (Guid.Empty == assinanteId || assinanteId == null)
+                throw new Exception("Não foi possível realizar a assinatura");
+
+            var assinatura = await _assinaturaRepository.ObterPorIdAsync(assinarDto.AssinaturaId);
+            if (assinatura == null)
+                throw new Exception("Não foi possível realizar a assinatura. Assinatura informada não encontrada");
+
+            var usuario = await _repository.ObterAssinantePorId(assinanteId.Value);
+            if (usuario == null)
+                throw new Exception("Não foi possível realizar a assinatura. Usuário não encontrado");
+
+            usuario.DefinirAssinatura(assinatura);
+            await _repository.AlterarAsync(usuario);
         }
 
-        public Guid ObterUserId()
+        private Guid? ObterUserId()
         {
-            var dd = _accessor.HttpContext.User.Identity as ClaimsIdentity;
+            var claims = _accessor.HttpContext.User.Identity as ClaimsIdentity;
 
-            var x = _accessor.HttpContext.User.FindFirst("Id");
-            return  Guid.Parse(x?.Value);
+            var assinanteId = _accessor.HttpContext.User.FindFirst("Id");
+            return Guid.Parse(assinanteId?.Value);
         }
     }
 

@@ -69,12 +69,12 @@ namespace FiapNews.Controllers
 
         [Authorize(Roles = "ASSINANTE")]
         [HttpPost("Assinar")]
-        public IActionResult Assinaar(AssinaturaDto assinaturaDto)
+        public async Task<IActionResult> Assinaar(AssinarDto assinarDto)
         {
             try
             {
-                appService.Assinar(assinaturaDto);
-                return Ok("Senha recuperada com sucesso. Verifique o email de cadastro");
+                await appService.AssinarAsync(assinarDto);
+                return Ok("Assinatura realizada com sucesso");
             }
             catch (Exception ex)
             {

@@ -16,7 +16,7 @@ namespace Infraestrutura.Persistencia
         
         public DbSet<Administrador> Administradores { get; set; }
         public DbSet<Assinante> Assinantes { get; set; }
-        public DbSet<Administrador> Assinatura { get; set; }
+        public DbSet<Assinatura> Assinatura { get; set; }
         public DbSet<Autor> Autores { get; set; }
         public DbSet<Categoria> Categorias { get; set; }
         public DbSet<Comentario> Comentarios { get; set; }

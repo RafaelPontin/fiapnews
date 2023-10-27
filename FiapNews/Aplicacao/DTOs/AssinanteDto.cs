@@ -4,5 +4,4 @@
     {
         public AssinaturaDto Assinatura { get; set; }
     }
-
 }

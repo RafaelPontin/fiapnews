@@ -4,7 +4,7 @@ using Dominio.ObjetosDeValor;
 namespace Infraestrutura.Persistencia
 {
     public static class FiapNewsSeed
-    {
+    {        
         public static void Seed(FiapNewsContext context)
         {
             if (!context.Administradores.Any())
@@ -12,11 +12,20 @@ namespace Infraestrutura.Persistencia
                 context.Administradores.AddRange(Administradores());
                 context.Autores.AddRange(Autores());
                 context.Assinantes.AddRange(Assinantes());
+                context.Assinatura.AddRange(Assinaturas());
+                context.SaveChanges();
+
+                var autores = context.Autores.ToList();
+                var assinantes = context.Assinantes.ToList();
+                
                 context.RedesSociais.AddRange(RedesSociais());
                 context.Tags.AddRange(Tags());
                 context.Categorias.AddRange(Categorias());
-                context.Noticias.AddRange(Noticias());
-                context.Comentarios.AddRange(Comentarios());
+                context.Noticias.AddRange(Noticias(autores));
+                context.SaveChanges();
+
+                var noticias = context.Noticias.ToList();
+                context.Comentarios.AddRange(Comentarios(noticias, assinantes));
                 context.SaveChanges();
             }            
         }
@@ -41,7 +50,7 @@ namespace Infraestrutura.Persistencia
         {
             return new List<Assinante>()
             {
-                new Assinante("Assinante", "assinante", "123456", "autor@email.com", "foto.jpg"),
+                new Assinante("Assinante", "assinante", "123456", "assinante@email.com", "foto.jpg"),
             };
         }
 
@@ -77,21 +86,29 @@ namespace Infraestrutura.Persistencia
         }
 
 
-        private static List<Noticia> Noticias()
+        private static List<Noticia> Noticias(List<Autor> autores)
         {
             var categorias = Categorias().Where(c => c.Descricao == "Futebol").ToList();
             return new List<Noticia>() {
-                new Noticia("Partidade de futebol", "golllll", "teste teste", "teste", categorias, Autores(), "brasil", false)
+                new Noticia("Partidade de futebol", "golllll", "teste teste", "teste", categorias, autores, "brasil", false)
             };
         }   
 
-        private static List<Comentario> Comentarios()
+        private static List<Comentario> Comentarios(List<Noticia> noticias, List<Assinante> assinantes)
         {
             return new List<Comentario>()
             {
-                new Comentario("Gol do flamengo", Assinantes().FirstOrDefault(), Noticias().FirstOrDefault())
+                new Comentario("Gol do flamengo", assinantes.FirstOrDefault(), noticias.FirstOrDefault())
             };
         }
 
+
+        private static List<Assinatura> Assinaturas()
+        {
+            return new List<Assinatura>()
+            {
+                new Assinatura(Dominio.Enum.TipoAssinatura.PAGO)
+            };
+        }
     }
 }
