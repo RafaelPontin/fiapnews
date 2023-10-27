@@ -17,7 +17,6 @@ namespace Dominio.Entidades
         
         public Assinatura Assinatura { get; private set; }
         public override bool PodeComentar { get => Assinatura.PodeComentar; }
-        public ICollection<Comentario> Comentarios { get; private set; }
 
         public void DefinirAssinatura(Assinatura assinatura)
         {
