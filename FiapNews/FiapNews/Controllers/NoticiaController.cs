@@ -31,21 +31,4 @@ public class NoticiaController : BaseController<Noticia, NoticiaDto, INoticiaSer
         return base.ObterTodosAsync();
     }
 
-    [Authorize(Roles = "ADMINISTRADOR")]
-    public override async Task<IActionResult> AdicionarAsync(NoticiaDto dto)
-    {
-        return await base.AdicionarAsync(dto);
-    }
-
-    [Authorize(Roles = "ADMINISTRADOR")]
-    public override async Task<IActionResult> AlterarAsync(NoticiaDto dto)
-    {
-        return await base.AlterarAsync(dto);
-    }
-
-    [Authorize(Roles = "ADMINISTRADOR")]
-    public override async Task<IActionResult> DeletarAsync(Guid id)
-    {
-        return await base.DeletarAsync(id);
-    }
 }
