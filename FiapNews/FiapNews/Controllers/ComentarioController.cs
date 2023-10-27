@@ -7,6 +7,7 @@ namespace FiapNews.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize(Roles = "ADMINISTRADOR")]
 public class ComentarioController : ControllerBase
 {
     private readonly IComentarioService _appService;
@@ -17,7 +18,6 @@ public class ComentarioController : ControllerBase
     }
 
     //Validar ou Reprovar comentario
-    [Authorize(Roles = "ADMINISTRADOR")]
     [HttpPut("Aprovar/{idComentario}")]
     public async Task<IActionResult> Aprovar([FromRoute] Guid idComentario, [FromHeader] Guid idAdministrador)
     {
@@ -32,7 +32,6 @@ public class ComentarioController : ControllerBase
         }
     }
 
-    [Authorize(Roles = "ADMINISTRADOR")]
     [HttpPut("Reprovar/{idComentario}")]
     public async Task<IActionResult> Reprovar([FromRoute] Guid idComentario, [FromHeader] Guid idAdministrador, [FromBody] string motivo)
     {
@@ -48,6 +47,7 @@ public class ComentarioController : ControllerBase
     }
 
     //BuscarTodos
+    [AllowAnonymous]
     [HttpGet("Aprovados")]
     public async Task<IActionResult> GetAprovados()
     {
@@ -62,7 +62,6 @@ public class ComentarioController : ControllerBase
         }
     }
 
-    [Authorize(Roles = "ADMINISTRADOR")]
     [HttpGet("Reprovados")]
     public async Task<IActionResult> GetReprovados()
     {
@@ -77,7 +76,6 @@ public class ComentarioController : ControllerBase
         }
     }
 
-    [Authorize(Roles = "ADMINISTRADOR")]
     [HttpGet("Pendentes")]
     public async Task<IActionResult> GetPendentes()
     {
@@ -94,6 +92,7 @@ public class ComentarioController : ControllerBase
 
 
     //BuscarPorNoticia
+    [AllowAnonymous]
     [HttpGet("Aprovados/{idNoticia}")]
     public async Task<IActionResult> GetAprovadosPorNoticia([FromRoute] Guid idNoticia)
     {
@@ -108,7 +107,6 @@ public class ComentarioController : ControllerBase
         }
     }
 
-    [Authorize(Roles = "ADMINISTRADOR")]
     [HttpGet("Pendentes/{idNoticia}")]
     public async Task<IActionResult> GetPendentesPorNoticia([FromRoute] Guid idNoticia)
     {
@@ -123,7 +121,6 @@ public class ComentarioController : ControllerBase
         }
     }
 
-    [Authorize(Roles = "ADMINISTRADOR")]
     [HttpGet("Reprovados/{idNoticia}")]
     public async Task<IActionResult> GetReprovadosPorNoticia([FromRoute] Guid idNoticia)
     {
@@ -138,8 +135,7 @@ public class ComentarioController : ControllerBase
         }
     }
 
-    //MetodosBasicos
-    [Authorize(Roles = "ADMINISTRADOR")]
+    //Metodos CRD
     [HttpGet]
     public async Task<IActionResult> ObterTodos()
     {
@@ -154,7 +150,6 @@ public class ComentarioController : ControllerBase
         }
     }
 
-    [Authorize(Roles = "ADMINISTRADOR")]
     [HttpGet("{id}")]
     public async Task<IActionResult> ObterPorId([FromRoute] Guid id)
     {
@@ -169,7 +164,7 @@ public class ComentarioController : ControllerBase
         }
     }
 
-    [Authorize]
+    [AllowAnonymous]
     [HttpPost]
     public async Task<IActionResult> AdicionarAsync([FromBody] ComentarioDto comentarioDTO)
     {
@@ -184,7 +179,6 @@ public class ComentarioController : ControllerBase
         }
     }
 
-    [Authorize(Roles = "ADMINISTRADOR")]
     [HttpDelete("{id}")]
     public async Task<IActionResult> Deletar([FromRoute] Guid id)
     {

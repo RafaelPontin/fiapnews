@@ -13,6 +13,8 @@ namespace Aplicacao.Mapeamento
             CreateMap<Categoria, CategoriaDto>().ReverseMap();
             CreateMap<RedeSocial, RedeSocialDto>().ReverseMap();
             CreateMap<Comentario, ComentarioDto>().ReverseMap();
+            CreateMap<Comentario, ComentarioRetornoDto>()
+                 .ForMember(x => x.AssinanteId, opt => opt.MapFrom(i => i.Assinante.Id));
             CreateMap<Assinatura, AssinaturaDto>().ReverseMap();
             CreateMap<Autor, AutorDto>()
                 .ForMember(x => x.Senha, opt => opt.Ignore())
@@ -27,6 +29,8 @@ namespace Aplicacao.Mapeamento
             CreateMap<AdministradorDto, Administrador>();
             CreateMap<Tag, TagDto>().ReverseMap();
             CreateMap<Noticia, NoticiaDto>().ReverseMap();
+            CreateMap<Assinatura, AssinaturaDto>().ReverseMap();
+            
         }
     }
 }

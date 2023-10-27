@@ -11,7 +11,7 @@ namespace FiapNews.Controllers;
 public class NoticiaController : BaseController<Noticia, NoticiaDto, INoticiaService>
 {
 
-    public NoticiaController(INoticiaService appService) : base(appService){}
+    public NoticiaController(INoticiaService appService) : base(appService) { }
 
     [HttpGet("Obter-Por-Categoria/{id}")]
     public IActionResult ObterNoticiaPorCategoria(Guid id)
@@ -30,4 +30,5 @@ public class NoticiaController : BaseController<Noticia, NoticiaDto, INoticiaSer
     {
         return base.ObterTodosAsync();
     }
+
 }

@@ -15,6 +15,8 @@ namespace Infraestrutura.Persistencia
                 context.RedesSociais.AddRange(RedesSociais());
                 context.Tags.AddRange(Tags());
                 context.Categorias.AddRange(Categorias());
+                context.Noticias.AddRange(Noticias());
+                context.Comentarios.AddRange(Comentarios());
                 context.SaveChanges();
             }            
         }
@@ -73,5 +75,23 @@ namespace Infraestrutura.Persistencia
                 new Categoria("Mundo"),
             };
         }
+
+
+        private static List<Noticia> Noticias()
+        {
+            var categorias = Categorias().Where(c => c.Descricao == "Futebol").ToList();
+            return new List<Noticia>() {
+                new Noticia("Partidade de futebol", "golllll", "teste teste", "teste", categorias, Autores(), "brasil", false)
+            };
+        }   
+
+        private static List<Comentario> Comentarios()
+        {
+            return new List<Comentario>()
+            {
+                new Comentario("Gol do flamengo", Assinantes().FirstOrDefault(), Noticias().FirstOrDefault())
+            };
+        }
+
     }
 }

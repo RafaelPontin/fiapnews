@@ -7,7 +7,7 @@ namespace Dominio.Entidades
         public TipoAssinatura TipoAssinatura { get; private set; }
         public double Preco { get; private set; }
         public int TipoPlano { get; private set; }
-        public bool PodeComentar { get => TipoAssinatura == TipoAssinatura.PAGO; }
+        public bool PodeComentar { get => UsuarioPodeComentar(); }
 
         protected Assinatura()
         {
@@ -19,6 +19,14 @@ namespace Dominio.Entidades
             AdicionaAssinatura(tipoAssinatura);
         }
 
+        public Assinatura(TipoAssinatura tipoAssinatura, double preco, int tipoPlano)
+        {
+            TipoAssinatura = tipoAssinatura;
+            CalculaPreco(preco);
+            CalculaPeriodicidade(tipoPlano);
+        }
+
+
         private void AdicionaAssinatura(TipoAssinatura tipoAssinatura)
         {
             TipoAssinatura = tipoAssinatura;
@@ -26,24 +34,35 @@ namespace Dominio.Entidades
             CalculaPeriodicidade();
         }
 
-        private void CalculaPreco()
+        public void CalculaPreco(double preco = 0)
         {
             switch (TipoAssinatura)
             {
                 case TipoAssinatura.BASICO: Preco = 0; break;
                 case TipoAssinatura.PAGO: Preco = 50; break;
-                default: throw new ArgumentException("Não foi possivel encontrar Preço para o TipoAssinatura ", nameof(Preco));
             }
+            if(preco != 0) Preco = preco;
         }
 
-        private void CalculaPeriodicidade()
+        public void CalculaPeriodicidade(int tipoPlano = 0)
         {
             switch (TipoAssinatura) 
             {
                 case TipoAssinatura.BASICO: TipoPlano = 360; break;
                 case TipoAssinatura.PAGO:   TipoPlano = 30; break;
-                default: throw new ArgumentException("Não foi possivel encontrar Preço para o TipoPlano ", nameof(TipoPlano));
             }
+            if (tipoPlano != 0) TipoPlano = tipoPlano;
+        }
+
+        public void AlterarTipoAssinatura(TipoAssinatura tipoAssinatura)
+        {
+            TipoAssinatura = tipoAssinatura;
+        }
+
+        private bool UsuarioPodeComentar()
+        {
+            if (TipoAssinatura == TipoAssinatura.PAGO) return true;
+            else return false;
         }
     }
 }

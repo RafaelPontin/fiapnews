@@ -1,4 +1,6 @@
-﻿using Aplicacao.Contratos.Persistencia;
+﻿using Aplicacao;
+using Aplicacao.Contratos.Persistencia;
+using Aplicacao.Contratos.Servico;
 using Infraestrutura.Persistencia;
 using Infraestrutura.Repositorio;
 using Microsoft.AspNetCore.Builder;
@@ -17,6 +19,7 @@ namespace Infraestrutura
 
             services.AddScoped(typeof(IRepositoryBase<>), typeof(RepositoryBase<>));
             services.AddScoped(typeof(IAutorRepository), typeof(AutorRepository));
+            services.AddScoped<IAssinaturaRepository, AssinaturaRepository>();
             services.AddScoped(typeof(IAssinanteRepository), typeof(AssinanteRepository));
             services.AddScoped(typeof(IUsuarioRepository), typeof(UsuarioRepository));
             services.AddScoped<ITagRepository, TagRepository>();
