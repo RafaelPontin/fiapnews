@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FiapNews.Controllers
 {
-    [Authorize(Roles = "ADMINISTRADOR")]
+    [Authorize(Roles = "ADMINISTRADOR, ASSINANTE")]
     public class AssinanteController : BaseController<Assinante, AssinanteDto, IAssinanteService>
     {
         private readonly IAssinanteService appService;
@@ -60,6 +60,21 @@ namespace FiapNews.Controllers
                 if (string.IsNullOrWhiteSpace(token))
                     return StatusCode(StatusCodes.Status400BadRequest, "Dados Informados inválidos");
                 return Ok(token);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+        [Authorize(Roles = "ASSINANTE")]
+        [HttpPost("Assinar")]
+        public IActionResult Assinaar(AssinaturaDto assinaturaDto)
+        {
+            try
+            {
+                appService.Assinar(assinaturaDto);
+                return Ok("Senha recuperada com sucesso. Verifique o email de cadastro");
             }
             catch (Exception ex)
             {

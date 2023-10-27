@@ -3,6 +3,8 @@ using Aplicacao.Contratos.Servico;
 using Aplicacao.DTOs;
 using AutoMapper;
 using Dominio.Entidades;
+using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 
 namespace Aplicacao
 {
@@ -10,14 +12,17 @@ namespace Aplicacao
     {
         private readonly IAssinanteRepository _repository;
         private readonly IUsuarioService<Assinante> _usuarioService;
+        private readonly IHttpContextAccessor _accessor;
 
         public AssinanteService(
             IAssinanteRepository repository,
             IMapper mapper,
-            IUsuarioService<Assinante> usuarioService) : base(repository, mapper)
+            IUsuarioService<Assinante> usuarioService,
+            IHttpContextAccessor accessor) : base(repository, mapper)
         {
             _repository = repository;
             _usuarioService = usuarioService;
+            _accessor = accessor;
         }
 
         protected override Assinante DefinirEntidadeInclusao(AssinanteDto dto)
@@ -92,6 +97,19 @@ namespace Aplicacao
         public string Autenticar(LoginDto loginDto)
         {
             return _usuarioService.Autenticar(loginDto);
+        }
+
+        public void Assinar(AssinaturaDto assinaturaDto)
+        {
+            ObterUserId();
+        }
+
+        public Guid ObterUserId()
+        {
+            var dd = _accessor.HttpContext.User.Identity as ClaimsIdentity;
+
+            var x = _accessor.HttpContext.User.FindFirst("Id");
+            return  Guid.Parse(x?.Value);
         }
     }
 
