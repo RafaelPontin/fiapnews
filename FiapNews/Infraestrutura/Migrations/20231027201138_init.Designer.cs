@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infraestrutura.Migrations
 {
     [DbContext(typeof(FiapNewsContext))]
-    [Migration("20231027175710_inicial")]
-    partial class inicial
+    [Migration("20231027201138_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -97,10 +97,6 @@ namespace Infraestrutura.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("AssinanteId")
-                        .IsRequired()
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<DateTime>("DataCriacao")
                         .HasColumnType("datetime");
 
@@ -124,13 +120,17 @@ namespace Infraestrutura.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(1000)");
 
-                    b.HasKey("Id");
+                    b.Property<Guid?>("UsuarioId")
+                        .IsRequired()
+                        .HasColumnType("uniqueidentifier");
 
-                    b.HasIndex("AssinanteId");
+                    b.HasKey("Id");
 
                     b.HasIndex("ModeradorResponsavelId");
 
                     b.HasIndex("NoticiaId");
+
+                    b.HasIndex("UsuarioId");
 
                     b.ToTable("Comentario", (string)null);
                 });
@@ -349,12 +349,6 @@ namespace Infraestrutura.Migrations
 
             modelBuilder.Entity("Dominio.Entidades.Comentario", b =>
                 {
-                    b.HasOne("Dominio.Entidades.Assinante", "Assinante")
-                        .WithMany("Comentarios")
-                        .HasForeignKey("AssinanteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Dominio.Entidades.Administrador", "ModeradorResponsavel")
                         .WithMany()
                         .HasForeignKey("ModeradorResponsavelId");
@@ -365,11 +359,17 @@ namespace Infraestrutura.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Assinante");
+                    b.HasOne("Dominio.Entidades.Usuario", "Usuario")
+                        .WithMany("Comentarios")
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("ModeradorResponsavel");
 
                     b.Navigation("Noticia");
+
+                    b.Navigation("Usuario");
                 });
 
             modelBuilder.Entity("Dominio.Entidades.Usuario", b =>
@@ -463,7 +463,7 @@ namespace Infraestrutura.Migrations
                     b.Navigation("Comentarios");
                 });
 
-            modelBuilder.Entity("Dominio.Entidades.Assinante", b =>
+            modelBuilder.Entity("Dominio.Entidades.Usuario", b =>
                 {
                     b.Navigation("Comentarios");
                 });
