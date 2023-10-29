@@ -33,3 +33,13 @@
 **Senha:** 123456 
 
 [Documentação da regra de negocio e dos termos de aceite](https://github.com/RafaelPontin/fiapnews/wiki/Dom%C3%ADnio)  
+
+
+|Alunos| E-mail|
+|------|-------|
+|Antonio Andderson de Freitas Soares| Antonio Andderson de Freitas Soares|
+|Elielson do Nascimento Rodrigues|elielsonrj@hotmail.com|
+|RAFAEL FAUSTINO MAGALHAES PONTIN|rfmpontin@gmail.com|
+|Alexssander Ferreira do Nascimento|alexssanderferreira@hotmail.com|
+|Autran Francisco Martine Castão|autran.martine@gmail.com|
+
