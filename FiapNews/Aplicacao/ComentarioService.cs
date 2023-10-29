@@ -14,14 +14,16 @@ public class ComentarioService : IComentarioService
     private readonly IAdministradorRepository _administradorRepository;
     private readonly INoticiaRepository _noticiaRepository;
     private readonly IAssinanteRepository _assinanteRepository;
+    private readonly IAutorRepository _autorRepository;
     protected List<string> _erros;
 
-    public ComentarioService(IComentarioRepository comentarioRepository, IMapper mapper, IAdministradorRepository administradorRepository, INoticiaRepository noticiaRepository, IAssinanteRepository assinanteRepository)
+    public ComentarioService(IComentarioRepository comentarioRepository, IMapper mapper, IAdministradorRepository administradorRepository, INoticiaRepository noticiaRepository, IAssinanteRepository assinanteRepository, IAutorRepository autorRepository)
     {
         _comentarioRepository = comentarioRepository;
         _administradorRepository = administradorRepository;
         _noticiaRepository = noticiaRepository;
         _assinanteRepository = assinanteRepository;
+        _autorRepository =  autorRepository;
         _mapper = mapper;
         _erros = new List<string>();
     }
@@ -30,19 +32,23 @@ public class ComentarioService : IComentarioService
     public async Task Aprovar(Guid idComentario, Guid idAdministrador)
     {
         Comentario comentario = await _comentarioRepository.ObterPorIdAsync(idComentario);
+
+        if (comentario is null)
+            throw new Exception("Comentario não encontrado.");
+
         Administrador administrador = await _administradorRepository.ObterPorIdAsync(idAdministrador);
-        ValidarValores(comentario);
 
         comentario.AprovarComentario(administrador);
         await _comentarioRepository.AlterarAsync(comentario);
     }
     public async Task Reprovar(Guid idComentario, Guid idAdministrador, string motivo)
     {
-        if (string.IsNullOrWhiteSpace(motivo))
-            _erros.Add("Informe o motivo da reprovação.");
         Comentario comentario = await _comentarioRepository.ObterPorIdAsync(idComentario);
+
+        if (comentario is null)
+            throw new Exception("Comentario não encontrado.");
+
         Administrador administrador = await _administradorRepository.ObterPorIdAsync(idAdministrador);
-        ValidarValores(comentario);
 
         comentario.ReprovarComentario(administrador, motivo);
         await _comentarioRepository.AlterarAsync(comentario);
@@ -113,11 +119,11 @@ public class ComentarioService : IComentarioService
         if (entidade.Noticia is null)
             _erros.Add("Noticia informada não encontrada.");
 
-        if (entidade.Assinante is null)
+        if (entidade.Usuario is null)
             _erros.Add("Assinante informado não encontrado.");
 
-        if (!entidade.Assinante.PodeComentar)
-            _erros.Add(entidade.Assinante.Nome + " não pode comentar.");
+        if (!entidade.Usuario.PodeComentar)
+            _erros.Add(entidade.Usuario.Nome + " não pode comentar.");
 
         if (_erros.Any())
             throw new Exception(string.Join("\n", _erros));
@@ -126,27 +132,18 @@ public class ComentarioService : IComentarioService
     {
         if (entidade == null)
             _erros.Add("Comentario informada não encontrada.");
-        
-        if (entidade.Noticia is null)
-            _erros.Add("Noticia informada não encontrada.");
-        
-        if (entidade.Assinante is null)
-            _erros.Add("Assinante informado não encontrado.");
-
-        if (entidade.Assinante.PodeComentar)
-            _erros.Add(entidade.Assinante.Nome + " não pode comentar.");
 
         if (_erros.Any())
             throw new Exception(string.Join("\n", _erros));
     }
 
     //MetodosBasicos
-    public async Task AdicionarAsync(ComentarioDto dto)
+    public async Task AdicionarAsync(ComentarioDto dto,Guid usuarioId, string role)
     {
         ValidarValoresDto(dto);
         Noticia noticia = await _noticiaRepository.ObterPorIdAsync(dto.NoticiaId);
-        Assinante assinante = await _assinanteRepository.ObterAssinantePorId(dto.AssinanteId);
-        Comentario comentario = new(dto.Texto, assinante, noticia);
+        Usuario usuario = await RetornarUsuarioAsync(usuarioId, role);
+        Comentario comentario = new(dto.Texto, usuario, noticia);
         ValidarValores(comentario);
 
         await _comentarioRepository.AdicionarAsync(comentario);
@@ -165,5 +162,28 @@ public class ComentarioService : IComentarioService
     {
         var comentario = await _comentarioRepository.ObterPorIdAsync(id);
         ValidarDelecao(comentario);
+        await _comentarioRepository.DeletarAsync(comentario);
+    }
+
+    private async Task<Usuario> RetornarUsuarioAsync(Guid idUsuario,string role)
+    {
+        Usuario usuario = null;
+        switch (role)
+        {
+            case "AUTOR":
+                usuario = await _autorRepository.ObterAutorPorId(idUsuario);
+                break;
+            case "ASSINANTE":
+                usuario = await _assinanteRepository.ObterAssinantePorId(idUsuario);
+                break;
+            case "ADMINISTRADOR":
+                usuario = await _administradorRepository.ObterPorIdAsync(idUsuario);
+                break;
+        }
+
+        if (usuario is null)
+            _erros.Add("Usuario não encontrado.");
+
+        return usuario;
     }
 }

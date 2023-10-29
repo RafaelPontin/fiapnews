@@ -4,7 +4,6 @@ using Aplicacao.DTOs;
 using AutoMapper;
 using Dominio.Entidades;
 using Dominio.ObjetosDeValor;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Aplicacao;
 public class NoticiaService : ServiceBase<NoticiaDto, Noticia, INoticiaRepository>, INoticiaService
@@ -96,6 +95,7 @@ public class NoticiaService : ServiceBase<NoticiaDto, Noticia, INoticiaRepositor
         if (entidade == null)
             throw new ArgumentNullException(nameof(entidade), "Noticia informada não encontrada.");
     }
+
     protected override void ValidarValores(NoticiaDto dto)
     {
         if (dto == null) _erros.Add("Informe os dados da Noticia!");

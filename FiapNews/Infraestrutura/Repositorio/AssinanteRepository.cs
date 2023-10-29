@@ -12,10 +12,10 @@ namespace Infraestrutura.Repositorio
         }
         public async Task<IReadOnlyList<Assinante>> ObterAssinantes()
         {
-            var autores = await _dbSet
+            var assinantes = await _dbSet
                 .Include(x => x.Assinatura)
                 .ToListAsync();
-            return autores;
+            return assinantes;
         }
         public async Task<Assinante> ObterAssinantePorId(Guid id)
         {
