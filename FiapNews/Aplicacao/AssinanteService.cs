@@ -28,6 +28,14 @@ namespace Aplicacao
             _assinaturaRepository = assinaturaRepository;
         }
 
+        public override async Task AlterarAsync(AssinanteDto dto)
+        {
+            ValidarValores(dto);
+            var entidade = await Repository.ObterPorIdAsync(dto.Id);
+
+            await Repository.AlterarAsync(DefinirEntidadeAlteracao(entidade, dto));
+        }
+
         protected override Assinante DefinirEntidadeInclusao(AssinanteDto dto)
         {
             var usuario = Repository.ObterIQueryable().FirstOrDefault(x => x.Login == dto.Login);
@@ -69,6 +77,12 @@ namespace Aplicacao
         {
             if (entidade == null)
                 throw new ArgumentNullException(nameof(entidade), "Assinante informado não encontrada.");
+            if (dto.Login != entidade.Login)
+               _erros.Add("Não é possível alterar o login do assinante.");
+            if (dto.Senha != entidade.Senha)
+               _erros.Add("Para alterar a senha do assinante utilize o metodo alterar senha.");
+            if (_erros.Any())
+                throw new Exception(string.Join("\n", _erros));
             entidade.AlterarDadosDoUsuario(dto.Nome, dto.Email, dto.Foto);
             return entidade;
         }
