@@ -136,7 +136,7 @@ public class ComentarioController : ControllerBase
     }
 
     //Metodos CRD
-    [HttpGet]
+    [HttpGet("ObterTodos")]
     public async Task<IActionResult> ObterTodos()
     {
         try
@@ -150,7 +150,7 @@ public class ComentarioController : ControllerBase
         }
     }
 
-    [HttpGet("{id}")]
+    [HttpGet("ObterPorId/{id}")]
     public async Task<IActionResult> ObterPorId([FromRoute] Guid id)
     {
         try
@@ -165,7 +165,7 @@ public class ComentarioController : ControllerBase
     }
 
     [AllowAnonymous]
-    [HttpPost]
+    [HttpPost("Adicionar")]
     public async Task<IActionResult> AdicionarAsync([FromBody] ComentarioDto comentarioDTO)
     {
         try
@@ -179,7 +179,7 @@ public class ComentarioController : ControllerBase
         }
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete("Deletar/{id}")]
     public async Task<IActionResult> Deletar([FromRoute] Guid id)
     {
         try

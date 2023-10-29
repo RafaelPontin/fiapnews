@@ -56,7 +56,10 @@ public class NoticiaService : ServiceBase<NoticiaDto, Noticia, INoticiaRepositor
             if (item != null)
             {
                 Categoria categoria = _categoriaRepository.ObterPorIdAsync(item.Id).Result;
-                categorias.Add(categoria);
+                if (categoria == null)
+                    throw new Exception ($"Categoria informada não encontrada. Id: {item.Id}");
+                else
+                  categorias.Add(categoria);
             }
         }
         return categorias;
@@ -71,7 +74,10 @@ public class NoticiaService : ServiceBase<NoticiaDto, Noticia, INoticiaRepositor
             if (item != null)
             {
                 Autor autor = _autorRepository.ObterAutorPorId(item.Id).Result;
-                autores.Add(autor);
+                if (autor == null)
+                    throw new Exception($"Autor informado não encontrado. Id: {item.Id}");
+                else
+                    autores.Add(autor);
             }
         }
         return autores;
