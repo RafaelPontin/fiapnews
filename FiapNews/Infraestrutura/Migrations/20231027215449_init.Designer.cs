@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infraestrutura.Migrations
 {
     [DbContext(typeof(FiapNewsContext))]
-    [Migration("20231027201138_init")]
+    [Migration("20231027215449_init")]
     partial class init
     {
         /// <inheritdoc />

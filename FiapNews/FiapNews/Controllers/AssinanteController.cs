@@ -69,7 +69,7 @@ namespace FiapNews.Controllers
 
         [Authorize(Roles = "ASSINANTE")]
         [HttpPost("Assinar")]
-        public async Task<IActionResult> Assinaar(AssinarDto assinarDto)
+        public async Task<IActionResult> Assinar(AssinarDto assinarDto)
         {
             try
             {
@@ -80,6 +80,21 @@ namespace FiapNews.Controllers
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
+        }
+
+
+        [AllowAnonymous]
+        [HttpGet("Obter-Todos")]
+        public override async Task<IActionResult> ObterTodosAsync()
+        {
+            return Ok(await Service.ObterTodosAsync());
+        }
+
+        [AllowAnonymous]
+        [HttpGet("Obter-Por-Id")]
+        public override async Task<IActionResult> ObterPorIdAsync(Guid id)
+        {
+            return Ok(await Service.ObterPorIdAsync(id));
         }
     }
 }
