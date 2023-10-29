@@ -2,6 +2,7 @@
 using Aplicacao.DTOs;
 using Dominio.ObjetosDeValor;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace FiapNews.Controllers
 {
@@ -13,6 +14,18 @@ namespace FiapNews.Controllers
         public RedeSocialController(IRedeSocialService appService) : base(appService)
         {
             this.appService = appService;
+        }
+
+        [AllowAnonymous]
+        public override Task<IActionResult> ObterTodosAsync()
+        {
+            return base.ObterTodosAsync();
+        }
+
+        [AllowAnonymous]
+        public override Task<IActionResult> ObterPorIdAsync(Guid id)
+        {
+            return base.ObterPorIdAsync(id);
         }
     }
 
