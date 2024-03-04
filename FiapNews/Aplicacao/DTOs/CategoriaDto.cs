@@ -6,5 +6,6 @@ namespace Aplicacao.DTOs
     {
         [Required(ErrorMessage = "Descrição é obrigatória")]
         public string Descricao { get; set; }
+        public bool Aprovado { get; set; }
     }
 }

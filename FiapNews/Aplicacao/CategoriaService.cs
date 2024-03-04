@@ -1,6 +1,7 @@
 ﻿using Aplicacao.Contratos.Persistencia;
 using Aplicacao.Contratos.Servico;
 using Aplicacao.DTOs;
+using Aplicacao.Mensagem;
 using AutoMapper;
 using Dominio.ObjetosDeValor;
 
@@ -8,8 +9,19 @@ namespace Aplicacao
 {
     public class CategoriaService : ServiceBase<CategoriaDto, Categoria, IRepositoryBase<Categoria>>, ICategoriaService
     {
-        public CategoriaService(IRepositoryBase<Categoria> repository, IMapper mapper) : base(repository, mapper)
+        private IRabbit _rabbit;
+
+        public CategoriaService(IRepositoryBase<Categoria> repository, IMapper mapper, IRabbit rabbit) : base(repository, mapper)
         {
+            _rabbit = rabbit;   
+        }
+
+        public override async Task AdicionarAsync(CategoriaDto dto)
+        {
+            dto.Aprovado = false;
+            await base.AdicionarAsync(dto);
+
+            _rabbit.Send(dto, "fila-categoria");
         }
 
         protected override Categoria DefinirEntidadeInclusao(CategoriaDto dto)
