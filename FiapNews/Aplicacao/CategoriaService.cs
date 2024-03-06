@@ -18,7 +18,7 @@ namespace Aplicacao
 
         public override async Task AdicionarAsync(CategoriaDto dto)
         {
-            dto.Aprovado = false;
+            //dto.Aprovado = false;
             await base.AdicionarAsync(dto);
 
             _rabbit.Send(dto, "fila-categoria");

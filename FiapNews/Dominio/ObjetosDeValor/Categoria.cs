@@ -6,6 +6,7 @@ namespace Dominio.ObjetosDeValor
     {
         public string Descricao { get; private set; } = string.Empty;
         private const int TAMANHO_DESCRICAO = 100;
+        private bool Aprovado { get; set; }
         public IReadOnlyCollection<Noticia> Noticias { get; }
         protected Categoria()
         {
