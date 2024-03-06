@@ -1,4 +1,5 @@
 using Aplicacao.DTOs;
+using CategoriaConsumer.request;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System.Text;
@@ -9,10 +10,12 @@ namespace CategoriaConsumer;
 public class Worker : BackgroundService
 {
     private readonly ILogger<Worker> _logger;
+    private IRequest _request;
 
-    public Worker(ILogger<Worker> logger)
+    public Worker(ILogger<Worker> logger, IRequest request)
     {
         _logger = logger;
+        _request = request;
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -45,11 +48,9 @@ public class Worker : BackgroundService
 
                     var body = eventArgrs.Body.ToArray();
                     var message = Encoding.UTF8.GetString(body);
-                    var categoria = JsonSerializer.Deserialize<CategoriaDto>(message);
-                    //regra negocio 
+                    _request.Post(message);
 
-
-                    Console.WriteLine(categoria.Descricao);
+                    Console.WriteLine(message);
                 };
 
                 channel.BasicConsume(
