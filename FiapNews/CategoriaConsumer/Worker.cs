@@ -59,7 +59,7 @@ public class Worker : BackgroundService
                     consumer: consumer
                 );
             }
-            await Task.Delay(2000);
+            await Task.Delay(5000);
         }
     }
 }
