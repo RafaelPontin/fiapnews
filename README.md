@@ -42,3 +42,35 @@
 |RAFAEL FAUSTINO MAGALHAES PONTIN|rfmpontin@gmail.com|
 |Alexssander Ferreira do Nascimento|alexssanderferreira@hotmail.com|
 |Autran Francisco Martine Castão|autran.martine@gmail.com|
+
+
+# Tech Challenge Fase 3
+
+* Instalar o Docker na maquina
+* Rodar o comando no prompt :
+  ~~~docker
+    docker run -p 15672:15672 -p 5672:5672 masstransit/rabbitmq
+  ~~~
+
+* Atualizar a main pelo git
+* Inicializar os seguintes projetos (CategoriaConsumer, ConfigSite e FiapNews)
+
+   1. CategoriaConsume: Worker responsável pelo gerenciamento da fila
+  
+   2. ConfigSite: Micro Serviço responsável pela criação das configurações iniciais de uma nova pagina para o front
+  
+   3. FiapNews: API responsável pelo gerenciamento do sistema criada na fase 1
+   ![image](https://github.com/RafaelPontin/fiapnews/assets/16031920/e63fc40e-08a1-47b2-b5ca-2b9046a531e0)
+
+  
+### Como realizar os testes
+
+* Chamar o end point /api/Categoria/Adicionar
+ ![image](https://github.com/RafaelPontin/fiapnews/assets/16031920/57d0c9e7-5c82-48dd-b664-79c9f8cb4fd8)
+
+* A mensagem sera criada no RabbitMQ
+![image](https://github.com/RafaelPontin/fiapnews/assets/16031920/0cc96628-cafd-4ca1-a34c-831969e039f4)
+
+* No final do processo existirar um novo registro no banco
+![image](https://github.com/RafaelPontin/fiapnews/assets/16031920/bd98b74f-7ac8-4dd6-8dae-2c86a9984726)
+  
