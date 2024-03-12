@@ -2,6 +2,7 @@
 using Aplicacao.DTOs;
 using Dominio.ObjetosDeValor;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace FiapNews.Controllers
 {
@@ -13,6 +14,12 @@ namespace FiapNews.Controllers
         public CategoriaController(ICategoriaService appService) : base(appService)
         {
             this.appService = appService;
+        }
+
+        [AllowAnonymous]
+        public override Task<IActionResult> AdicionarAsync(CategoriaDto dto)
+        {
+            return base.AdicionarAsync(dto);
         }
     }
 }

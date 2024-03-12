@@ -1,5 +1,7 @@
 ﻿using Aplicacao.Contratos.Persistencia;
 using Aplicacao.Contratos.Servico;
+using Aplicacao.DTOs;
+using Aplicacao.Mensagem;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
@@ -24,6 +26,7 @@ namespace Aplicacao
             services.AddScoped<INoticiaService, NoticiaService>();
             services.AddScoped<IAssinanteService, AssinanteService>();
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
+            services.AddScoped<IRabbit, Rabbit>();
             return services;
         }
     }
