@@ -21,7 +21,7 @@ namespace ConfigSite.Models
 
         public void DefinirLink()
         {
-            Link = RemoverEspacos(Descricao).ToLower();
+            Link = $"http://fiapnews.com.br/{RemoverEspacos(Descricao).ToLower()}";
         }
 
 
