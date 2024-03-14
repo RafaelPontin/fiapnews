@@ -8,5 +8,9 @@
         {
             Id = Guid.NewGuid();
         }
+        protected void DefinirId(Guid id)
+        {
+            Id = id;
+        }
     }
 }

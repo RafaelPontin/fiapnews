@@ -22,7 +22,7 @@ namespace ConfigSite.Data.Repository
         {
             var configSite = new ConfiguracaoSite
             {
-                Id = Guid.NewGuid(),
+                Id = request.Id,
                 DataCriacao = DateTime.Now,
                 Descricao = request.Descricao                
             };

@@ -17,11 +17,20 @@ namespace Dominio.ObjetosDeValor
         {
             DefinirDescricao(descricao);
         }
-
+        public Categoria(string descricao, Guid id) : base()
+        {
+            DefinirIdEntidade(id);
+            DefinirDescricao(descricao);            
+        }
         public void DefinirDescricao(string descricao)
         {
             ValidarDescricao(descricao);
             Descricao = descricao;
+        }
+
+        public void DefinirIdEntidade(Guid id)
+        {
+            DefinirId(id);
         }
 
         private void ValidarDescricao(string descricao)
